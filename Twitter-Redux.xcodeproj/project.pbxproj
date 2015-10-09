@@ -14,6 +14,9 @@
 		6F38A3A91BC74CF200D226E9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38A3A71BC74CF200D226E9 /* MainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		6F38A3AA1BC74CF200D226E9 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F38A3A81BC74CF200D226E9 /* MainViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		6FFA58D31BC787D5009CC013 /* MenuVCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */; settings = {ASSET_TAGS = (); }; };
+		6FFA58DC1BC78978009CC013 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		6FFA58DD1BC78978009CC013 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FFA58DB1BC78978009CC013 /* MenuTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		6F38A3A71BC74CF200D226E9 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = "Twitter-Redux/ViewControllers/MainViewController.swift"; sourceTree = "<group>"; };
 		6F38A3A81BC74CF200D226E9 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = "Twitter-Redux/ViewControllers/MainViewController.xib"; sourceTree = "<group>"; };
 		6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Application/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuVCManager.swift; path = "Twitter-Redux/Models/MenuVCManager.swift"; sourceTree = "<group>"; };
+		6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTableViewCell.swift; path = "Twitter-Redux/Views/MenuTableViewCell.swift"; sourceTree = "<group>"; };
+		6FFA58DB1BC78978009CC013 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuTableViewCell.xib; path = "Twitter-Redux/Views/MenuTableViewCell.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +48,8 @@
 		6F38A3801BC747D600D226E9 = {
 			isa = PBXGroup;
 			children = (
+				6FFA58D51BC78948009CC013 /* Views */,
+				6FFA58D41BC787D9009CC013 /* Models */,
 				6F38A3A21BC7488300D226E9 /* ViewControllers */,
 				6F38A38B1BC747D600D226E9 /* Application */,
 				6F38A38A1BC747D600D226E9 /* Products */,
@@ -77,6 +85,23 @@
 				6F38A3A81BC74CF200D226E9 /* MainViewController.xib */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6FFA58D41BC787D9009CC013 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6FFA58D51BC78948009CC013 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */,
+				6FFA58DB1BC78978009CC013 /* MenuTableViewCell.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +164,7 @@
 				6F38A3A61BC74BDE00D226E9 /* MenuViewController.xib in Resources */,
 				6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */,
 				6F38A3941BC747D600D226E9 /* Assets.xcassets in Resources */,
+				6FFA58DD1BC78978009CC013 /* MenuTableViewCell.xib in Resources */,
 				6F38A3AA1BC74CF200D226E9 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +179,8 @@
 				6F38A3A91BC74CF200D226E9 /* MainViewController.swift in Sources */,
 				6F38A38D1BC747D600D226E9 /* AppDelegate.swift in Sources */,
 				6F38A3A51BC74BDE00D226E9 /* MenuViewController.swift in Sources */,
+				6FFA58D31BC787D5009CC013 /* MenuVCManager.swift in Sources */,
+				6FFA58DC1BC78978009CC013 /* MenuTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainVC = MainViewController()
  
         let menuViewController = MenuViewController()
+        menuViewController.delegate = mainVC
         menuNavigationController = UINavigationController(rootViewController: menuViewController)
         
         if let mainVC = mainVC {
@@ -30,13 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 mainVC.addChildViewController(menuNavigationController)
                 menuNavigationController.view.frame = CGRectMake(0, 0, MenuViewController.Constants.menuWidth, mainVC.view.bounds.height)
                 menuNavigationController.view.autoresizingMask = [.FlexibleHeight, .FlexibleTopMargin, .FlexibleBottomMargin]
-                print(menuNavigationController.view.frame)
                 mainVC.view.addSubview(menuNavigationController.view)
                 mainVC.view.bringSubviewToFront(mainVC.containerView)
                 menuNavigationController.didMoveToParentViewController(mainVC)
             }
         }
-        
         
         window?.rootViewController = mainVC
         window?.makeKeyAndVisible()
