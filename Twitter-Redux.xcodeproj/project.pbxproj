@@ -1,0 +1,293 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6F38A38D1BC747D600D226E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38A38C1BC747D600D226E9 /* AppDelegate.swift */; };
+		6F38A3941BC747D600D226E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F38A3931BC747D600D226E9 /* Assets.xcassets */; };
+		6F38A3A51BC74BDE00D226E9 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38A3A31BC74BDE00D226E9 /* MenuViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		6F38A3A61BC74BDE00D226E9 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F38A3A41BC74BDE00D226E9 /* MenuViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		6F38A3A91BC74CF200D226E9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F38A3A71BC74CF200D226E9 /* MainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		6F38A3AA1BC74CF200D226E9 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F38A3A81BC74CF200D226E9 /* MainViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6F38A3891BC747D600D226E9 /* Twitter-Redux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter-Redux.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F38A38C1BC747D600D226E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Application/AppDelegate.swift; sourceTree = "<group>"; };
+		6F38A3931BC747D600D226E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Application/Assets.xcassets; sourceTree = "<group>"; };
+		6F38A3981BC747D600D226E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Application/Info.plist; sourceTree = "<group>"; };
+		6F38A3A31BC74BDE00D226E9 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "Twitter-Redux/ViewControllers/MenuViewController.swift"; sourceTree = "<group>"; };
+		6F38A3A41BC74BDE00D226E9 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuViewController.xib; path = "Twitter-Redux/ViewControllers/MenuViewController.xib"; sourceTree = "<group>"; };
+		6F38A3A71BC74CF200D226E9 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = "Twitter-Redux/ViewControllers/MainViewController.swift"; sourceTree = "<group>"; };
+		6F38A3A81BC74CF200D226E9 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = "Twitter-Redux/ViewControllers/MainViewController.xib"; sourceTree = "<group>"; };
+		6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Application/LaunchScreen.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6F38A3861BC747D600D226E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6F38A3801BC747D600D226E9 = {
+			isa = PBXGroup;
+			children = (
+				6F38A3A21BC7488300D226E9 /* ViewControllers */,
+				6F38A38B1BC747D600D226E9 /* Application */,
+				6F38A38A1BC747D600D226E9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6F38A38A1BC747D600D226E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6F38A3891BC747D600D226E9 /* Twitter-Redux.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6F38A38B1BC747D600D226E9 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				6F38A38C1BC747D600D226E9 /* AppDelegate.swift */,
+				6F38A3931BC747D600D226E9 /* Assets.xcassets */,
+				6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */,
+				6F38A3981BC747D600D226E9 /* Info.plist */,
+			);
+			name = Application;
+			path = "Twitter-Redux";
+			sourceTree = "<group>";
+		};
+		6F38A3A21BC7488300D226E9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6F38A3A31BC74BDE00D226E9 /* MenuViewController.swift */,
+				6F38A3A41BC74BDE00D226E9 /* MenuViewController.xib */,
+				6F38A3A71BC74CF200D226E9 /* MainViewController.swift */,
+				6F38A3A81BC74CF200D226E9 /* MainViewController.xib */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6F38A3881BC747D600D226E9 /* Twitter-Redux */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F38A39B1BC747D600D226E9 /* Build configuration list for PBXNativeTarget "Twitter-Redux" */;
+			buildPhases = (
+				6F38A3851BC747D600D226E9 /* Sources */,
+				6F38A3861BC747D600D226E9 /* Frameworks */,
+				6F38A3871BC747D600D226E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Twitter-Redux";
+			productName = "Twitter-Redux";
+			productReference = 6F38A3891BC747D600D226E9 /* Twitter-Redux.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6F38A3811BC747D600D226E9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Randy Ting";
+				TargetAttributes = {
+					6F38A3881BC747D600D226E9 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = 6F38A3841BC747D600D226E9 /* Build configuration list for PBXProject "Twitter-Redux" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6F38A3801BC747D600D226E9;
+			productRefGroup = 6F38A38A1BC747D600D226E9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6F38A3881BC747D600D226E9 /* Twitter-Redux */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6F38A3871BC747D600D226E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F38A3A61BC74BDE00D226E9 /* MenuViewController.xib in Resources */,
+				6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */,
+				6F38A3941BC747D600D226E9 /* Assets.xcassets in Resources */,
+				6F38A3AA1BC74CF200D226E9 /* MainViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6F38A3851BC747D600D226E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F38A3A91BC74CF200D226E9 /* MainViewController.swift in Sources */,
+				6F38A38D1BC747D600D226E9 /* AppDelegate.swift in Sources */,
+				6F38A3A51BC74BDE00D226E9 /* MenuViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6F38A3991BC747D600D226E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6F38A39A1BC747D600D226E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6F38A39C1BC747D600D226E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Twitter-Redux/Application/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.randy.Twitter-Redux";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6F38A39D1BC747D600D226E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Twitter-Redux/Application/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.randy.Twitter-Redux";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6F38A3841BC747D600D226E9 /* Build configuration list for PBXProject "Twitter-Redux" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F38A3991BC747D600D226E9 /* Debug */,
+				6F38A39A1BC747D600D226E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6F38A39B1BC747D600D226E9 /* Build configuration list for PBXNativeTarget "Twitter-Redux" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F38A39C1BC747D600D226E9 /* Debug */,
+				6F38A39D1BC747D600D226E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6F38A3811BC747D600D226E9 /* Project object */;
+}
