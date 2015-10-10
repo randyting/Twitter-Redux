@@ -42,14 +42,8 @@
                             <action selector="onTapRetweetButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="d0x-wR-EeJ"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzE-jt-ewg">
-                        <rect key="frame" x="173" y="161" width="14" height="14"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="78" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRw-O8-Fm5">
-                        <rect key="frame" x="113" y="161" width="14" height="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2000000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzE-jt-ewg">
+                        <rect key="frame" x="173" y="161" width="98" height="14"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -67,6 +61,9 @@
                             <constraint firstAttribute="height" constant="30" id="QVM-OG-shR"/>
                         </constraints>
                         <state key="normal" image="reply"/>
+                        <connections>
+                            <action selector="onTapReplyButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OCw-AL-VGI"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I just Amazon Prime Now'd sponges, a swim cap, and 12 cans of tuna. Modern life is wonderful." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4i0-4O-2qH">
                         <rect key="frame" x="15" y="72" width="382" height="71"/>
@@ -104,6 +101,12 @@
                             <constraint firstItem="H9w-pA-IUu" firstAttribute="centerY" secondItem="zed-yd-P36" secondAttribute="centerY" id="yFY-89-YRh"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="78" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRw-O8-Fm5">
+                        <rect key="frame" x="113" y="161" width="36" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="xd1-NB-904" firstAttribute="top" secondItem="zed-yd-P36" secondAttribute="bottom" id="09U-Dg-kH1"/>
@@ -123,20 +126,20 @@
                     <constraint firstItem="kzE-jt-ewg" firstAttribute="centerY" secondItem="FKs-sn-qEJ" secondAttribute="centerY" id="TtX-nP-Mrf"/>
                     <constraint firstItem="G1G-cF-VHC" firstAttribute="top" secondItem="xd1-NB-904" secondAttribute="top" id="X7z-er-boG"/>
                     <constraint firstItem="FKs-sn-qEJ" firstAttribute="top" secondItem="4i0-4O-2qH" secondAttribute="bottom" constant="10" id="Z6f-jJ-DJP"/>
+                    <constraint firstItem="NRw-O8-Fm5" firstAttribute="leading" secondItem="n76-4I-W5C" secondAttribute="trailing" constant="-12" id="atJ-rb-JMD"/>
                     <constraint firstItem="4i0-4O-2qH" firstAttribute="leading" secondItem="xd1-NB-904" secondAttribute="leading" id="cBC-Ux-0fQ"/>
                     <constraint firstItem="FKs-sn-qEJ" firstAttribute="leading" secondItem="xd1-NB-904" secondAttribute="leading" id="cMB-Le-bqR"/>
                     <constraint firstItem="xd1-NB-904" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="e7V-Rv-7qY"/>
                     <constraint firstItem="ZDL-Ad-H3S" firstAttribute="leading" secondItem="G1G-cF-VHC" secondAttribute="trailing" constant="10" id="eza-ss-HkD"/>
+                    <constraint firstItem="kzE-jt-ewg" firstAttribute="leading" secondItem="dXc-Rs-UtG" secondAttribute="trailing" constant="-12" id="fnm-4b-koD"/>
                     <constraint firstItem="G1G-cF-VHC" firstAttribute="leading" secondItem="xd1-NB-904" secondAttribute="trailing" constant="10" id="h6V-P4-rMm"/>
                     <constraint firstItem="dXc-Rs-UtG" firstAttribute="centerY" secondItem="n76-4I-W5C" secondAttribute="centerY" id="i1o-qD-hcp"/>
                     <constraint firstItem="MWI-ux-Wuu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZDL-Ad-H3S" secondAttribute="trailing" constant="10" id="jOv-DG-g5N"/>
                     <constraint firstAttribute="trailing" secondItem="zed-yd-P36" secondAttribute="trailing" id="oLc-Je-w26"/>
-                    <constraint firstItem="n76-4I-W5C" firstAttribute="centerX" secondItem="NRw-O8-Fm5" secondAttribute="centerX" constant="-20" id="rh2-bJ-JKs"/>
                     <constraint firstItem="n76-4I-W5C" firstAttribute="height" secondItem="FKs-sn-qEJ" secondAttribute="height" id="s8Y-tY-seg"/>
                     <constraint firstItem="MWI-ux-Wuu" firstAttribute="top" secondItem="xd1-NB-904" secondAttribute="top" id="sma-j1-Xlz"/>
                     <constraint firstItem="4i0-4O-2qH" firstAttribute="top" secondItem="xd1-NB-904" secondAttribute="bottom" constant="10" id="tcf-iQ-e5w"/>
                     <constraint firstItem="ZDL-Ad-H3S" firstAttribute="bottom" secondItem="G1G-cF-VHC" secondAttribute="bottom" id="vHp-ZF-TG9"/>
-                    <constraint firstItem="dXc-Rs-UtG" firstAttribute="centerX" secondItem="kzE-jt-ewg" secondAttribute="centerX" constant="-20" id="zf3-4Y-vQV"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

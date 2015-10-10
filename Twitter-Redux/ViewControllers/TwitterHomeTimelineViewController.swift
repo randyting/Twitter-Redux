@@ -29,6 +29,7 @@ class TwitterHomeTimelineViewController: UIViewController {
     setupTweetsTableView(tweetsTableView)
     setupRefreshControl(refreshControl)
     setupInitialValues()
+    setupNavigationBar()
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -42,7 +43,6 @@ class TwitterHomeTimelineViewController: UIViewController {
     tableView.delegate = self
     tableView.estimatedRowHeight = 300
     tableView.rowHeight = UITableViewAutomaticDimension
-    
     let tweetTableViewCellNib = UINib(nibName: "TweetTableViewCell", bundle: nil)
     tableView.registerNib(tweetTableViewCellNib, forCellReuseIdentifier: tweetsCellReuseIdentifier)
   }
@@ -62,7 +62,15 @@ class TwitterHomeTimelineViewController: UIViewController {
     tweetsTableView.bottomRefreshControl = bottomRefreshControl
   }
   
+  private func setupNavigationBar(){
+    let newTweetButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "createNewTweet:")
+    navigationItem.rightBarButtonItem = newTweetButton
+  }
+  
   // MARK: - Behavior
+ func createNewTweet(sender: UIBarButtonItem) {
+    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+  }
   
   func refreshTweets(){
     currentUser.homeTimelineWithParams(nil) { (tweets, error) -> () in
@@ -98,8 +106,6 @@ class TwitterHomeTimelineViewController: UIViewController {
       }
     }
   }
-  
-  // MARK: - Navigation
 }
 
 // MARK: - UITableView Delegate and Datasource
@@ -109,6 +115,7 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
     let cell = tweetsTableView.dequeueReusableCellWithIdentifier(tweetsCellReuseIdentifier, forIndexPath: indexPath) as! TweetTableViewCell
     
     cell.tweet = tweets?[indexPath.row]
+    cell.delegate = self
     
     return cell
   }
@@ -131,12 +138,25 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
   
 }
 
+// MARK: - TweetTableViewCell Delegate
+extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
+  func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton) {
+    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweetTableViewCell.tweetToShow, forViewController: self)
+  }
+}
+
 // MARK: - NewTweetViewController Delegate
-//extension TwitterHomeTimelineViewController: NewTweetViewControllerDelegate {
-//  func newTweetViewController(newTweetViewController: NewTweetViewController, didPostTweetText: String) {
-//    refreshTweets()
-//  }
-//}
+extension TwitterHomeTimelineViewController: NewTweetViewControllerDelegate {
+  func newTweetViewController(newTweetViewController: NewTweetViewController, didPostTweetText: String) {
+    dismissViewControllerAnimated(true, completion: nil)
+    refreshTweets()
+  }
+  
+  func newTweetViewController(newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+}
 
 
 

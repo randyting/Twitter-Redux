@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol TweetTableViewCellDelegate {
+  optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton)
+}
+
 class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Storyboard Objects
@@ -33,6 +37,7 @@ class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Properties
   var tweetToShow: Tweet!
+  weak var delegate: AnyObject?
   
   var tweet: Tweet! {
     didSet{
@@ -67,10 +72,10 @@ class TweetTableViewCell: UITableViewCell {
       retweetOrReplyContainerViewHeightConstraint.constant = 25
       if tweet.isRetweet {
         retweetOrReplyIcon.image = UIImage(named: "retweet")
-        retweetOrReplyLabel.text = "\(tweet.userScreenname!) Retweeted"
+        retweetOrReplyLabel.text = "\(tweet.userName!) Retweeted"
       } else {
         retweetOrReplyIcon.image = UIImage(named: "reply")
-        retweetOrReplyLabel.text = "in reply to \(tweet.inReplyToScreenName!)"
+        retweetOrReplyLabel.text = "in reply to @\(tweet.inReplyToScreenName!)"
       }
     } else {
       retweetOrReplyContainerView.hidden = true
@@ -120,4 +125,7 @@ class TweetTableViewCell: UITableViewCell {
     }
   }
   
+  @IBAction func onTapReplyButton(sender: UIButton) {
+    delegate?.tweetTableViewCell!(self, didTapReplyButton: sender)
+  }
 }

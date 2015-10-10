@@ -100,9 +100,18 @@ class TweetDetailViewController: UIViewController {
   }
   
   @IBAction func onTapReplyButton(sender: AnyObject) {
-//    let vc = segue.destinationViewController as? NewTweetViewController
-//    vc?.inReplyToUserScreenname = tweet.userScreenname
-//    vc?.inReplyToStatusID = tweet.idString
+    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweet, forViewController: self)
   }
 
+}
+
+// MARK: - NewTweetViewControllerDelegate
+extension TweetDetailViewController: NewTweetViewControllerDelegate {
+  func newTweetViewController(newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func newTweetViewController(newTweetViewController: NewTweetViewController, didPostTweetText: String) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
 }
