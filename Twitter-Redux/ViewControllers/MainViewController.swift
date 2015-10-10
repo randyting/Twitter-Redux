@@ -28,10 +28,20 @@ class MainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    setupObservers()
     containerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "onContainerViewPanGesture:"))
   }
   
+  // MARK: - Setup
+  private func setupObservers() {
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogin:", name: userDidLoginNotification, object: nil)
+  }
+  
   // MARK: - Behavior
+  func onUserLogin(notification: NSNotification){
+    selectViewController(MenuVCManager.sharedInstance.vcArray[0])
+  }
+
   func onContainerViewPanGesture(sender: UIPanGestureRecognizer) {
     
     let state = sender.state
@@ -95,7 +105,7 @@ class MainViewController: UIViewController {
       }, completion: nil)
   }
   
-  private func selectViewController(selectedViewController: UIViewController) {
+  func selectViewController(selectedViewController: UIViewController) {
     
     if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
       currentViewController.willMoveToParentViewController(nil)
@@ -109,6 +119,11 @@ class MainViewController: UIViewController {
     selectedViewController.didMoveToParentViewController(self)
     
     MenuVCManager.sharedInstance.currentViewController = selectedViewController
+  }
+  
+  // MARK: - Deinit
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
 }

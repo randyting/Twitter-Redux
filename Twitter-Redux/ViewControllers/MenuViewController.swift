@@ -35,7 +35,6 @@ class MenuViewController: UIViewController {
     self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: nil, action: nil)
     
     setupTableView(menuTableView)
-    
     // Do any additional setup after loading the view.
   }
   
@@ -49,6 +48,7 @@ class MenuViewController: UIViewController {
   
 }
 
+// MARK: - TableViewDelegate and TableViewDatasource
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

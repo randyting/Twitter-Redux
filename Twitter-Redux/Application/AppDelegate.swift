@@ -39,18 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainVC.view.bringSubviewToFront(mainVC.containerView)
         menuNavigationController.didMoveToParentViewController(mainVC)
       }
-
+      
     }
     
     if let currentUser = TwitterUser.currentUser {
       UserManager.sharedInstance.currentUser = currentUser
       UserManager.sharedInstance.loggedInUsers.append(currentUser)
-      window?.rootViewController = mainVC
     } else {
-      loginVC!.mainViewController = mainVC
-      window?.rootViewController = loginVC
+      mainVC?.selectViewController(loginVC!)
     }
     
+    window?.rootViewController = mainVC
     window?.makeKeyAndVisible()
     
     return true

@@ -9,17 +9,10 @@
 import UIKit
 
 class TwitterLoginViewController: UIViewController {
-
-  // MARK: - Instance Variables
-  var mainViewController: MainViewController!
-  
-  // MARK: - Constants
-  private let loginSegueIdentifier = "loginSegue"
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    attemptToLogin()
   }
   
   // MARK: - Convenience
@@ -36,14 +29,7 @@ class TwitterLoginViewController: UIViewController {
       } else {
         UserManager.sharedInstance.currentUser = user
         UserManager.sharedInstance.loggedInUsers.append(user!)
-        if let appDelegate = UIApplication.sharedApplication().delegate {
-          if let window = appDelegate.window {
-            window!.rootViewController = self.mainViewController!
-            window!.makeKeyAndVisible()
-          }
-        }
-
-//        NSNotificationCenter.defaultCenter().postNotificationName(userDidLoginNotification, object: self)
+        NSNotificationCenter.defaultCenter().postNotificationName(userDidLoginNotification, object: self)
       }
     }
   }
