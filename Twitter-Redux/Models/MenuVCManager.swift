@@ -17,8 +17,7 @@ class MenuVCManager: NSObject {
   let vcArray: [UIViewController]!
   
   let vcTitleArray = [
-    "Menu",
-    "Navigation With Menu"
+    "Home"
   ]
   
   // MARK: - Instance Variables
@@ -27,8 +26,7 @@ class MenuVCManager: NSObject {
   // MARK: - Initializer
   override init() {
     vcArray = [
-      MenuViewController(),
-      UINavigationController(rootViewController: MenuViewController())
+      UINavigationController(rootViewController: TwitterHomeTimelineViewController())
     ]
   }
 }

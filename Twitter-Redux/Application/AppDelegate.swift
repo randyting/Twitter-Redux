@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if let currentUser = TwitterUser.currentUser {
       UserManager.sharedInstance.currentUser = currentUser
       UserManager.sharedInstance.loggedInUsers.append(currentUser)
+      mainVC?.selectViewController(MenuVCManager.sharedInstance.vcArray[0])
     } else {
       mainVC?.selectViewController(loginVC!)
     }

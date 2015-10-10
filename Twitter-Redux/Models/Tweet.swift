@@ -49,9 +49,9 @@ class Tweet: NSObject {
     profileImageURL = NSURL(string: profileImageURLString!)
     
     
-    if let mediaURLString = (dictionary["entities"]?["media"] as? NSArray)![0]["media_url_https"] as? String {
-      mediaURL = NSURL(string: mediaURLString)
-    }
+//    if let mediaURLString = (dictionary["entities"]?["media"] as? NSArray)![0]["media_url_https"] as? String {
+//      mediaURL = NSURL(string: mediaURLString)
+//    }
     
     favorited = dictionary["favorited"] as? Bool
     retweeted = dictionary["retweeted"] as? Bool

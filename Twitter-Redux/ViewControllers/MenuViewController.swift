@@ -31,11 +31,9 @@ class MenuViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.title = "This is my title"
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: nil, action: nil)
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logoutUser:")
     
     setupTableView(menuTableView)
-    // Do any additional setup after loading the view.
   }
   
   // MARK: - Initial Setup
@@ -46,6 +44,11 @@ class MenuViewController: UIViewController {
     tableView.registerNib(menuTableViewCellNib, forCellReuseIdentifier: cellReuseIdentifier)
   }
   
+  // MARK: - Behavior
+  func logoutUser(sender: UIBarButtonItem){
+    UserManager.sharedInstance.currentUser?.logout()
+    NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: self)
+  }
 }
 
 // MARK: - TableViewDelegate and TableViewDatasource

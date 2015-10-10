@@ -23,6 +23,10 @@
 		6F93A19B1BC7A652003E92FB /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F93A19A1BC7A652003E92FB /* UserManager.swift */; settings = {ASSET_TAGS = (); }; };
 		6F93A19E1BC7A73A003E92FB /* TwitterLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F93A19C1BC7A73A003E92FB /* TwitterLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		6F93A19F1BC7A73A003E92FB /* TwitterLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F93A19D1BC7A73A003E92FB /* TwitterLoginViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		6FC04B0B1BC8B99000B036BB /* TwitterHomeTimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC04B091BC8B99000B036BB /* TwitterHomeTimelineViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		6FC04B0C1BC8B99000B036BB /* TwitterHomeTimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FC04B0A1BC8B99000B036BB /* TwitterHomeTimelineViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		6FC04B0F1BC8BB8B00B036BB /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC04B0D1BC8BB8B00B036BB /* TweetTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		6FC04B101BC8BB8B00B036BB /* TweetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FC04B0E1BC8BB8B00B036BB /* TweetTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		6FFA58D31BC787D5009CC013 /* MenuVCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */; settings = {ASSET_TAGS = (); }; };
 		6FFA58DC1BC78978009CC013 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -50,6 +54,10 @@
 		6F93A19A1BC7A652003E92FB /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserManager.swift; path = "Twitter-Redux/Models/UserManager.swift"; sourceTree = "<group>"; };
 		6F93A19C1BC7A73A003E92FB /* TwitterLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterLoginViewController.swift; path = "Twitter-Redux/ViewControllers/TwitterLoginViewController.swift"; sourceTree = "<group>"; };
 		6F93A19D1BC7A73A003E92FB /* TwitterLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TwitterLoginViewController.xib; path = "Twitter-Redux/ViewControllers/TwitterLoginViewController.xib"; sourceTree = "<group>"; };
+		6FC04B091BC8B99000B036BB /* TwitterHomeTimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterHomeTimelineViewController.swift; path = "Twitter-Redux/ViewControllers/TwitterHomeTimelineViewController.swift"; sourceTree = "<group>"; };
+		6FC04B0A1BC8B99000B036BB /* TwitterHomeTimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TwitterHomeTimelineViewController.xib; path = "Twitter-Redux/ViewControllers/TwitterHomeTimelineViewController.xib"; sourceTree = "<group>"; };
+		6FC04B0D1BC8BB8B00B036BB /* TweetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TweetTableViewCell.swift; path = "Twitter-Redux/Views/TweetTableViewCell.swift"; sourceTree = "<group>"; };
+		6FC04B0E1BC8BB8B00B036BB /* TweetTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TweetTableViewCell.xib; path = "Twitter-Redux/Views/TweetTableViewCell.xib"; sourceTree = "<group>"; };
 		6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Application/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuVCManager.swift; path = "Twitter-Redux/Models/MenuVCManager.swift"; sourceTree = "<group>"; };
 		6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTableViewCell.swift; path = "Twitter-Redux/Views/MenuTableViewCell.swift"; sourceTree = "<group>"; };
@@ -121,6 +129,8 @@
 				6F38A3A81BC74CF200D226E9 /* MainViewController.xib */,
 				6F93A19C1BC7A73A003E92FB /* TwitterLoginViewController.swift */,
 				6F93A19D1BC7A73A003E92FB /* TwitterLoginViewController.xib */,
+				6FC04B091BC8B99000B036BB /* TwitterHomeTimelineViewController.swift */,
+				6FC04B0A1BC8B99000B036BB /* TwitterHomeTimelineViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -152,6 +162,8 @@
 			children = (
 				6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */,
 				6FFA58DB1BC78978009CC013 /* MenuTableViewCell.xib */,
+				6FC04B0D1BC8BB8B00B036BB /* TweetTableViewCell.swift */,
+				6FC04B0E1BC8BB8B00B036BB /* TweetTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -227,6 +239,8 @@
 			files = (
 				6F38A3A61BC74BDE00D226E9 /* MenuViewController.xib in Resources */,
 				6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */,
+				6FC04B0C1BC8B99000B036BB /* TwitterHomeTimelineViewController.xib in Resources */,
+				6FC04B101BC8BB8B00B036BB /* TweetTableViewCell.xib in Resources */,
 				6F38A3941BC747D600D226E9 /* Assets.xcassets in Resources */,
 				6FFA58DD1BC78978009CC013 /* MenuTableViewCell.xib in Resources */,
 				6F93A19F1BC7A73A003E92FB /* TwitterLoginViewController.xib in Resources */,
@@ -274,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FC04B0B1BC8B99000B036BB /* TwitterHomeTimelineViewController.swift in Sources */,
 				6F93A1941BC7A461003E92FB /* TwitterDetailDateFormatter.swift in Sources */,
 				6F38A3A91BC74CF200D226E9 /* MainViewController.swift in Sources */,
 				6F38A38D1BC747D600D226E9 /* AppDelegate.swift in Sources */,
@@ -281,6 +296,7 @@
 				6F38A3A51BC74BDE00D226E9 /* MenuViewController.swift in Sources */,
 				6F93A1921BC7A461003E92FB /* Tweet.swift in Sources */,
 				6F93A19B1BC7A652003E92FB /* UserManager.swift in Sources */,
+				6FC04B0F1BC8BB8B00B036BB /* TweetTableViewCell.swift in Sources */,
 				6FFA58D31BC787D5009CC013 /* MenuVCManager.swift in Sources */,
 				6F93A1961BC7A461003E92FB /* TwitterUser.swift in Sources */,
 				6F93A1951BC7A461003E92FB /* TwitterHomeTimelineParameters.swift in Sources */,

@@ -35,13 +35,19 @@ class MainViewController: UIViewController {
   // MARK: - Setup
   private func setupObservers() {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogin:", name: userDidLoginNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogout:", name: userDidLogoutNotification, object: nil)
   }
   
   // MARK: - Behavior
-  func onUserLogin(notification: NSNotification){
+  func onUserLogin(notification: NSNotification) {
     selectViewController(MenuVCManager.sharedInstance.vcArray[0])
   }
-
+  
+  func onUserLogout(notification: NSNotification) {
+    let loginVC = TwitterLoginViewController()
+    selectViewController(loginVC)
+  }
+  
   func onContainerViewPanGesture(sender: UIPanGestureRecognizer) {
     
     let state = sender.state
@@ -119,6 +125,7 @@ class MainViewController: UIViewController {
     selectedViewController.didMoveToParentViewController(self)
     
     MenuVCManager.sharedInstance.currentViewController = selectedViewController
+    showContainerView()
   }
   
   // MARK: - Deinit
