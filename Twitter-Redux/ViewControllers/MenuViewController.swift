@@ -64,7 +64,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    delegate?.menuViewController?(self, selectedViewController: MenuVCManager.sharedInstance.vcArray[indexPath.row])
+    
+    if UserManager.sharedInstance.currentUser != nil {
+      delegate?.menuViewController?(self, selectedViewController: MenuVCManager.sharedInstance.vcArray[indexPath.row])
+    }
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -8,12 +8,8 @@
 
 import UIKit
 
-@objc protocol TweetTableViewCellDelegate {
-  optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didLoadMediaImage: Bool) -> ()
-}
-
 class TweetTableViewCell: UITableViewCell {
-
+  
   // MARK: - Storyboard Objects
   @IBOutlet private weak var profileImageView: UIImageView!
   @IBOutlet private weak var tweetTextLabel: UILabel!
@@ -29,41 +25,64 @@ class TweetTableViewCell: UITableViewCell {
   @IBOutlet private weak var favoriteButton: UIButton!
   @IBOutlet private weak var favoriteCountLabel: UILabel!
   
+  @IBOutlet weak var retweetOrReplyContainerView: UIView!
+  @IBOutlet weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var retweetOrReplyIcon: UIImageView!
+  @IBOutlet weak var retweetOrReplyLabel: UILabel!
+  
   
   // MARK: - Properties
-  weak var delegate: AnyObject?
+  var tweetToShow: Tweet!
   
   var tweet: Tweet! {
     didSet{
+      tweetToShow = tweet.originalTweet ?? tweet
       updateContent()
     }
   }
   
   // MARK: - Setup
   private func updateContent() {
-    profileImageView.setImageWithURL(tweet.profileImageURL)
-    tweetTextLabel.text = tweet.text
-    userNameLabel.text = tweet.userName
-    userScreenNameLabel.text = "@" + tweet.userScreenname
-    favoriteCountLabel.text = String(tweet.favoriteCount)
-    retweetCountLabel.text = String(tweet.retweetCount)
+    
+    profileImageView.setImageWithURL(tweetToShow.profileImageURL)
+    tweetTextLabel.text = tweetToShow.text
+    userNameLabel.text = tweetToShow.userName
+    userScreenNameLabel.text = "@" + tweetToShow.userScreenname
+    favoriteCountLabel.text = String(tweetToShow.favoriteCount)
+    retweetCountLabel.text = String(tweetToShow.retweetCount)
     timeSinceCreatedDXTimestampLabel.timestamp = TwitterDateFormatter.sharedInstance.dateFromString(tweet.createdAt)
-    if tweet.favorited == true {
+    if tweetToShow.favorited == true {
       favoriteButton.setImage(UIImage(named: "favorite_on"), forState: UIControlState.Normal)
     } else {
       favoriteButton.setImage(UIImage(named: "favorite"), forState: UIControlState.Normal)
     }
-    if tweet.retweeted == true {
+    if tweetToShow.retweeted == true {
       retweetButton.setImage(UIImage(named: "retweet_on"), forState: UIControlState.Normal)
     } else {
       retweetButton.setImage(UIImage(named: "retweet"), forState: UIControlState.Normal)
     }
+    
+    if tweet.isRetweet || tweet.isReply {
+      retweetOrReplyContainerView.hidden = false
+      retweetOrReplyContainerViewHeightConstraint.constant = 25
+      if tweet.isRetweet {
+        retweetOrReplyIcon.image = UIImage(named: "retweet")
+        retweetOrReplyLabel.text = "\(tweet.userScreenname!) Retweeted"
+      } else {
+        retweetOrReplyIcon.image = UIImage(named: "reply")
+        retweetOrReplyLabel.text = "in reply to \(tweet.inReplyToScreenName!)"
+      }
+    } else {
+      retweetOrReplyContainerView.hidden = true
+      retweetOrReplyContainerViewHeightConstraint.constant = 0
+    }
+    
   }
   
   // MARK: - Behavior
   @IBAction func onTapRetweetButton(sender: AnyObject) {
-    if tweet.retweeted == true{
-      TwitterUser.unretweet(tweet) { (response, error) -> () in
+    if tweetToShow.retweeted == true{
+      TwitterUser.unretweet(tweetToShow) { (response, error) -> () in
         if let error = error {
           print("Unretweet Error: \(error.localizedDescription)")
         } else {
@@ -71,7 +90,7 @@ class TweetTableViewCell: UITableViewCell {
         }
       }
     } else {
-      TwitterUser.retweet(tweet) { (response, error) -> () in
+      TwitterUser.retweet(tweetToShow) { (response, error) -> () in
         if let error = error {
           print("Retweet Error: \(error.localizedDescription)")
         } else {
@@ -82,8 +101,8 @@ class TweetTableViewCell: UITableViewCell {
   }
   
   @IBAction func onTapFavoriteButton(sender: UIButton) {
-    if tweet.favorited == true{
-      TwitterUser.unfavorite(tweet) { (response, error) -> () in
+    if tweetToShow.favorited == true{
+      TwitterUser.unfavorite(tweetToShow) { (response, error) -> () in
         if let error = error {
           print("Unfavorite Error: \(error.localizedDescription)")
         } else {
@@ -91,7 +110,7 @@ class TweetTableViewCell: UITableViewCell {
         }
       }
     } else {
-      TwitterUser.favorite(tweet) { (response, error) -> () in
+      TwitterUser.favorite(tweetToShow) { (response, error) -> () in
         if let error = error {
           print("Favorite Error: \(error.localizedDescription)")
         } else {
@@ -100,5 +119,5 @@ class TweetTableViewCell: UITableViewCell {
       }
     }
   }
-    
+  
 }

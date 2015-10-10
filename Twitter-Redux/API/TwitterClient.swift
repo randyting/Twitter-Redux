@@ -19,12 +19,9 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
   private var loginCompletion: ((user: TwitterUser?, error: NSError?) -> ())?
   
   // MARK: - Shared Instance
-  class var sharedInstance: TwitterClient {
-    struct Static {
-      static let instance = TwitterClient(baseURL: twitterBaseURL, consumerKey: twitterConsumerKey, consumerSecret: twitterConsumerSecret)
-    }
-    return Static.instance
-  }
+  static let sharedInstance: TwitterClient = {
+    return TwitterClient(baseURL: twitterBaseURL, consumerKey: twitterConsumerKey, consumerSecret: twitterConsumerSecret)
+  }()
   
   // MARK: - Login
   func loginWithCompletion(completion: (user: TwitterUser?, error: NSError?) -> ()){
@@ -171,10 +168,10 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
       let error = NSError.init(domain: "com.randy.Twitter", code: 0, userInfo: ["Error reason": "Tweet has not been retweeted."])
       completion(response: nil, error: error)
     } else {
-      if tweet.retweetedStatus == nil {
+      if tweet.originalTweet == nil {
         originalTweetIdString = tweet.idString
       } else {
-        originalTweetIdString = tweet.originalTweetIdString!
+        originalTweetIdString = tweet.originalTweet!.idString
       }
     }
     

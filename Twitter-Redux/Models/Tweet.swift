@@ -20,12 +20,30 @@ class Tweet: NSObject {
   let userName: String!
   let userScreenname: String!
   let profileImageURL: NSURL!
-  let retweetedStatus: NSDictionary!
-  let originalTweetIdString: String?
   var mediaURL: NSURL?
+  var inReplyToScreenName: String?
+  
   
   var favorited: Bool!
   var retweeted: Bool!
+  
+  var originalTweet: Tweet?
+  
+  var isRetweet: Bool {
+    if let _ = originalTweet {
+      return true
+    } else {
+      return false
+    }
+  }
+  
+  var isReply: Bool {
+    if let _ = inReplyToScreenName {
+      return true
+    } else {
+      return false
+    }
+  }
   
   // MARK: - Init
   init(dictionary: NSDictionary) {
@@ -37,9 +55,14 @@ class Tweet: NSObject {
     text = dictionary["text"] as? String
     userName = dictionary["user"]!["name"] as? String
     userScreenname = dictionary["user"]!["screen_name"] as? String
-    id = dictionary["id"] as? UInt64
-    retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
-    originalTweetIdString = dictionary["retweeted_status"]?["id_str"] as? String
+    id = UInt64(idString)
+    
+    inReplyToScreenName = dictionary["in_reply_to_screen_name"] as? String
+    
+    let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
+    if let retweetedStatus = retweetedStatus {
+      originalTweet = Tweet(dictionary: retweetedStatus)
+    }
     
     var profileImageURLString = dictionary["user"]!["profile_image_url_https"] as? String
     let range = profileImageURLString!.rangeOfString("normal.jpg", options: .RegularExpressionSearch)
@@ -47,7 +70,6 @@ class Tweet: NSObject {
       profileImageURLString = profileImageURLString!.stringByReplacingCharactersInRange(range, withString: "bigger.jpg")
     }
     profileImageURL = NSURL(string: profileImageURLString!)
-    
     
 //    if let mediaURLString = (dictionary["entities"]?["media"] as? NSArray)![0]["media_url_https"] as? String {
 //      mediaURL = NSURL(string: mediaURLString)

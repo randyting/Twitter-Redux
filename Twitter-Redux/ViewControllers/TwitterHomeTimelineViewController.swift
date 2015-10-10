@@ -12,9 +12,6 @@ class TwitterHomeTimelineViewController: UIViewController {
   
   // MARK: - Constants
   private let tweetsCellReuseIdentifier = "tweetsCellReuseIdentifier"
-  private let newTweetSegueIdentifier = "NewTweetSegue"
-  private let tweetDetailSegueIdentifier = "TweetDetailTableViewControllerSegue"
-  private let replyFromTweetsViewSegueIdentifier = "ReplyFromTweetsViewSegue"
   
   // MARK: - Properties
   private var currentUser: TwitterUser!
@@ -32,7 +29,6 @@ class TwitterHomeTimelineViewController: UIViewController {
     setupTweetsTableView(tweetsTableView)
     setupRefreshControl(refreshControl)
     setupInitialValues()
-    
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -61,9 +57,9 @@ class TwitterHomeTimelineViewController: UIViewController {
     refreshControl.addTarget(self, action: "refreshTweets", forControlEvents: .ValueChanged)
     tweetsTableView.insertSubview(refreshControl, atIndex: 0)
     
-    //      bottomRefreshControl.triggerVerticalOffset = 100
-    //      bottomRefreshControl.addTarget(self, action: "loadOlderTweets", forControlEvents: .ValueChanged)
-    //      tweetsTableView.bottomRefreshControl = bottomRefreshControl
+    bottomRefreshControl.triggerVerticalOffset = 100
+    bottomRefreshControl.addTarget(self, action: "loadOlderTweets", forControlEvents: .ValueChanged)
+    tweetsTableView.bottomRefreshControl = bottomRefreshControl
   }
   
   // MARK: - Behavior
@@ -113,7 +109,6 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
     let cell = tweetsTableView.dequeueReusableCellWithIdentifier(tweetsCellReuseIdentifier, forIndexPath: indexPath) as! TweetTableViewCell
     
     cell.tweet = tweets?[indexPath.row]
-    cell.delegate = self
     
     return cell
   }
@@ -128,16 +123,12 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    let tweetDetailVC = TweetDetailViewController()
+    tweetDetailVC.edgesForExtendedLayout = .None
+    tweetDetailVC.tweet = (tweetsTableView.cellForRowAtIndexPath(indexPath) as! TweetTableViewCell).tweetToShow
+    navigationController?.pushViewController(tweetDetailVC, animated: true)
   }
   
-}
-
-
-// MARK: - TweetTableViewCell Delegate
-extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
-  func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didLoadImage: Bool) {
-    tweetsTableView.reloadData()
-  }
 }
 
 // MARK: - NewTweetViewController Delegate
