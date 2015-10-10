@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 
   // MARK: - Global Notification Keys
 let userDidLoginNotification = "userDidLoginNotification"
@@ -24,12 +23,12 @@ class TwitterUser: NSObject {
   let profileImageURLString: String!
   
   // MARK: - Initialization
-  init(dictionary: [String: JSON]){
+  init(dictionary: NSDictionary){
     
-    name = dictionary["name"]?.string
-    screenname = dictionary["screen_name"]?.string
+    name = dictionary["name"] as? String
+    screenname = dictionary["screen_name"] as? String
     
-    let profileImageURLStringRaw = dictionary["profile_image_url_https"]?.string
+    let profileImageURLStringRaw = dictionary["profile_image_url_https"] as? String
     let range = profileImageURLStringRaw!.rangeOfString("normal", options: .RegularExpressionSearch)
     profileImageURLString = profileImageURLStringRaw!.stringByReplacingCharactersInRange(range!, withString: "bigger")
     

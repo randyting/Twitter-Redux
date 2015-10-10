@@ -42,16 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
-    if let currentUser = NSUserDefaults.standardUserDefaults().objectForKey(TwitterUser.currentUserKey){
-      UserManager.sharedInstance.currentUser = currentUser as? TwitterUser
-      UserManager.sharedInstance.loggedInUsers.append(currentUser as! TwitterUser)
+    if let currentUser = TwitterUser.currentUser {
+      UserManager.sharedInstance.currentUser = currentUser
+      UserManager.sharedInstance.loggedInUsers.append(currentUser)
       window?.rootViewController = mainVC
     } else {
       loginVC!.mainViewController = mainVC
       window?.rootViewController = loginVC
     }
     
-
     window?.makeKeyAndVisible()
     
     return true

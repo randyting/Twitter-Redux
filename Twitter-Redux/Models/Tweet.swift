@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 
 class Tweet: NSObject {
   
@@ -21,7 +20,7 @@ class Tweet: NSObject {
   let userName: String!
   let userScreenname: String!
   let profileImageURL: NSURL!
-  let retweetedStatus: [String:JSON]?
+  let retweetedStatus: NSDictionary!
   let originalTweetIdString: String?
   var mediaURL: NSURL?
   
@@ -29,20 +28,20 @@ class Tweet: NSObject {
   var retweeted: Bool!
   
   // MARK: - Init
-  init(dictionary: [String: JSON]) {
+  init(dictionary: NSDictionary) {
     
-    createdAt = dictionary["created_at"]!.string
-    favoriteCount = dictionary["favorite_count"]?.int
-    idString = dictionary["id_str"]?.string
-    retweetCount = dictionary["retweet_count"]?.int
-    text = dictionary["text"]?.string
-    userName = dictionary["user"]!["name"].string
-    userScreenname = dictionary["user"]!["screen_name"].string
-    id = dictionary["id"]?.uInt64
-    retweetedStatus = dictionary["retweeted_status"]?.dictionary
-    originalTweetIdString = dictionary["retweeted_status"]?["id_str"].string
+    createdAt = dictionary["created_at"] as? String
+    favoriteCount = dictionary["favorite_count"] as? Int
+    idString = dictionary["id_str"] as? String
+    retweetCount = dictionary["retweet_count"] as? Int
+    text = dictionary["text"] as? String
+    userName = dictionary["user"]!["name"] as? String
+    userScreenname = dictionary["user"]!["screen_name"] as? String
+    id = dictionary["id"] as? UInt64
+    retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
+    originalTweetIdString = dictionary["retweeted_status"]?["id_str"] as? String
     
-    var profileImageURLString = dictionary["user"]!["profile_image_url_https"].string
+    var profileImageURLString = dictionary["user"]!["profile_image_url_https"] as? String
     let range = profileImageURLString!.rangeOfString("normal.jpg", options: .RegularExpressionSearch)
     if let range = range {
       profileImageURLString = profileImageURLString!.stringByReplacingCharactersInRange(range, withString: "bigger.jpg")
@@ -50,22 +49,21 @@ class Tweet: NSObject {
     profileImageURL = NSURL(string: profileImageURLString!)
     
     
-    if let mediaURLString = dictionary["entities"]?["media"][0]["media_url_https"].string {
+    if let mediaURLString = (dictionary["entities"]?["media"] as? NSArray)![0]["media_url_https"] as? String {
       mediaURL = NSURL(string: mediaURLString)
     }
     
-    favorited = dictionary["favorited"]?.bool
-    retweeted = dictionary["retweeted"]?.bool
+    favorited = dictionary["favorited"] as? Bool
+    retweeted = dictionary["retweeted"] as? Bool
     
     super.init()
   }
   
   // MARK: - Class Methods
-  class func tweets(array array: [JSON]) -> [Tweet] {
+  class func tweets(array array: [NSDictionary]) -> [Tweet] {
     var tweets = [Tweet]()
     for tweet in array {
-      let tweetDictionary = tweet.dictionary!
-      tweets.append(Tweet.init(dictionary: tweetDictionary ))
+      tweets.append(Tweet.init(dictionary: tweet ))
     }
     return tweets
   }

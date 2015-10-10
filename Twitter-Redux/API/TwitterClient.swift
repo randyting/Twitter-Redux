@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 
   // MARK: - Credentials
 let twitterConsumerKey = "k1czNm79JKV5T5WLd8lPSSDBB"
@@ -66,8 +65,8 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     GET("/1.1/account/verify_credentials.json",
       parameters: nil,
       success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-        let userDetails = JSON.init(response)
-        let currentUser = TwitterUser.init(dictionary: userDetails.dictionary!)
+        let userDetails = response as! NSDictionary
+        let currentUser = TwitterUser.init(dictionary: userDetails)
         completion?(user: currentUser, error: nil)
         
       }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -81,8 +80,8 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     GET("/1.1/statuses/home_timeline.json",
       parameters: parameters?.dictionary,
       success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-        let tweetsAsJSON  = JSON.init(response).array!
-        let tweets = Tweet.tweets(array: tweetsAsJSON)
+        let tweetsAsArray = response as? [NSDictionary]
+        let tweets = Tweet.tweets(array: tweetsAsArray!)
         completion(tweets: tweets, error: nil)
       }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
         completion(tweets: nil, error: error)
@@ -117,9 +116,9 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         //
       },
       success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-        let favoriteResponseAsJSON  = JSON.init(response).dictionary!
-        tweet.favorited = favoriteResponseAsJSON["favorited"]?.bool
-        tweet.favoriteCount = favoriteResponseAsJSON["favorite_count"]?.int
+        let favoriteResponse = response as? NSDictionary
+        tweet.favorited = favoriteResponse!["favorited"] as? Bool
+        tweet.favoriteCount = favoriteResponse!["favorite_count"] as? Int
         completion(response: response, error: nil)
       }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
         completion(response: nil, error: error)
@@ -136,9 +135,9 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         //
       },
       success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-        let unfavoriteResponseAsJSON  = JSON.init(response).dictionary!
-        tweet.favorited = unfavoriteResponseAsJSON["favorited"]?.bool
-        tweet.favoriteCount = unfavoriteResponseAsJSON["favorite_count"]?.int
+        let unfavoriteResponse = response as? NSDictionary
+        tweet.favorited = unfavoriteResponse!["favorited"] as? Bool
+        tweet.favoriteCount = unfavoriteResponse!["favorite_count"] as? Int
         completion(response: response, error: nil)
       }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
         completion(response: nil, error: error)
@@ -155,9 +154,9 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         //
       },
       success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-        let retweetedResponseAsJSON  = JSON.init(response).dictionary!
-        tweet.retweeted = retweetedResponseAsJSON["retweeted"]?.bool
-        tweet.retweetCount = retweetedResponseAsJSON["retweet_count"]?.int
+        let retweetedResponse = response as? NSDictionary
+        tweet.retweeted = retweetedResponse!["retweeted"] as? Bool
+        tweet.retweetCount = retweetedResponse!["retweet_count"] as? Int
         completion(response: response, error: nil)
       }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
         completion(response: nil, error: error)
@@ -183,8 +182,8 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
       parameters: ["id": originalTweetIdString,
                     "include_my_retweet": true],
       success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-        let tweetAsJSON  = JSON.init(response).dictionary!
-        let retweetIDString = (tweetAsJSON["current_user_retweet"]?["id_str"].string)!
+        let tweetResponse = response as? NSDictionary
+        let retweetIDString = (tweetResponse!["current_user_retweet"]?["id_str"] as? String)!
         
         let parameters = ["id": retweetIDString]
         
@@ -194,9 +193,9 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
             //
           },
           success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-            let unretweetedResponseAsJSON  = JSON.init(response).dictionary!
+            let unretweetedResponse = response as? NSDictionary
             tweet.retweeted = false  // Looks like Twitter's servers take a while to update this to false
-            tweet.retweetCount = (unretweetedResponseAsJSON["retweet_count"]?.int)! - 1
+            tweet.retweetCount = (unretweetedResponse!["retweet_count"] as? Int)! - 1
             completion(response: response, error: nil)
           }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
             completion(response: nil, error: error)
