@@ -85,7 +85,9 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   private func setupGestureRecognizer() {
-    view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "onPanGesture:"))
+    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: "onPanGesture:")
+    blurGestureRecognizer.delegate = self
+    view.addGestureRecognizer(blurGestureRecognizer)
   }
   
   func onPanGesture(sender: UIPanGestureRecognizer) {
@@ -131,6 +133,14 @@ class TwitterUserProfileViewController: UIViewController {
     profileScrollView.setContentOffset(CGPointMake(xOffset,0) , animated: true)
   }
   
+}
+
+extension TwitterUserProfileViewController: UIGestureRecognizerDelegate {
+  func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    // Respond only if gesture is a vertical gesture
+    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocityInView(view)
+    return fabs(velocity.y) > fabs(velocity.x)
+  }
 }
 
 extension TwitterUserProfileViewController: UIScrollViewDelegate {
