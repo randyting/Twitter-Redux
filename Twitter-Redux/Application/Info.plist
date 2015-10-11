@@ -27,7 +27,7 @@
 			<string>OAuth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>randytwitterdemo</string>
+				<string>randytwitterreduxdemo</string>
 			</array>
 		</dict>
 	</array>

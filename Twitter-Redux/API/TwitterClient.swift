@@ -30,7 +30,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     requestSerializer.removeAccessToken()
     fetchRequestTokenWithPath("oauth/request_token",
       method: "GET",
-      callbackURL: NSURL(string: "randytwitterdemo://oauth"),
+      callbackURL: NSURL(string: "randytwitterreduxdemo://oauth"),
       scope: nil,
       success: {
         (requestToken: BDBOAuth1Credential!) -> Void in

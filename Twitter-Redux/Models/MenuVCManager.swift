@@ -17,16 +17,28 @@ class MenuVCManager: NSObject {
   let vcArray: [UIViewController]!
   
   let vcTitleArray = [
-    "Home"
+    "Home",
+    "Me"
   ]
   
   // MARK: - Instance Variables
-  var currentViewController: UIViewController?
+  var currentViewController: UIViewController? {
+    didSet {
+      if let currentViewController = currentViewController {
+        if let topVC = (currentViewController as? UINavigationController)?.topViewController {
+          if topVC.isKindOfClass(TwitterUserProfileViewController){
+            (topVC as! TwitterUserProfileViewController).user = UserManager.sharedInstance.currentUser
+          }
+        }
+      }
+    }
+  }
   
   // MARK: - Initializer
   override init() {
     vcArray = [
-      UINavigationController(rootViewController: TwitterHomeTimelineViewController())
+      UINavigationController(rootViewController: TwitterHomeTimelineViewController()),
+      UINavigationController(rootViewController: TwitterUserProfileViewController())
     ]
   }
 }

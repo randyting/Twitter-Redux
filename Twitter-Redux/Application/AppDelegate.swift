@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var menuNavigationController: UINavigationController?
   var mainVC: MainViewController?
+//  var mainVC: TwitterUserProfileViewController?
   var loginVC: TwitterLoginViewController?
   
   
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     mainVC = MainViewController()
+//    mainVC = TwitterUserProfileViewController()
     loginVC = TwitterLoginViewController()
     
     

@@ -21,16 +21,32 @@ class TwitterUser: NSObject {
   let name: String!
   let screenname: String!
   let profileImageURLString: String!
+  let idString: String!
+  let userDescription: String!
+  let followersCount: Int!
+  let friendsCount: Int!
+  let statusesCount: Int!
+  let profileBackgroundImageURLString: String!
   
   // MARK: - Initialization
   init(dictionary: NSDictionary){
     
     name = dictionary["name"] as? String
     screenname = dictionary["screen_name"] as? String
+    idString = dictionary["id_str"] as? String
+    userDescription = dictionary["description"] as? String
+    followersCount = dictionary["followers_count"] as? Int
+    friendsCount = dictionary["friends_count"] as? Int
+    statusesCount = dictionary["statuses_count"] as? Int
     
     let profileImageURLStringRaw = dictionary["profile_image_url_https"] as? String
-    let range = profileImageURLStringRaw!.rangeOfString("normal", options: .RegularExpressionSearch)
+    var range = profileImageURLStringRaw!.rangeOfString("normal", options: .RegularExpressionSearch)
     profileImageURLString = profileImageURLStringRaw!.stringByReplacingCharactersInRange(range!, withString: "bigger")
+    
+    let profileBackgroundImageURLStringRaw = dictionary["profile_background_image_url_https"] as? String
+    profileBackgroundImageURLString = profileBackgroundImageURLStringRaw
+//    range = profileBackgroundImageURLStringRaw!.rangeOfString(".png", options: .RegularExpressionSearch)
+//    profileBackgroundImageURLString = profileBackgroundImageURLStringRaw!.stringByReplacingCharactersInRange(range!, withString: "/mobile_retina")
     
     super.init()
     TwitterUser.currentUser = self
@@ -41,12 +57,24 @@ class TwitterUser: NSObject {
     self.name = aDecoder.decodeObjectForKey("name") as! String
     self.screenname = aDecoder.decodeObjectForKey("screenname") as! String
     self.profileImageURLString = aDecoder.decodeObjectForKey("profileImageURLString") as! String
+    self.idString =  aDecoder.decodeObjectForKey("userIDString") as! String
+    self.userDescription = aDecoder.decodeObjectForKey("userDescription") as! String
+    self.followersCount = aDecoder.decodeObjectForKey("followersCount") as! Int
+    self.friendsCount = aDecoder.decodeObjectForKey("friendsCount") as! Int
+    self.statusesCount = aDecoder.decodeObjectForKey("statuses_count") as! Int
+    self.profileBackgroundImageURLString = aDecoder.decodeObjectForKey("profileBackgroundImageURLString") as! String
   }
   
   func encodeWithCoder(aCoder: NSCoder) {
     aCoder.encodeObject(name, forKey: "name")
     aCoder.encodeObject(screenname, forKey: "screenname")
     aCoder.encodeObject(profileImageURLString, forKey: "profileImageURLString")
+    aCoder.encodeObject(idString, forKey: "userIDString")
+    aCoder.encodeObject(userDescription, forKey: "userDescription")
+    aCoder.encodeObject(followersCount, forKey: "followersCount")
+    aCoder.encodeObject(friendsCount, forKey: "friendsCount")
+    aCoder.encodeObject(statusesCount, forKey: "statuses_count")
+    aCoder.encodeObject(profileBackgroundImageURLString, forKey: "profileBackgroundImageURLString")
   }
   
   // MARK: - Instance Methods
