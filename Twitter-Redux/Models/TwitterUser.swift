@@ -89,13 +89,11 @@ class TwitterUser: NSObject {
   }
   
   func homeTimelineWithParams(params: TwitterHomeTimelineParameters?, completion: (tweets: [Tweet]?, error: NSError?) -> ()){
-    TwitterClient.sharedInstance.homeTimelineWithParams(params) { (tweets, error) -> () in
-      if let error = error {
-        completion(tweets: nil, error: error)
-      } else {
-        completion(tweets: tweets, error: nil)
-      }
-    }
+    TwitterClient.sharedInstance.homeTimelineWithParams(params, completion: completion)
+  }
+  
+  func mentionsTimelineWithParams(params: TwitterHomeTimelineParameters?, completion: (tweets: [Tweet]?, error: NSError?) -> ()){
+    TwitterClient.sharedInstance.mentionsTimelineWithParams(params, completion: completion)
   }
   
   func profileImageURL() -> NSURL? {

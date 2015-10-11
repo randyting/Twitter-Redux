@@ -33,6 +33,7 @@
 		6FC04B181BC9039B00B036BB /* NewTweetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FC04B161BC9039B00B036BB /* NewTweetViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		6FC04B1B1BC9A4B100B036BB /* TwitterUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC04B191BC9A4B100B036BB /* TwitterUserProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		6FC04B1C1BC9A4B100B036BB /* TwitterUserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FC04B1A1BC9A4B100B036BB /* TwitterUserProfileViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		6FC04B291BCA43AD00B036BB /* TwitterMentionsTimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC04B281BCA43AC00B036BB /* TwitterMentionsTimelineViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		6FFA58D11BC784E4009CC013 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		6FFA58D31BC787D5009CC013 /* MenuVCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */; settings = {ASSET_TAGS = (); }; };
 		6FFA58DC1BC78978009CC013 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -70,6 +71,7 @@
 		6FC04B161BC9039B00B036BB /* NewTweetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewTweetViewController.xib; path = "Twitter-Redux/ViewControllers/NewTweetViewController.xib"; sourceTree = "<group>"; };
 		6FC04B191BC9A4B100B036BB /* TwitterUserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterUserProfileViewController.swift; path = "Twitter-Redux/ViewControllers/TwitterUserProfileViewController.swift"; sourceTree = "<group>"; };
 		6FC04B1A1BC9A4B100B036BB /* TwitterUserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TwitterUserProfileViewController.xib; path = "Twitter-Redux/ViewControllers/TwitterUserProfileViewController.xib"; sourceTree = "<group>"; };
+		6FC04B281BCA43AC00B036BB /* TwitterMentionsTimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterMentionsTimelineViewController.swift; path = "Twitter-Redux/ViewControllers/TwitterMentionsTimelineViewController.swift"; sourceTree = "<group>"; };
 		6FFA58D01BC784E4009CC013 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Application/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6FFA58D21BC787D5009CC013 /* MenuVCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuVCManager.swift; path = "Twitter-Redux/Models/MenuVCManager.swift"; sourceTree = "<group>"; };
 		6FFA58DA1BC78978009CC013 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuTableViewCell.swift; path = "Twitter-Redux/Views/MenuTableViewCell.swift"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		6F38A3A21BC7488300D226E9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6FC04B271BCA436600B036BB /* TwitterMentionsTimelineViewController */,
 				6FC04B261BC9A57200B036BB /* TwitterUserProfileViewController */,
 				6FC04B251BC9A56200B036BB /* NewTweetViewController */,
 				6FC04B241BC9A54B00B036BB /* TwitterDetailViewController */,
@@ -233,6 +236,14 @@
 				6FC04B1A1BC9A4B100B036BB /* TwitterUserProfileViewController.xib */,
 			);
 			name = TwitterUserProfileViewController;
+			sourceTree = "<group>";
+		};
+		6FC04B271BCA436600B036BB /* TwitterMentionsTimelineViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6FC04B281BCA43AC00B036BB /* TwitterMentionsTimelineViewController.swift */,
+			);
+			name = TwitterMentionsTimelineViewController;
 			sourceTree = "<group>";
 		};
 		6FFA58D41BC787D9009CC013 /* Models */ = {
@@ -396,6 +407,7 @@
 				6FFA58D31BC787D5009CC013 /* MenuVCManager.swift in Sources */,
 				6F93A1961BC7A461003E92FB /* TwitterUser.swift in Sources */,
 				6F93A1951BC7A461003E92FB /* TwitterHomeTimelineParameters.swift in Sources */,
+				6FC04B291BCA43AD00B036BB /* TwitterMentionsTimelineViewController.swift in Sources */,
 				6F93A18C1BC7A44A003E92FB /* TwitterClient.swift in Sources */,
 				6F93A19E1BC7A73A003E92FB /* TwitterLoginViewController.swift in Sources */,
 				6FFA58DC1BC78978009CC013 /* MenuTableViewCell.swift in Sources */,

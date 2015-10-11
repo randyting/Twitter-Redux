@@ -18,6 +18,7 @@ class MenuVCManager: NSObject {
   
   let vcTitleArray = [
     "Home",
+    "Mentions",
     "Me"
   ]
   
@@ -38,7 +39,8 @@ class MenuVCManager: NSObject {
   override init() {
     vcArray = [
       UINavigationController(rootViewController: TwitterHomeTimelineViewController()),
-      UINavigationController(rootViewController: TwitterUserProfileViewController())
+      UINavigationController(rootViewController: TwitterMentionsTimelineViewController()),
+      UINavigationController(rootViewController: TwitterUserProfileViewController()),
     ]
   }
 }

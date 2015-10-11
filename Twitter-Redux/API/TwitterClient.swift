@@ -85,6 +85,19 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
   }
   
+  func mentionsTimelineWithParams(parameters: TwitterHomeTimelineParameters?, completion: (tweets: [Tweet]?, error: NSError? ) -> () ){
+    
+    GET("/1.1/statuses/mentions_timeline.json",
+      parameters: parameters?.dictionary,
+      success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+        let tweetsAsArray = response as? [NSDictionary]
+        let tweets = Tweet.tweets(array: tweetsAsArray!)
+        completion(tweets: tweets, error: nil)
+      }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+        completion(tweets: nil, error: error)
+    }
+  }
+  
   func tweetText(text: String?, inReplyToStatusID: String?, completion: (success: Bool?, error: NSError?) -> ()) {
 
     var parameters: [String:AnyObject] = ["status":text!]

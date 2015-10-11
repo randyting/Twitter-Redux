@@ -14,10 +14,10 @@ class TwitterHomeTimelineViewController: UIViewController {
   private let tweetsCellReuseIdentifier = "tweetsCellReuseIdentifier"
   
   // MARK: - Properties
-  private var currentUser: TwitterUser!
-  private var tweets: [Tweet]?
-  private let refreshControl = UIRefreshControl()
-  private let bottomRefreshControl = UIRefreshControl()
+  var currentUser: TwitterUser!
+  var tweets: [Tweet]?
+  let refreshControl = UIRefreshControl()
+  let bottomRefreshControl = UIRefreshControl()
   
   // MARK: - Storyboard
   @IBOutlet weak var tweetsTableView: UITableView!
@@ -47,7 +47,7 @@ class TwitterHomeTimelineViewController: UIViewController {
     tableView.registerNib(tweetTableViewCellNib, forCellReuseIdentifier: tweetsCellReuseIdentifier)
   }
   
-  private func setupInitialValues(){
+  func setupInitialValues(){
     title = "Home"
     currentUser = UserManager.sharedInstance.currentUser
     refreshTweets()
@@ -68,7 +68,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   // MARK: - Behavior
- func createNewTweet(sender: UIBarButtonItem) {
+  func createNewTweet(sender: UIBarButtonItem) {
     NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
   }
   
