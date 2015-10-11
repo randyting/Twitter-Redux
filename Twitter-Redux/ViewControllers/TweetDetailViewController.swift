@@ -40,6 +40,7 @@ class TweetDetailViewController: UIViewController {
   // MARK: - Setup
   private func updateContent() {
     profileImageView.setImageWithURL(tweet.profileImageURL)
+    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTapProfileImage:"))
     tweetTextLabel.text = tweet.text
     userNameLabel.text = tweet.userName
     userScreennameLabel.text = "@" + tweet.userScreenname
@@ -59,6 +60,19 @@ class TweetDetailViewController: UIViewController {
   }
   
   // MARK: - Behavior
+  func onTapProfileImage(sender: UITapGestureRecognizer) {
+    let profileVC = TwitterUserProfileViewController()
+    
+    TwitterUser.userWithScreenName(tweet.userScreenname) { (user, error) -> () in
+      if let error = error {
+        print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
+      } else {
+        profileVC.user = user
+        self.navigationController?.pushViewController(profileVC, animated: true)
+      }
+    }
+  }
+  
   @IBAction func onTapFavoriteButton(sender: AnyObject) {
     if tweet.favorited == true{
       TwitterUser.unfavorite(tweet) { (response, error) -> () in

@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol TweetTableViewCellDelegate {
   optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton)
+  optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView)
 }
 
 class TweetTableViewCell: UITableViewCell {
@@ -50,6 +51,8 @@ class TweetTableViewCell: UITableViewCell {
   private func updateContent() {
     
     profileImageView.setImageWithURL(tweetToShow.profileImageURL)
+    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTapProfileImage:"))
+    
     tweetTextLabel.text = tweetToShow.text
     userNameLabel.text = tweetToShow.userName
     userScreenNameLabel.text = "@" + tweetToShow.userScreenname
@@ -128,4 +131,9 @@ class TweetTableViewCell: UITableViewCell {
   @IBAction func onTapReplyButton(sender: UIButton) {
     delegate?.tweetTableViewCell!(self, didTapReplyButton: sender)
   }
+  
+  func onTapProfileImage(sender: UITapGestureRecognizer) {
+    delegate?.tweetTableViewCell!(self, didTapProfileImage: profileImageView)
+  }
+
 }

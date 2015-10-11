@@ -205,5 +205,20 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
 
   }
   
+  func userWithScreenName(screenName: String!, completion: (user: TwitterUser?, error: NSError?) -> ()) {
+    
+    let parameters: [String:AnyObject] = ["screen_name":screenName]
+    
+    GET("/1.1/users/show.json",
+      parameters: parameters,
+      success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+        let userDictionary = response as! NSDictionary
+        let user = TwitterUser(dictionary: userDictionary)
+        completion(user: user, error: nil)
+      }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+        completion(user:nil, error: error)
+    }
+  }
+  
   
 }

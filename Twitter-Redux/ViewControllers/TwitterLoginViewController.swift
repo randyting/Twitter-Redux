@@ -28,6 +28,7 @@ class TwitterLoginViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
       } else {
         UserManager.sharedInstance.currentUser = user
+        TwitterUser.currentUser = user
         UserManager.sharedInstance.loggedInUsers.append(user!)
         NSNotificationCenter.defaultCenter().postNotificationName(userDidLoginNotification, object: self)
       }

@@ -143,6 +143,20 @@ extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
   func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton) {
     NewTweetViewController.presentNewTweetVCInReplyToTweet(tweetTableViewCell.tweetToShow, forViewController: self)
   }
+  
+  func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {
+    let profileVC = TwitterUserProfileViewController()
+    
+    TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { (user, error) -> () in
+      if let error = error {
+        print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
+      } else {
+        profileVC.user = user
+        self.navigationController?.pushViewController(profileVC, animated: true)
+      }
+    }
+  }
+  
 }
 
 // MARK: - NewTweetViewController Delegate

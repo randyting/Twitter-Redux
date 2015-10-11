@@ -27,6 +27,7 @@ class TwitterUser: NSObject {
   let friendsCount: Int!
   let statusesCount: Int!
   let profileBackgroundImageURLString: String!
+  var profileBannerImageURLString: String?
   
   // MARK: - Initialization
   init(dictionary: NSDictionary){
@@ -40,16 +41,16 @@ class TwitterUser: NSObject {
     statusesCount = dictionary["statuses_count"] as? Int
     
     let profileImageURLStringRaw = dictionary["profile_image_url_https"] as? String
-    var range = profileImageURLStringRaw!.rangeOfString("normal", options: .RegularExpressionSearch)
+    let range = profileImageURLStringRaw!.rangeOfString("normal", options: .RegularExpressionSearch)
     profileImageURLString = profileImageURLStringRaw!.stringByReplacingCharactersInRange(range!, withString: "bigger")
     
-    let profileBackgroundImageURLStringRaw = dictionary["profile_background_image_url_https"] as? String
-    profileBackgroundImageURLString = profileBackgroundImageURLStringRaw
-//    range = profileBackgroundImageURLStringRaw!.rangeOfString(".png", options: .RegularExpressionSearch)
-//    profileBackgroundImageURLString = profileBackgroundImageURLStringRaw!.stringByReplacingCharactersInRange(range!, withString: "/mobile_retina")
+    profileBackgroundImageURLString = dictionary["profile_background_image_url_https"] as? String
+
+    if let profileBannerImageURLString = dictionary["profile_banner_url"] as? String  {
+      self.profileBannerImageURLString = profileBannerImageURLString + "/mobile_retina"
+    }
     
     super.init()
-    TwitterUser.currentUser = self
   }
   
   // MARK: - NSCoding
@@ -63,6 +64,7 @@ class TwitterUser: NSObject {
     self.friendsCount = aDecoder.decodeObjectForKey("friendsCount") as! Int
     self.statusesCount = aDecoder.decodeObjectForKey("statuses_count") as! Int
     self.profileBackgroundImageURLString = aDecoder.decodeObjectForKey("profileBackgroundImageURLString") as! String
+    self.profileBannerImageURLString = aDecoder.decodeObjectForKey("profileBannerImageURLString") as? String
   }
   
   func encodeWithCoder(aCoder: NSCoder) {
@@ -75,6 +77,7 @@ class TwitterUser: NSObject {
     aCoder.encodeObject(friendsCount, forKey: "friendsCount")
     aCoder.encodeObject(statusesCount, forKey: "statuses_count")
     aCoder.encodeObject(profileBackgroundImageURLString, forKey: "profileBackgroundImageURLString")
+    aCoder.encodeObject(profileBannerImageURLString, forKey: "profileBannerImageURLString")
   }
   
   // MARK: - Instance Methods
@@ -122,6 +125,10 @@ class TwitterUser: NSObject {
   
   class func unretweet(tweet: Tweet, completion: (response: AnyObject?, error: NSError?) ->()){
     TwitterClient.sharedInstance.unretweet(tweet, completion: completion)
+  }
+  
+  class func userWithScreenName(screenName: String?, completion: (user: TwitterUser?, error: NSError?) -> ()) {
+    TwitterClient.sharedInstance.userWithScreenName(screenName, completion: completion)
   }
   
   // MARK: - Class Variables

@@ -32,7 +32,9 @@ class TwitterUserProfileViewController: UIViewController {
     
     edgesForExtendedLayout = .None
     
-    setupNavigationBar()
+    if user == UserManager.sharedInstance.currentUser {
+      setupNavigationBar()
+    }
     setupAppearance()
     setupPaging()
     setupInitialValues()
@@ -58,8 +60,8 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   private func setupInitialValues(){
-    leftBackgroundImageView.setImageWithURL(NSURL(string: user.profileBackgroundImageURLString))
-    rightBackgroundImageView.setImageWithURL(NSURL(string: user.profileBackgroundImageURLString))
+    leftBackgroundImageView.setImageWithURL(NSURL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
+    rightBackgroundImageView.setImageWithURL(NSURL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
     profileImageView.setImageWithURL(NSURL(string: user.profileImageURLString))
     userNameLabel.text = user.name
     userScreennameLabel.text = "@ \(user.screenname)"
