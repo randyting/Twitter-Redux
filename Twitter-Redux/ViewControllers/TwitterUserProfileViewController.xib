@@ -9,6 +9,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TwitterUserProfileViewController" customModule="Twitter_Redux" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="McY-xr-afR" id="Fg5-BF-x2a"/>
+                <outlet property="contentViewHeightConstraint" destination="fxe-60-e88" id="NVw-Ir-ft9"/>
                 <outlet property="followerCountContainerView" destination="78l-RH-9MS" id="OUc-Dy-EUT"/>
                 <outlet property="followerCountLabel" destination="tFm-6e-4cv" id="Ey5-ql-MPl"/>
                 <outlet property="friendsCountContainerView" destination="ZMa-2v-WVL" id="gxn-iu-guD"/>
@@ -17,6 +18,7 @@
                 <outlet property="pageControl" destination="5N3-k6-070" id="cYS-HE-GU5"/>
                 <outlet property="profileImageView" destination="IjS-qa-JZF" id="eEB-cp-mlj"/>
                 <outlet property="profileScrollView" destination="RCr-jo-iL8" id="jGE-Tw-3Cv"/>
+                <outlet property="profileScrollViewHeightConstraint" destination="9xf-LR-IuR" id="e80-TO-far"/>
                 <outlet property="rightBackgroundImageView" destination="a9Z-9A-YCw" id="zGT-FA-ynH"/>
                 <outlet property="statusCountContainerView" destination="8vg-LY-856" id="Pqb-Kv-Vw5"/>
                 <outlet property="statusCountLabel" destination="Vrl-5Y-9H6" id="wP5-AT-TqF"/>
@@ -37,21 +39,21 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="McY-xr-afR">
                             <rect key="frame" x="0.0" y="0.0" width="1200" height="160"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jE5-c9-yO6">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
-                                </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a9Z-9A-YCw">
                                     <rect key="frame" x="600" y="0.0" width="600" height="160"/>
                                 </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jE5-c9-yO6">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
+                                </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IjS-qa-JZF">
-                                    <rect key="frame" x="264" y="10" width="73" height="73"/>
+                                    <rect key="frame" x="264" y="9" width="73" height="73"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="73" id="fKS-5i-u33"/>
                                         <constraint firstAttribute="width" constant="73" id="y7s-sr-XMx"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@randy_ting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4P-1g-IbK">
-                                    <rect key="frame" x="268" y="120" width="65" height="14"/>
+                                    <rect key="frame" x="268" y="119" width="65" height="14"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -63,7 +65,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Randy Ting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0rg-it-skK">
-                                    <rect key="frame" x="262" y="93" width="78" height="17"/>
+                                    <rect key="frame" x="262" y="92" width="78" height="17"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -82,12 +84,12 @@
                                 <constraint firstItem="aaN-8C-Fmo" firstAttribute="width" secondItem="a9Z-9A-YCw" secondAttribute="width" constant="-30" id="dUP-Yz-jPm"/>
                                 <constraint firstAttribute="bottom" secondItem="a9Z-9A-YCw" secondAttribute="bottom" id="deI-He-UyJ"/>
                                 <constraint firstAttribute="height" constant="160" id="fxe-60-e88"/>
+                                <constraint firstItem="IjS-qa-JZF" firstAttribute="centerY" secondItem="jE5-c9-yO6" secondAttribute="centerY" constant="-35" id="ghx-fj-eeE"/>
                                 <constraint firstItem="a9Z-9A-YCw" firstAttribute="centerY" secondItem="aaN-8C-Fmo" secondAttribute="centerY" id="har-fX-768"/>
                                 <constraint firstItem="C4P-1g-IbK" firstAttribute="top" secondItem="0rg-it-skK" secondAttribute="bottom" constant="10" id="r7X-Bg-NP8"/>
                                 <constraint firstAttribute="trailing" secondItem="a9Z-9A-YCw" secondAttribute="trailing" id="twy-0u-KML"/>
                                 <constraint firstItem="a9Z-9A-YCw" firstAttribute="centerX" secondItem="aaN-8C-Fmo" secondAttribute="centerX" id="uYL-kK-l6G"/>
                                 <constraint firstItem="0rg-it-skK" firstAttribute="centerX" secondItem="IjS-qa-JZF" secondAttribute="centerX" id="xIX-4D-gjh"/>
-                                <constraint firstItem="IjS-qa-JZF" firstAttribute="top" secondItem="jE5-c9-yO6" secondAttribute="top" constant="10" id="y1E-c0-7X7"/>
                                 <constraint firstItem="jE5-c9-yO6" firstAttribute="leading" secondItem="McY-xr-afR" secondAttribute="leading" id="yl1-iv-gAc"/>
                             </constraints>
                         </view>

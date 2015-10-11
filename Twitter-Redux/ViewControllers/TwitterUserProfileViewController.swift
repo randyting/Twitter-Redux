@@ -26,6 +26,11 @@ class TwitterUserProfileViewController: UIViewController {
   @IBOutlet weak var friendsCountContainerView: UIView!
   @IBOutlet weak var followerCountContainerView: UIView!
   
+  @IBOutlet weak var profileScrollViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var contentViewHeightConstraint: NSLayoutConstraint!
+  
+  var beganPanGestureViewHeightY: CGFloat!
+  
   var user: TwitterUser!
   
   override func viewDidLoad() {
@@ -38,6 +43,7 @@ class TwitterUserProfileViewController: UIViewController {
     setupAppearance()
     setupPaging()
     setupInitialValues()
+    setupGestureRecognizer()
   }
   
   private func setupNavigationBar(){
@@ -57,6 +63,12 @@ class TwitterUserProfileViewController: UIViewController {
     friendsCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
     followerCountContainerView.layer.borderWidth = 0.5
     followerCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    
+    let blur = UIBlurEffect(style: .Dark)
+    let effectView = UIVisualEffectView(effect: blur)
+    effectView.frame = leftBackgroundImageView.bounds
+    effectView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+    leftBackgroundImageView.addSubview(effectView)
   }
   
   private func setupInitialValues(){
@@ -77,6 +89,38 @@ class TwitterUserProfileViewController: UIViewController {
     profileScrollView.showsHorizontalScrollIndicator = false
   }
   
+  private func setupGestureRecognizer() {
+    view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "onPanGesture:"))
+  }
+  
+  func onPanGesture(sender: UIPanGestureRecognizer) {
+    
+    switch sender.state {
+    case .Began:
+      beganPanGestureViewHeightY = profileScrollViewHeightConstraint.constant
+    case .Cancelled:
+      break
+    case .Changed:
+      profileScrollViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
+      contentViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
+    case .Ended:
+      UIView.animateWithDuration(0.5,
+        delay: 0,
+        usingSpringWithDamping: 1.0,
+        initialSpringVelocity: 1.0,
+        options: UIViewAnimationOptions.CurveEaseInOut,
+        animations: { () -> Void in
+          self.profileScrollViewHeightConstraint.constant = self.beganPanGestureViewHeightY
+          self.contentViewHeightConstraint.constant = self.beganPanGestureViewHeightY
+          self.view.layoutIfNeeded()
+        }, completion: nil)
+    case .Failed:
+      break
+    case .Possible:
+      break
+    }
+  }
+  
   func createNewTweet(sender: UIBarButtonItem) {
     NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
   }
@@ -85,7 +129,7 @@ class TwitterUserProfileViewController: UIViewController {
     let xOffset = profileScrollView.bounds.width * CGFloat(pageControl.currentPage)
     profileScrollView.setContentOffset(CGPointMake(xOffset,0) , animated: true)
   }
-
+  
 }
 
 extension TwitterUserProfileViewController: UIScrollViewDelegate {
