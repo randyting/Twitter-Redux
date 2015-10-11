@@ -68,7 +68,7 @@ class NewTweetViewController: UIViewController {
     if let inReplyToUserScreenname = inReplyToUserScreenname {
       tweetTextView.text = "@" + inReplyToUserScreenname + " "
     }
-    characterCountBarButtonItem.title = String((tweetTextView.text as NSString).length)
+    characterCountBarButtonItem.title = String(maxTweetLength - (tweetTextView.text as NSString).length)
   }
   
   private func setupNavigationBar() {
@@ -90,10 +90,12 @@ class NewTweetViewController: UIViewController {
   }
   
   func onTapCancelBarButton(sender: UIBarButtonItem) {
+    tweetTextView.resignFirstResponder()
     self.delegate?.newTweetViewController!(self, didCancelNewTweet: true)
   }
   
   func onTapTweetBarButton(sender: UIBarButtonItem) {
+    tweetTextView.resignFirstResponder()
     if tweetTextView.text.characters.count > 0 {
       TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion:
         {(success: Bool?, error: NSError?) -> () in
@@ -135,7 +137,7 @@ extension NewTweetViewController: UITextViewDelegate {
     if text.length == 0 {
       characterCountBarButtonItem.title = ""
     } else {
-      characterCountBarButtonItem.title = String(text.length)
+      characterCountBarButtonItem.title = String(maxTweetLength - text.length)
     }
   }
   
