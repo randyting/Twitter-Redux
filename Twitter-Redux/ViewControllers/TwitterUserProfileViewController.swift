@@ -64,6 +64,9 @@ class TwitterUserProfileViewController: UIViewController {
     friendsCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
     followerCountContainerView.layer.borderWidth = 0.5
     followerCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    
+    profileImageView.layer.cornerRadius = 4.0
+    profileImageView.clipsToBounds = true
   }
   
   private func setupInitialValues(){
@@ -99,10 +102,12 @@ class TwitterUserProfileViewController: UIViewController {
     case .Cancelled:
       break
     case .Changed:
-      profileScrollViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
-      contentViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
-      leftBackgroundImageView.image = backgroundImage?.blurredImageWithRadius(abs(sender.translationInView(view).y), iterations: 2, tintColor: nil)
-      rightBackgroundImageView.image = leftBackgroundImageView.image
+      if sender.translationInView(view).y > 0 {
+        profileScrollViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
+        contentViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
+        leftBackgroundImageView.image = backgroundImage?.blurredImageWithRadius(abs(sender.translationInView(view).y), iterations: 2, tintColor: nil)
+        rightBackgroundImageView.image = leftBackgroundImageView.image
+      }
     case .Ended:
       UIView.animateWithDuration(0.5,
         delay: 0,
@@ -112,11 +117,10 @@ class TwitterUserProfileViewController: UIViewController {
         animations: { () -> Void in
           self.profileScrollViewHeightConstraint.constant = self.beganPanGestureViewHeightY
           self.contentViewHeightConstraint.constant = self.beganPanGestureViewHeightY
-          self.view.layoutIfNeeded()
-        }, completion: { (Bool) -> Void in
           self.leftBackgroundImageView.image = self.backgroundImage
-          self.rightBackgroundImageView.image = self.leftBackgroundImageView.image
-      })
+          self.rightBackgroundImageView.image = self.backgroundImage
+          self.view.layoutIfNeeded()
+        }, completion: nil)
     case .Failed:
       break
     case .Possible:

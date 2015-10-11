@@ -12,6 +12,8 @@ class MenuTableViewCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
+    layoutMargins = UIEdgeInsetsZero
+    preservesSuperviewLayoutMargins = false
   }
   
   override func setSelected(selected: Bool, animated: Bool) {

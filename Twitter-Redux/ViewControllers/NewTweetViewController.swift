@@ -52,6 +52,8 @@ class NewTweetViewController: UIViewController {
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "willShowKeyboard:", name: UIKeyboardWillShowNotification, object: nil)
     
+    profileImageView.layer.cornerRadius = 4.0
+    profileImageView.clipsToBounds = true
   }
   
   private func setupTextView(textView: UITextView) {

@@ -49,7 +49,6 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
       requestToken: BDBOAuth1Credential(queryString: url.query),
       success: {
         (accessToken: BDBOAuth1Credential!) -> Void in
-        print("Received Access Token")
         self.requestSerializer.saveAccessToken(accessToken)
         self.getLoggedInUser(self.loginCompletion)
       }) {

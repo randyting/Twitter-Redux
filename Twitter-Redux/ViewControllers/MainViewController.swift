@@ -28,6 +28,7 @@ class MainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    setupShadowBehindView(containerView)
     setupObservers()
     containerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "onContainerViewPanGesture:"))
   }
@@ -36,6 +37,13 @@ class MainViewController: UIViewController {
   private func setupObservers() {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogin:", name: userDidLoginNotification, object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogout:", name: userDidLogoutNotification, object: nil)
+  }
+  
+  private func setupShadowBehindView(view: UIView){
+    view.layer.masksToBounds = false;
+    view.layer.shadowOffset = CGSizeMake(-5, 0);
+    view.layer.shadowRadius = 5;
+    view.layer.shadowOpacity = 0.5;
   }
   
   // MARK: - Behavior

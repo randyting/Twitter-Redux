@@ -35,6 +35,7 @@ class TweetTableViewCell: UITableViewCell {
   @IBOutlet weak var retweetOrReplyIcon: UIImageView!
   @IBOutlet weak var retweetOrReplyLabel: UILabel!
   
+  @IBOutlet weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   var tweetToShow: Tweet!
@@ -44,6 +45,7 @@ class TweetTableViewCell: UITableViewCell {
     didSet{
       tweetToShow = tweet.originalTweet ?? tweet
       updateContent()
+      setupAppearance()
     }
   }
   
@@ -73,6 +75,7 @@ class TweetTableViewCell: UITableViewCell {
     if tweet.isRetweet || tweet.isReply {
       retweetOrReplyContainerView.hidden = false
       retweetOrReplyContainerViewHeightConstraint.constant = 25
+      profileImageTopToContainerHeightConstraint.constant = 0
       if tweet.isRetweet {
         retweetOrReplyIcon.image = UIImage(named: "retweet")
         retweetOrReplyLabel.text = "\(tweet.userName!) Retweeted"
@@ -83,8 +86,14 @@ class TweetTableViewCell: UITableViewCell {
     } else {
       retweetOrReplyContainerView.hidden = true
       retweetOrReplyContainerViewHeightConstraint.constant = 0
+      profileImageTopToContainerHeightConstraint.constant = 15
     }
     
+  }
+  
+  private func setupAppearance() {
+    profileImageView.layer.cornerRadius = 4.0
+    profileImageView.clipsToBounds = true
   }
   
   // MARK: - Behavior
@@ -134,6 +143,14 @@ class TweetTableViewCell: UITableViewCell {
   
   func onTapProfileImage(sender: UITapGestureRecognizer) {
     delegate?.tweetTableViewCell!(self, didTapProfileImage: profileImageView)
+  }
+  
+  //  MARK: - Lifecycel
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    
+    self.layoutMargins = UIEdgeInsetsZero
+    self.preservesSuperviewLayoutMargins = false
   }
 
 }

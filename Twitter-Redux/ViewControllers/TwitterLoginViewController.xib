@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TwitterLoginViewController" customModule="Twitter_Redux" customModuleProvider="target">
@@ -15,19 +16,57 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEd-6N-wIx">
-                    <rect key="frame" x="281" y="285" width="38" height="30"/>
-                    <state key="normal" title="Login"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEd-6N-wIx">
+                    <rect key="frame" x="250" y="250" width="100" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="FEd-6N-wIx" secondAttribute="height" multiplier="1:1" id="OvP-6x-swr"/>
+                        <constraint firstAttribute="width" constant="100" id="rdT-Qr-7ib"/>
+                    </constraints>
+                    <state key="normal" image="login"/>
                     <connections>
                         <action selector="onTapLoginButton:" destination="-1" eventType="touchUpInside" id="eRs-ey-CXr"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKM-Vx-p0l">
+                    <rect key="frame" x="150" y="190" width="300" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No user logged in.  Please log in." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PE3-FR-Q0J">
+                            <rect key="frame" x="55" y="0.0" width="245" height="50"/>
+                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="19"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="YpB-ob-e8L">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="YpB-ob-e8L" secondAttribute="height" multiplier="1:1" id="TaB-zP-6JI"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="YpB-ob-e8L" firstAttribute="leading" secondItem="hKM-Vx-p0l" secondAttribute="leading" id="M5D-xk-NVJ"/>
+                        <constraint firstAttribute="bottom" secondItem="YpB-ob-e8L" secondAttribute="bottom" id="Noe-z0-AKR"/>
+                        <constraint firstItem="YpB-ob-e8L" firstAttribute="top" secondItem="hKM-Vx-p0l" secondAttribute="top" id="Orp-xF-VQ6"/>
+                        <constraint firstItem="PE3-FR-Q0J" firstAttribute="leading" secondItem="YpB-ob-e8L" secondAttribute="trailing" constant="5" id="PKL-W5-T4Y"/>
+                        <constraint firstItem="PE3-FR-Q0J" firstAttribute="centerY" secondItem="hKM-Vx-p0l" secondAttribute="centerY" id="TLV-cV-fbf"/>
+                        <constraint firstAttribute="height" constant="50" id="XdS-5u-5KO"/>
+                        <constraint firstAttribute="width" constant="300" id="cUu-Aq-735"/>
+                        <constraint firstAttribute="trailing" secondItem="PE3-FR-Q0J" secondAttribute="trailing" id="eN2-vS-HAi"/>
+                        <constraint firstItem="PE3-FR-Q0J" firstAttribute="height" secondItem="YpB-ob-e8L" secondAttribute="height" id="uQY-29-qN5"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.33333333333333331" green="0.67450980392156867" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="hKM-Vx-p0l" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6mm-vx-QBL"/>
                 <constraint firstItem="FEd-6N-wIx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LZC-N1-2qy"/>
+                <constraint firstItem="FEd-6N-wIx" firstAttribute="top" secondItem="hKM-Vx-p0l" secondAttribute="bottom" constant="10" id="Z7m-ir-RG2"/>
                 <constraint firstItem="FEd-6N-wIx" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="veb-2b-cxs"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="login" width="256" height="256"/>
+        <image name="warning" width="256" height="256"/>
+    </resources>
 </document>

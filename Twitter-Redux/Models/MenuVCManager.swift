@@ -22,6 +22,12 @@ class MenuVCManager: NSObject {
     "Me"
   ]
   
+  let vcImageArray = [
+  UIImage(named: "home"),
+    UIImage(named: "mentions"),
+    UIImage(named: "profile")
+  ]
+  
   // MARK: - Instance Variables
   var currentViewController: UIViewController? {
     didSet {

@@ -45,6 +45,7 @@ class TwitterHomeTimelineViewController: UIViewController {
     tableView.rowHeight = UITableViewAutomaticDimension
     let tweetTableViewCellNib = UINib(nibName: "TweetTableViewCell", bundle: nil)
     tableView.registerNib(tweetTableViewCellNib, forCellReuseIdentifier: tweetsCellReuseIdentifier)
+    tableView.separatorInset = UIEdgeInsetsZero
   }
   
   func setupInitialValues(){
@@ -63,8 +64,8 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   private func setupNavigationBar(){
-    let newTweetButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "createNewTweet:")
-    navigationItem.rightBarButtonItem = newTweetButton
+//    let newTweetButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "createNewTweet:")
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .Plain, target: self, action: "createNewTweet:")
   }
   
   // MARK: - Behavior
