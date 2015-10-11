@@ -29,8 +29,9 @@ class TwitterUserProfileViewController: UIViewController {
   @IBOutlet weak var profileScrollViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var contentViewHeightConstraint: NSLayoutConstraint!
   
-  var beganPanGestureViewHeightY: CGFloat!
+  var backgroundImage: UIImage?
   
+  var beganPanGestureViewHeightY: CGFloat!
   var user: TwitterUser!
   
   override func viewDidLoad() {
@@ -63,12 +64,6 @@ class TwitterUserProfileViewController: UIViewController {
     friendsCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
     followerCountContainerView.layer.borderWidth = 0.5
     followerCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
-    
-    let blur = UIBlurEffect(style: .Dark)
-    let effectView = UIVisualEffectView(effect: blur)
-    effectView.frame = leftBackgroundImageView.bounds
-    effectView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-    leftBackgroundImageView.addSubview(effectView)
   }
   
   private func setupInitialValues(){
@@ -98,11 +93,14 @@ class TwitterUserProfileViewController: UIViewController {
     switch sender.state {
     case .Began:
       beganPanGestureViewHeightY = profileScrollViewHeightConstraint.constant
+      backgroundImage = leftBackgroundImageView.image
     case .Cancelled:
       break
     case .Changed:
       profileScrollViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
       contentViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
+      leftBackgroundImageView.image = backgroundImage?.blurredImageWithRadius(abs(sender.translationInView(view).y), iterations: 2, tintColor: nil)
+      rightBackgroundImageView.image = leftBackgroundImageView.image
     case .Ended:
       UIView.animateWithDuration(0.5,
         delay: 0,
@@ -113,7 +111,10 @@ class TwitterUserProfileViewController: UIViewController {
           self.profileScrollViewHeightConstraint.constant = self.beganPanGestureViewHeightY
           self.contentViewHeightConstraint.constant = self.beganPanGestureViewHeightY
           self.view.layoutIfNeeded()
-        }, completion: nil)
+        }, completion: { (Bool) -> Void in
+          self.leftBackgroundImageView.image = self.backgroundImage
+          self.rightBackgroundImageView.image = self.leftBackgroundImageView.image
+      })
     case .Failed:
       break
     case .Possible:
