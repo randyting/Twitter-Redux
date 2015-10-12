@@ -23,25 +23,22 @@ PODS:
   - BDBOAuth1Manager (1.5.0):
     - AFNetworking/NSURLConnection (~> 2.5.0)
     - AFNetworking/NSURLSession (~> 2.5.0)
-  - CCBottomRefreshControl (0.5.1):
-    - Masonry (~> 0.6.2)
   - DXTimestamper (0.1.0)
   - FXBlurView (1.6.4)
-  - Masonry (0.6.3)
+  - UIScrollView-InfiniteScroll (0.7.3)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
-  - CCBottomRefreshControl
   - DXTimestamper
   - FXBlurView
+  - UIScrollView-InfiniteScroll
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   BDBOAuth1Manager: 2e28773b58f880fb36b5cd3efcf0b1fefbc78a99
-  CCBottomRefreshControl: 57a596348855260f627ffc2b311328ed15b94877
   DXTimestamper: 820bfa89bd230a108e421a66249ad55d08269a6a
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
-  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
+  UIScrollView-InfiniteScroll: b6c7d6d155dca7f9c5dd43813ecffeb301b3d50c
 
 COCOAPODS: 0.38.2

@@ -7,7 +7,7 @@ target 'Twitter-Redux' do
 pod 'AFNetworking'
 pod 'BDBOAuth1Manager'
 pod 'DXTimestamper'
-pod 'CCBottomRefreshControl'
+pod 'UIScrollView-InfiniteScroll'
 pod 'FXBlurView'
 
 end

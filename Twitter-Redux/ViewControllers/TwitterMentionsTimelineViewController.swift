@@ -53,7 +53,7 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
           self.tweets? += tweets!
           self.tweetsTableView.reloadData()
           dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.bottomRefreshControl.endRefreshing()
+            self.tweetsTableView.finishInfiniteScroll()
           })
         }
       }

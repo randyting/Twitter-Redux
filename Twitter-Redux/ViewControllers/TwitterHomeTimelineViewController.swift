@@ -17,7 +17,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   var currentUser: TwitterUser!
   var tweets: [Tweet]?
   let refreshControl = UIRefreshControl()
-  let bottomRefreshControl = UIRefreshControl()
+//  let bottomRefreshControl = UIRefreshControl()
   
   // MARK: - Storyboard
   @IBOutlet weak var tweetsTableView: UITableView!
@@ -58,13 +58,13 @@ class TwitterHomeTimelineViewController: UIViewController {
     refreshControl.addTarget(self, action: "refreshTweets", forControlEvents: .ValueChanged)
     tweetsTableView.insertSubview(refreshControl, atIndex: 0)
     
-    bottomRefreshControl.triggerVerticalOffset = 100
-    bottomRefreshControl.addTarget(self, action: "loadOlderTweets", forControlEvents: .ValueChanged)
-    tweetsTableView.bottomRefreshControl = bottomRefreshControl
+    tweetsTableView.infiniteScrollIndicatorStyle = .Gray
+    tweetsTableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+      self.loadOlderTweets()
+    }
   }
   
   private func setupNavigationBar(){
-//    let newTweetButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "createNewTweet:")
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .Plain, target: self, action: "createNewTweet:")
   }
   
@@ -101,7 +101,7 @@ class TwitterHomeTimelineViewController: UIViewController {
           self.tweets? += tweets!
           self.tweetsTableView.reloadData()
           dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.bottomRefreshControl.endRefreshing()
+            self.tweetsTableView.finishInfiniteScroll()
           })
         }
       }
