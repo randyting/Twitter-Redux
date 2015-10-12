@@ -77,7 +77,7 @@ class NewTweetViewController: UIViewController {
     self.title = "New Tweet"
     let tweetBarButtonItem = UIBarButtonItem(image: UIImage(named: "twitter"), style: .Plain, target: self, action: "onTapTweetBarButton:")
     characterCountBarButtonItem = UIBarButtonItem()
-    characterCountBarButtonItem.tintColor = UIColor.darkGrayColor()
+    characterCountBarButtonItem.tintColor = UIColor.whiteColor()
     navigationItem.rightBarButtonItems = [tweetBarButtonItem, characterCountBarButtonItem]
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "xmark"), style: .Plain, target: self, action: "onTapCancelBarButton:")    
   }

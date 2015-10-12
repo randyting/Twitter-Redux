@@ -15,9 +15,4 @@ class MenuTableViewCell: UITableViewCell {
     layoutMargins = UIEdgeInsetsZero
     preservesSuperviewLayoutMargins = false
   }
-  
-  override func setSelected(selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-  }
-  
 }

@@ -10,28 +10,27 @@ import UIKit
 
 class TwitterUserProfileViewController: UIViewController {
   
-  @IBOutlet weak var profileScrollView: UIScrollView!
-  @IBOutlet weak var contentView: UIView!
-  @IBOutlet weak var leftBackgroundImageView: UIImageView!
-  @IBOutlet weak var rightBackgroundImageView: UIImageView!
-  @IBOutlet weak var profileImageView: UIImageView!
-  @IBOutlet weak var userNameLabel: UILabel!
-  @IBOutlet weak var userScreennameLabel: UILabel!
-  @IBOutlet weak var userDescriptionLabel: UILabel!
-  @IBOutlet weak var pageControl: UIPageControl!
-  @IBOutlet weak var statusCountLabel: UILabel!
-  @IBOutlet weak var friendsCountLabel: UILabel!
-  @IBOutlet weak var followerCountLabel: UILabel!
-  @IBOutlet weak var statusCountContainerView: UIView!
-  @IBOutlet weak var friendsCountContainerView: UIView!
-  @IBOutlet weak var followerCountContainerView: UIView!
+  @IBOutlet private weak var profileScrollView: UIScrollView!
+  @IBOutlet private weak var contentView: UIView!
+  @IBOutlet private weak var leftBackgroundImageView: UIImageView!
+  @IBOutlet private weak var rightBackgroundImageView: UIImageView!
+  @IBOutlet private weak var profileImageView: UIImageView!
+  @IBOutlet private weak var userNameLabel: UILabel!
+  @IBOutlet private weak var userScreennameLabel: UILabel!
+  @IBOutlet private weak var userDescriptionLabel: UILabel!
+  @IBOutlet private weak var pageControl: UIPageControl!
+  @IBOutlet private weak var statusCountLabel: UILabel!
+  @IBOutlet private weak var friendsCountLabel: UILabel!
+  @IBOutlet private weak var followerCountLabel: UILabel!
+  @IBOutlet private weak var statusCountContainerView: UIView!
+  @IBOutlet private weak var friendsCountContainerView: UIView!
+  @IBOutlet private weak var followerCountContainerView: UIView!
   
-  @IBOutlet weak var profileScrollViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var contentViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet private weak var profileScrollViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet private weak var contentViewHeightConstraint: NSLayoutConstraint!
   
-  var backgroundImage: UIImage?
-  
-  var beganPanGestureViewHeightY: CGFloat!
+  private var backgroundImage: UIImage?
+  private var beganPanGestureViewHeightY: CGFloat!
   var user: TwitterUser!
   
   override func viewDidLoad() {

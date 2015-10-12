@@ -16,6 +16,4 @@ class UserManager: NSObject {
   // MARK: - Instance Variables
   var loggedInUsers: [TwitterUser] = []
   var currentUser: TwitterUser?
-  
-
 }

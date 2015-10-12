@@ -30,12 +30,12 @@ class TweetTableViewCell: UITableViewCell {
   @IBOutlet private weak var favoriteButton: UIButton!
   @IBOutlet private weak var favoriteCountLabel: UILabel!
   
-  @IBOutlet weak var retweetOrReplyContainerView: UIView!
-  @IBOutlet weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var retweetOrReplyIcon: UIImageView!
-  @IBOutlet weak var retweetOrReplyLabel: UILabel!
+  @IBOutlet private weak var retweetOrReplyContainerView: UIView!
+  @IBOutlet private weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet private weak var retweetOrReplyIcon: UIImageView!
+  @IBOutlet private weak var retweetOrReplyLabel: UILabel!
   
-  @IBOutlet weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
+  @IBOutlet private weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   var tweetToShow: Tweet!

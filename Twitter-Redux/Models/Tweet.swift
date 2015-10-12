@@ -22,8 +22,6 @@ class Tweet: NSObject {
   let profileImageURL: NSURL!
   var mediaURL: NSURL?
   var inReplyToScreenName: String?
-  
-  
   var favorited: Bool!
   var retweeted: Bool!
   

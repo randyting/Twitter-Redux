@@ -11,8 +11,8 @@ import UIKit
 class MainViewController: UIViewController {
   
   // MARK: - Constants
-  let containerShownXConstraintValue = CGFloat(0)
-  let containerHiddenXConstraintValue = MenuViewController.Constants.menuWidth
+  private let containerShownXConstraintValue = CGFloat(0)
+  private let containerHiddenXConstraintValue = MenuViewController.Constants.menuWidth
   
   // MARK: - Xib Objects
   @IBOutlet weak var containerView: UIView!
