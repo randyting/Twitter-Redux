@@ -48,8 +48,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   private func setupNavigationBar(){
-    let newTweetButton = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "createNewTweet:")
-    navigationItem.rightBarButtonItem = newTweetButton
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .Plain, target: self, action: "createNewTweet:")
     if user == UserManager.sharedInstance.currentUser {
       self.title = "Me"
     } else {

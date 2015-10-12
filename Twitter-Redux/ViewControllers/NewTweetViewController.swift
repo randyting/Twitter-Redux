@@ -75,12 +75,11 @@ class NewTweetViewController: UIViewController {
   
   private func setupNavigationBar() {
     self.title = "New Tweet"
-    let tweetBarButtonItem = UIBarButtonItem(title: "Tweet", style: UIBarButtonItemStyle.Plain, target: self, action: "onTapTweetBarButton:")
+    let tweetBarButtonItem = UIBarButtonItem(image: UIImage(named: "twitter"), style: .Plain, target: self, action: "onTapTweetBarButton:")
     characterCountBarButtonItem = UIBarButtonItem()
     characterCountBarButtonItem.tintColor = UIColor.darkGrayColor()
     navigationItem.rightBarButtonItems = [tweetBarButtonItem, characterCountBarButtonItem]
-    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "onTapCancelBarButton:")
-    
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "xmark"), style: .Plain, target: self, action: "onTapCancelBarButton:")    
   }
   
   // MARK: - Behavior

@@ -43,20 +43,15 @@ class MenuViewController: UIViewController {
     let menuTableViewCellNib = UINib(nibName: "MenuTableViewCell", bundle: nil)
     tableView.registerNib(menuTableViewCellNib, forCellReuseIdentifier: cellReuseIdentifier)
     tableView.separatorInset = UIEdgeInsetsZero
+    
+    tableView.backgroundColor = UIColor.lightGrayColor()
+    
+    let footerView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = footerView
   }
   
   private func setupNavigationBar() {
-//    let logoutImage = UIImage(named: "logout")
-//      let logoutImageView = UIImageView(frame: CGRectMake(0, 0, 30, 30))
-////    let logoutImageView = UIImageView(image: logoutImage)
-//        logoutImageView.contentMode = .ScaleAspectFill
-//    logoutImageView.image = logoutImage
-//    logoutImageView.userInteractionEnabled = true
-//    logoutImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "logoutUser:"))
-//    logoutImageView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-
-//      self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutImageView)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain , target: self, action: "logoutUser:")
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain , target: self, action: "logoutUser:")
   }
   
   // MARK: - Behavior

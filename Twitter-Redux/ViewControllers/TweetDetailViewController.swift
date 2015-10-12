@@ -35,6 +35,7 @@ class TweetDetailViewController: UIViewController {
     super.viewDidLoad()
     self.title = "Tweet"
     updateContent()
+    setupAppearance()
   }
   
   // MARK: - Setup
@@ -57,6 +58,11 @@ class TweetDetailViewController: UIViewController {
     } else {
       retweetButton.setImage(UIImage(named: "retweet"), forState: UIControlState.Normal)
     }
+  }
+  
+  private func setupAppearance() {
+    profileImageView.layer.cornerRadius = 4.0
+    profileImageView.clipsToBounds = true
   }
   
   // MARK: - Behavior
