@@ -120,22 +120,36 @@ class MainViewController: UIViewController {
         self.view.layoutIfNeeded()
       }, completion: nil)
   }
+
+  private func showContainerViewWithCompletion(completion: (Bool)->Void){
+    UIView.animateWithDuration(0.5,
+                               delay: 0,
+                               usingSpringWithDamping: 1.0,
+                               initialSpringVelocity: 1.0,
+                               options: UIViewAnimationOptions.CurveEaseInOut,
+                               animations: { () -> Void in
+                                self.containerViewCenterXConstraint.constant = self.containerShownXConstraintValue
+                                self.view.layoutIfNeeded()
+      }, completion: completion)
+  }
   
-  func selectViewController(_ selectedViewController: UIViewController) {
-    
-    if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
-      currentViewController.willMove(toParentViewController: nil)
-      currentViewController.view.removeFromSuperview()
-      currentViewController.removeFromParentViewController()
+  
+  func selectViewController(selectedViewController: UIViewController) {
+    showContainerViewWithCompletion { (success: Bool) in
+      if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
+        currentViewController.willMoveToParentViewController(nil)
+        currentViewController.view.removeFromSuperview()
+        currentViewController.removeFromParentViewController()
+      }
+      self.addChildViewController(selectedViewController)
+      selectedViewController.view.frame = self.containerView.bounds
+      selectedViewController.view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+      self.containerView.addSubview(selectedViewController.view)
+      selectedViewController.didMoveToParentViewController(self)
+      
+      MenuVCManager.sharedInstance.currentViewController = selectedViewController
     }
-    self.addChildViewController(selectedViewController)
-    selectedViewController.view.frame = containerView.bounds
-    selectedViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    containerView.addSubview(selectedViewController.view)
-    selectedViewController.didMove(toParentViewController: self)
-    
-    MenuVCManager.sharedInstance.currentViewController = selectedViewController
-    showContainerView()
+
   }
   
   // MARK: - Deinit
