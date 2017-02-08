@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol MenuViewControllerDelegate {
-  optional func menuViewController(menuViewController: MenuViewController, selectedViewController: UIViewController)
+  @objc optional func menuViewController(_ menuViewController: MenuViewController, selectedViewController: UIViewController)
 }
 
 class MenuViewController: UIViewController {
@@ -18,7 +18,7 @@ class MenuViewController: UIViewController {
   let cellReuseIdentifier = "com.randy.menuCellReuseIdentifer"
   
   // MARK: - Xib Objects
-  @IBOutlet private weak var menuTableView: UITableView!
+  @IBOutlet fileprivate weak var menuTableView: UITableView!
   
   // MARK: - Class Static Constants
   struct Constants {
@@ -37,35 +37,35 @@ class MenuViewController: UIViewController {
   }
   
   // MARK: - Initial Setup
-  private func setupTableView(tableView: UITableView) {
+  fileprivate func setupTableView(_ tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
     let menuTableViewCellNib = UINib(nibName: "MenuTableViewCell", bundle: nil)
-    tableView.registerNib(menuTableViewCellNib, forCellReuseIdentifier: cellReuseIdentifier)
-    tableView.separatorInset = UIEdgeInsetsZero
+    tableView.register(menuTableViewCellNib, forCellReuseIdentifier: cellReuseIdentifier)
+    tableView.separatorInset = UIEdgeInsets.zero
     
-    tableView.backgroundColor = UIColor.lightGrayColor()
+    tableView.backgroundColor = UIColor.lightGray
     
-    let footerView = UIView(frame: CGRectZero)
+    let footerView = UIView(frame: CGRect.zero)
         tableView.tableFooterView = footerView
   }
   
-  private func setupNavigationBar() {
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain , target: self, action: "logoutUser:")
+  fileprivate func setupNavigationBar() {
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .plain , target: self, action: #selector(MenuViewController.logoutUser(_:)))
   }
   
   // MARK: - Behavior
-  func logoutUser(sender: UIBarButtonItem){
+  func logoutUser(_ sender: UIBarButtonItem){
     UserManager.sharedInstance.currentUser?.logout()
-    NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: self)
+    NotificationCenter.default.post(name: Notification.Name(rawValue: userDidLogoutNotification), object: self)
   }
 }
 
 // MARK: - TableViewDelegate and TableViewDatasource
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = menuTableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier, forIndexPath: indexPath)
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = menuTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
     
     cell.textLabel!.text = MenuVCManager.sharedInstance.vcTitleArray[indexPath.row]
     cell.imageView!.image = MenuVCManager.sharedInstance.vcImageArray[indexPath.row]
@@ -73,15 +73,15 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     return cell
   }
   
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
     
     if UserManager.sharedInstance.currentUser != nil {
       delegate?.menuViewController?(self, selectedViewController: MenuVCManager.sharedInstance.vcArray[indexPath.row])
     }
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return MenuVCManager.sharedInstance.vcArray.count
   }
   

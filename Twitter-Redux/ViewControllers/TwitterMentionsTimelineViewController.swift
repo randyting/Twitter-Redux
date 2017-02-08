@@ -32,7 +32,7 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
       } else {
         self.tweets = tweets
         self.tweetsTableView.reloadData()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
           self.refreshControl.endRefreshing()
         })
       }
@@ -52,7 +52,7 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
         } else {
           self.tweets? += tweets!
           self.tweetsTableView.reloadData()
-          dispatch_async(dispatch_get_main_queue(), { () -> Void in
+          DispatchQueue.main.async(execute: { () -> Void in
             self.tweetsTableView.finishInfiniteScroll()
           })
         }

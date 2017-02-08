@@ -9,33 +9,33 @@
 import UIKit
 
 @objc protocol TweetTableViewCellDelegate {
-  optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton)
-  optional func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView)
+  @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton)
+  @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView)
 }
 
 class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Storyboard Objects
-  @IBOutlet private weak var profileImageView: UIImageView!
-  @IBOutlet private weak var tweetTextLabel: UILabel!
-  @IBOutlet private weak var timeSinceCreatedDXTimestampLabel: DXTimestampLabel!
-  @IBOutlet private weak var userNameLabel: UILabel!
-  @IBOutlet private weak var userScreenNameLabel: UILabel!
+  @IBOutlet fileprivate weak var profileImageView: UIImageView!
+  @IBOutlet fileprivate weak var tweetTextLabel: UILabel!
+  @IBOutlet fileprivate weak var timeSinceCreatedDXTimestampLabel: DXTimestampLabel!
+  @IBOutlet fileprivate weak var userNameLabel: UILabel!
+  @IBOutlet fileprivate weak var userScreenNameLabel: UILabel!
   
-  @IBOutlet private weak var replyButton: UIButton!
+  @IBOutlet fileprivate weak var replyButton: UIButton!
   
-  @IBOutlet private weak var retweetButton: UIButton!
-  @IBOutlet private weak var retweetCountLabel: UILabel!
+  @IBOutlet fileprivate weak var retweetButton: UIButton!
+  @IBOutlet fileprivate weak var retweetCountLabel: UILabel!
   
-  @IBOutlet private weak var favoriteButton: UIButton!
-  @IBOutlet private weak var favoriteCountLabel: UILabel!
+  @IBOutlet fileprivate weak var favoriteButton: UIButton!
+  @IBOutlet fileprivate weak var favoriteCountLabel: UILabel!
   
-  @IBOutlet private weak var retweetOrReplyContainerView: UIView!
-  @IBOutlet private weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet private weak var retweetOrReplyIcon: UIImageView!
-  @IBOutlet private weak var retweetOrReplyLabel: UILabel!
+  @IBOutlet fileprivate weak var retweetOrReplyContainerView: UIView!
+  @IBOutlet fileprivate weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var retweetOrReplyIcon: UIImageView!
+  @IBOutlet fileprivate weak var retweetOrReplyLabel: UILabel!
   
-  @IBOutlet private weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   var tweetToShow: Tweet!
@@ -50,30 +50,30 @@ class TweetTableViewCell: UITableViewCell {
   }
   
   // MARK: - Setup
-  private func updateContent() {
+  fileprivate func updateContent() {
     
-    profileImageView.setImageWithURL(tweetToShow.profileImageURL)
-    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTapProfileImage:"))
+    profileImageView.setImageWith(tweetToShow.profileImageURL as URL!)
+    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TweetTableViewCell.onTapProfileImage(_:))))
     
     tweetTextLabel.text = tweetToShow.text
     userNameLabel.text = tweetToShow.userName
     userScreenNameLabel.text = "@" + tweetToShow.userScreenname
     favoriteCountLabel.text = String(tweetToShow.favoriteCount)
     retweetCountLabel.text = String(tweetToShow.retweetCount)
-    timeSinceCreatedDXTimestampLabel.timestamp = TwitterDateFormatter.sharedInstance.dateFromString(tweet.createdAt)
+    timeSinceCreatedDXTimestampLabel.timestamp = TwitterDateFormatter.sharedInstance.date(from: tweet.createdAt)
     if tweetToShow.favorited == true {
-      favoriteButton.setImage(UIImage(named: "favorite_on"), forState: UIControlState.Normal)
+      favoriteButton.setImage(UIImage(named: "favorite_on"), for: UIControlState())
     } else {
-      favoriteButton.setImage(UIImage(named: "favorite"), forState: UIControlState.Normal)
+      favoriteButton.setImage(UIImage(named: "favorite"), for: UIControlState())
     }
     if tweetToShow.retweeted == true {
-      retweetButton.setImage(UIImage(named: "retweet_on"), forState: UIControlState.Normal)
+      retweetButton.setImage(UIImage(named: "retweet_on"), for: UIControlState())
     } else {
-      retweetButton.setImage(UIImage(named: "retweet"), forState: UIControlState.Normal)
+      retweetButton.setImage(UIImage(named: "retweet"), for: UIControlState())
     }
     
     if tweet.isRetweet || tweet.isReply {
-      retweetOrReplyContainerView.hidden = false
+      retweetOrReplyContainerView.isHidden = false
       retweetOrReplyContainerViewHeightConstraint.constant = 25
       profileImageTopToContainerHeightConstraint.constant = 0
       if tweet.isRetweet {
@@ -84,20 +84,20 @@ class TweetTableViewCell: UITableViewCell {
         retweetOrReplyLabel.text = "in reply to @\(tweet.inReplyToScreenName!)"
       }
     } else {
-      retweetOrReplyContainerView.hidden = true
+      retweetOrReplyContainerView.isHidden = true
       retweetOrReplyContainerViewHeightConstraint.constant = 0
       profileImageTopToContainerHeightConstraint.constant = 15
     }
     
   }
   
-  private func setupAppearance() {
+  fileprivate func setupAppearance() {
     profileImageView.layer.cornerRadius = 4.0
     profileImageView.clipsToBounds = true
   }
   
   // MARK: - Behavior
-  @IBAction func onTapRetweetButton(sender: AnyObject) {
+  @IBAction func onTapRetweetButton(_ sender: AnyObject) {
     if tweetToShow.retweeted == true{
       TwitterUser.unretweet(tweetToShow) { (response, error) -> () in
         if let error = error {
@@ -117,7 +117,7 @@ class TweetTableViewCell: UITableViewCell {
     }
   }
   
-  @IBAction func onTapFavoriteButton(sender: UIButton) {
+  @IBAction func onTapFavoriteButton(_ sender: UIButton) {
     if tweetToShow.favorited == true{
       TwitterUser.unfavorite(tweetToShow) { (response, error) -> () in
         if let error = error {
@@ -137,11 +137,11 @@ class TweetTableViewCell: UITableViewCell {
     }
   }
   
-  @IBAction func onTapReplyButton(sender: UIButton) {
+  @IBAction func onTapReplyButton(_ sender: UIButton) {
     delegate?.tweetTableViewCell!(self, didTapReplyButton: sender)
   }
   
-  func onTapProfileImage(sender: UITapGestureRecognizer) {
+  func onTapProfileImage(_ sender: UITapGestureRecognizer) {
     delegate?.tweetTableViewCell!(self, didTapProfileImage: profileImageView)
   }
   
@@ -149,7 +149,7 @@ class TweetTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    self.layoutMargins = UIEdgeInsetsZero
+    self.layoutMargins = UIEdgeInsets.zero
     self.preservesSuperviewLayoutMargins = false
   }
 

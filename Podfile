@@ -9,6 +9,7 @@ pod 'BDBOAuth1Manager'
 pod 'DXTimestamper'
 pod 'UIScrollView-InfiniteScroll'
 pod 'FXBlurView'
+pod 'SwiftLint'
 
 end
 

@@ -35,12 +35,12 @@ class TwitterHomeTimelineParameters: NSObject {
     super.init()
   }
   
-  private func namesAndValues() -> [String:AnyObject?] {
+  fileprivate func namesAndValues() -> [String:AnyObject?] {
     let dictionary: [String: AnyObject?] =
     [
-      "count"   : self.count,
-      "since_id": self.sinceId,
-      "max_id"  : self.maxId
+      "count"   : self.count as Optional<AnyObject>,
+      "since_id": self.sinceId as Optional<AnyObject>,
+      "max_id"  : self.maxId as Optional<AnyObject>
     ]
     
     return dictionary
