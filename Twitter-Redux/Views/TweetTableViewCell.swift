@@ -42,7 +42,7 @@ class TweetTableViewCell: UITableViewCell {
   weak var delegate: AnyObject?
   
   var tweet: Tweet! {
-    didSet{
+    didSet {
       tweetToShow = tweet.originalTweet ?? tweet
       updateContent()
       setupAppearance()
@@ -98,8 +98,8 @@ class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Behavior
   @IBAction func onTapRetweetButton(_ sender: AnyObject) {
-    if tweetToShow.retweeted == true{
-      TwitterUser.unretweet(tweetToShow) { (response, error) -> () in
+    if tweetToShow.retweeted == true {
+      TwitterUser.unretweet(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Unretweet Error: \(error.localizedDescription)")
         } else {
@@ -107,7 +107,7 @@ class TweetTableViewCell: UITableViewCell {
         }
       }
     } else {
-      TwitterUser.retweet(tweetToShow) { (response, error) -> () in
+      TwitterUser.retweet(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Retweet Error: \(error.localizedDescription)")
         } else {
@@ -118,8 +118,8 @@ class TweetTableViewCell: UITableViewCell {
   }
   
   @IBAction func onTapFavoriteButton(_ sender: UIButton) {
-    if tweetToShow.favorited == true{
-      TwitterUser.unfavorite(tweetToShow) { (response, error) -> () in
+    if tweetToShow.favorited == true {
+      TwitterUser.unfavorite(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Unfavorite Error: \(error.localizedDescription)")
         } else {
@@ -127,7 +127,7 @@ class TweetTableViewCell: UITableViewCell {
         }
       }
     } else {
-      TwitterUser.favorite(tweetToShow) { (response, error) -> () in
+      TwitterUser.favorite(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Favorite Error: \(error.localizedDescription)")
         } else {
@@ -145,7 +145,7 @@ class TweetTableViewCell: UITableViewCell {
     delegate?.tweetTableViewCell!(self, didTapProfileImage: profileImageView)
   }
   
-  //  MARK: - Lifecycel
+  // MARK: - Lifecycel
   override func awakeFromNib() {
     super.awakeFromNib()
     

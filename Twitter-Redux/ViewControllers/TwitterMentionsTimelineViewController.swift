@@ -19,14 +19,14 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
     super.init(nibName: "TwitterHomeTimelineViewController", bundle: nil)
   }
   
-  override func setupInitialValues(){
+  override func setupInitialValues() {
     title = "Mentions"
     currentUser = UserManager.sharedInstance.currentUser
     refreshTweets()
   }
   
-  override func refreshTweets(){
-    currentUser.mentionsTimelineWithParams(nil) { (tweets, error) -> () in
+  override func refreshTweets() {
+    currentUser.mentionsTimelineWithParams(nil) { (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
@@ -46,7 +46,7 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
       params.maxId = String((tweets.last!.id! - 1))
       params.count = 20
       
-      currentUser.homeTimelineWithParams(params) { (tweets, error) -> () in
+      currentUser.homeTimelineWithParams(params) { (tweets, error) -> Void in
         if let error = error {
           print(error.localizedDescription)
         } else {

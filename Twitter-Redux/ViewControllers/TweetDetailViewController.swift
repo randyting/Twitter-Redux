@@ -69,7 +69,7 @@ class TweetDetailViewController: UIViewController {
   func onTapProfileImage(_ sender: UITapGestureRecognizer) {
     let profileVC = TwitterUserProfileViewController()
     
-    TwitterUser.userWithScreenName(tweet.userScreenname) { (user, error) -> () in
+    TwitterUser.userWithScreenName(tweet.userScreenname) { (user, error) -> Void in
       if let error = error {
         print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
       } else {
@@ -80,8 +80,8 @@ class TweetDetailViewController: UIViewController {
   }
   
   @IBAction func onTapFavoriteButton(_ sender: AnyObject) {
-    if tweet.favorited == true{
-      TwitterUser.unfavorite(tweet) { (response, error) -> () in
+    if tweet.favorited == true {
+      TwitterUser.unfavorite(tweet) { (_, error) -> Void in
         if let error = error {
           print("Unfavorite Error: \(error.localizedDescription)")
         } else {
@@ -89,7 +89,7 @@ class TweetDetailViewController: UIViewController {
         }
       }
     } else {
-      TwitterUser.favorite(tweet) { (response, error) -> () in
+      TwitterUser.favorite(tweet) { (_, error) -> Void in
         if let error = error {
           print("Favorite Error: \(error.localizedDescription)")
         } else {
@@ -100,8 +100,8 @@ class TweetDetailViewController: UIViewController {
   }
   
   @IBAction func onTapRetweet(_ sender: AnyObject) {
-    if tweet.retweeted == true{
-      TwitterUser.unretweet(tweet) { (response, error) -> () in
+    if tweet.retweeted == true {
+      TwitterUser.unretweet(tweet) { (_, error) -> Void in
         if let error = error {
           print("Unretweet Error: \(error.localizedDescription)")
         } else {
@@ -109,7 +109,7 @@ class TweetDetailViewController: UIViewController {
         }
       }
     } else {
-      TwitterUser.retweet(tweet) { (response, error) -> () in
+      TwitterUser.retweet(tweet) { (_, error) -> Void in
         if let error = error {
           print("Retweet Error: \(error.localizedDescription)")
         } else {

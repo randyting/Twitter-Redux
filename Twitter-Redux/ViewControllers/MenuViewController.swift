@@ -51,11 +51,11 @@ class MenuViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .plain , target: self, action: #selector(MenuViewController.logoutUser(_:)))
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .plain, target: self, action: #selector(MenuViewController.logoutUser(_:)))
   }
   
   // MARK: - Behavior
-  func logoutUser(_ sender: UIBarButtonItem){
+  func logoutUser(_ sender: UIBarButtonItem) {
     UserManager.sharedInstance.currentUser?.logout()
     NotificationCenter.default.post(name: Notification.Name(rawValue: userDidLogoutNotification), object: self)
   }
@@ -86,4 +86,3 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
 }
-

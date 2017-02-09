@@ -45,7 +45,7 @@ class NewTweetViewController: UIViewController {
   }
   
   // MARK: - Initial Setup
-  fileprivate func setupAppearance(){
+  fileprivate func setupAppearance() {
     // Aligns text to top in text view
     automaticallyAdjustsScrollViewInsets = false
     edgesForExtendedLayout = UIRectEdge()
@@ -62,7 +62,7 @@ class NewTweetViewController: UIViewController {
     textView.delegate = self
   }
   
-  fileprivate func setupInitialValues(){
+  fileprivate func setupInitialValues() {
     currentUser = TwitterUser.currentUser
     profileImageView.setImageWith(currentUser.profileImageURL() as URL!)
     userNameLabel.text = currentUser.name
@@ -98,8 +98,7 @@ class NewTweetViewController: UIViewController {
   func onTapTweetBarButton(_ sender: UIBarButtonItem) {
     tweetTextView.resignFirstResponder()
     if tweetTextView.text.characters.count > 0 {
-      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion:
-        {(success: Bool?, error: NSError?) -> () in
+      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion: {(_, error: NSError?) -> Void in
           if let error = error {
             print(error.localizedDescription)
           } else {

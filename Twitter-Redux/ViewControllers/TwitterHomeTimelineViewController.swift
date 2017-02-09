@@ -36,9 +36,8 @@ class TwitterHomeTimelineViewController: UIViewController {
     tweetsTableView.reloadData()
   }
   
-  
   // MARK: - Initial Setup
-  fileprivate func setupTweetsTableView(_ tableView: UITableView){
+  fileprivate func setupTweetsTableView(_ tableView: UITableView) {
     tableView.dataSource = self
     tableView.delegate = self
     tableView.estimatedRowHeight = 300
@@ -48,7 +47,7 @@ class TwitterHomeTimelineViewController: UIViewController {
     tableView.separatorInset = UIEdgeInsets.zero
   }
   
-  func setupInitialValues(){
+  func setupInitialValues() {
     title = "Home"
     currentUser = UserManager.sharedInstance.currentUser
     refreshTweets()
@@ -59,12 +58,12 @@ class TwitterHomeTimelineViewController: UIViewController {
     tweetsTableView.insertSubview(refreshControl, at: 0)
     
     tweetsTableView.infiniteScrollIndicatorStyle = .gray
-    tweetsTableView.addInfiniteScroll { (scrollView) -> Void in
+    tweetsTableView.addInfiniteScroll { (_) -> Void in
       self.loadOlderTweets()
     }
   }
   
-  fileprivate func setupNavigationBar(){
+  fileprivate func setupNavigationBar() {
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(TwitterHomeTimelineViewController.createNewTweet(_:)))
   }
   
@@ -73,8 +72,8 @@ class TwitterHomeTimelineViewController: UIViewController {
     NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
   }
   
-  func refreshTweets(){
-    currentUser.homeTimelineWithParams(nil) { (tweets, error) -> () in
+  func refreshTweets() {
+    currentUser.homeTimelineWithParams(nil) { (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
@@ -94,7 +93,7 @@ class TwitterHomeTimelineViewController: UIViewController {
       params.maxId = String((tweets.last!.id! - 1))
       params.count = 20
       
-      currentUser.homeTimelineWithParams(params) { (tweets, error) -> () in
+      currentUser.homeTimelineWithParams(params) { (tweets, error) -> Void in
         if let error = error {
           print(error.localizedDescription)
         } else {
@@ -148,7 +147,7 @@ extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {
     let profileVC = TwitterUserProfileViewController()
     
-    TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { (user, error) -> () in
+    TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { (user, error) -> Void in
       if let error = error {
         print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
       } else {
@@ -172,6 +171,3 @@ extension TwitterHomeTimelineViewController: NewTweetViewControllerDelegate {
   }
   
 }
-
-
-

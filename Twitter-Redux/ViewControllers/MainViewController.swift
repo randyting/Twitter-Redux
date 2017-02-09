@@ -9,7 +9,7 @@
 import UIKit
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -22,7 +22,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l >= r
@@ -30,7 +30,6 @@ fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     return !(lhs < rhs)
   }
 }
-
 
 class MainViewController: UIViewController {
   
@@ -41,7 +40,6 @@ class MainViewController: UIViewController {
   // MARK: - Xib Objects
   @IBOutlet weak var containerView: UIView!
   @IBOutlet fileprivate weak var containerViewCenterXConstraint: NSLayoutConstraint!
-  
   
   // MARK: - Instance Variables
   fileprivate var beganPanGestureContainerCenterX: CGFloat!
@@ -63,11 +61,11 @@ class MainViewController: UIViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onUserLogout(_:)), name: NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
   }
   
-  fileprivate func setupShadowBehindView(_ view: UIView){
-    view.layer.masksToBounds = false;
-    view.layer.shadowOffset = CGSize(width: -5, height: 0);
-    view.layer.shadowRadius = 5;
-    view.layer.shadowOpacity = 0.5;
+  fileprivate func setupShadowBehindView(_ view: UIView) {
+    view.layer.masksToBounds = false
+    view.layer.shadowOffset = CGSize(width: -5, height: 0)
+    view.layer.shadowRadius = 5
+    view.layer.shadowOpacity = 0.5
   }
   
   // MARK: - Behavior
@@ -91,7 +89,7 @@ class MainViewController: UIViewController {
       containerVelocity = sender.velocity(in: view).x
       
       if (containerViewCenterXConstraint.constant >= containerShownXConstraintValue &&
-        containerViewCenterXConstraint.constant <= containerHiddenXConstraintValue){
+        containerViewCenterXConstraint.constant <= containerHiddenXConstraintValue) {
           containerViewCenterXConstraint.constant = beganPanGestureContainerCenterX + sender.translation(in: view).x
           
           if containerViewCenterXConstraint.constant < containerShownXConstraintValue {
@@ -119,7 +117,7 @@ class MainViewController: UIViewController {
     }
   }
   
-  fileprivate func hideContainerView(){
+  fileprivate func hideContainerView() {
     UIView.animate(withDuration: 0.5,
       delay: 0,
       usingSpringWithDamping: 1.0,
@@ -131,7 +129,7 @@ class MainViewController: UIViewController {
       }, completion: nil)
   }
   
-  fileprivate func showContainerView(){
+  fileprivate func showContainerView() {
     UIView.animate(withDuration: 0.5,
       delay: 0,
       usingSpringWithDamping: 1.0,

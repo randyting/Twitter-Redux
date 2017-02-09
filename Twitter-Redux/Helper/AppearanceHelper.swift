@@ -19,7 +19,7 @@ class AppearanceHelper: NSObject {
     UINavigationBar.appearance().tintColor = primaryTintColor
     UINavigationBar.appearance().barTintColor = primaryBackgroundColor
     UINavigationBar.appearance().backgroundColor = primaryBackgroundColor
-    UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:primaryTintColor]
+    UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: primaryTintColor]
     
     UITableViewCell.appearance().backgroundColor = secondaryTintColor
 
