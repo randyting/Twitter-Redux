@@ -109,20 +109,22 @@ class TwitterUser: NSObject {
     TwitterClient.sharedInstance.tweetText(text, inReplyToStatusID: inReplyToStatusID, completion: completion)
   }
   
-  class func favorite(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
-    TwitterClient.sharedInstance.favorite(tweet, completion: completion as! (Any??, Error?) -> ())
+  class func favorite(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.favorite(tweet, completion: completion)
   }
   
-  class func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
-    TwitterClient.sharedInstance.unfavorite(tweet, completion: completion as! (Any??, Error?) -> ())
+  class func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.unfavorite(tweet, completion: completion)
   }
   
-  class func retweet(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
-    TwitterClient.sharedInstance.retweet(tweet, completion: completion as! (Any??, Error?) -> ())
+  class func retweet(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.retweet(tweet, completion: completion)
+
   }
   
-  class func unretweet(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
-    TwitterClient.sharedInstance.unretweet(tweet, completion: completion as! (Any??, Error?) -> ())
+  class func unretweet(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.unretweet(tweet, completion: completion
+    )
   }
   
   class func userWithScreenName(_ screenName: String?, completion: @escaping (_ user: TwitterUser?, _ error: Error?) -> ()) {

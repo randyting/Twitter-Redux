@@ -125,7 +125,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
   }
   
-  func favorite(_ tweet: Tweet, completion: @escaping (_ response: Any??, _ error: Error?) ->()){
+  func favorite(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     
     let parameters = ["id": tweet.idString]
     
@@ -144,7 +144,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
   }
   
-  func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: Any??, _ error: Error?) ->()){
+  func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     
     let parameters = ["id": tweet.idString]
     
@@ -163,7 +163,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
   }
   
-  func retweet(_ tweet: Tweet, completion: @escaping (_ response: Any??, _ error: Error?) ->()){
+  func retweet(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     
     let parameters = ["id": tweet.idString]
     
@@ -182,7 +182,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
   }
   
-  func unretweet(_ tweet: Tweet, completion: @escaping (_ response: Any??, _ error: Error?) ->()){
+  func unretweet(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     
     var originalTweetIdString = String()
     
