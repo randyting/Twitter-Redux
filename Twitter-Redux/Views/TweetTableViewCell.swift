@@ -31,11 +31,11 @@ class TweetTableViewCell: UITableViewCell {
   @IBOutlet fileprivate weak var favoriteCountLabel: UILabel!
   
   @IBOutlet fileprivate weak var retweetOrReplyContainerView: UIView!
-  @IBOutlet fileprivate weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var retweetContainerViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet fileprivate weak var retweetOrReplyIcon: UIImageView!
   @IBOutlet fileprivate weak var retweetOrReplyLabel: UILabel!
   
-  @IBOutlet fileprivate weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var profileTopToContainerHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   var tweetToShow: Tweet!
@@ -74,8 +74,8 @@ class TweetTableViewCell: UITableViewCell {
     
     if tweet.isRetweet || tweet.isReply {
       retweetOrReplyContainerView.isHidden = false
-      retweetOrReplyContainerViewHeightConstraint.constant = 25
-      profileImageTopToContainerHeightConstraint.constant = 0
+      retweetContainerViewHeightConstraint.constant = 25
+      profileTopToContainerHeightConstraint.constant = 0
       if tweet.isRetweet {
         retweetOrReplyIcon.image = UIImage(named: "retweet")
         retweetOrReplyLabel.text = "\(tweet.userName!) Retweeted"
@@ -85,8 +85,8 @@ class TweetTableViewCell: UITableViewCell {
       }
     } else {
       retweetOrReplyContainerView.isHidden = true
-      retweetOrReplyContainerViewHeightConstraint.constant = 0
-      profileImageTopToContainerHeightConstraint.constant = 15
+      retweetContainerViewHeightConstraint.constant = 0
+      profileTopToContainerHeightConstraint.constant = 15
     }
     
   }

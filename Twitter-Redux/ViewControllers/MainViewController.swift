@@ -7,29 +7,6 @@
 //
 
 import UIKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
 
 class MainViewController: UIViewController {
   
@@ -87,18 +64,7 @@ class MainViewController: UIViewController {
       beganPanGestureContainerCenterX = containerViewCenterXConstraint.constant
     case .changed:
       containerVelocity = sender.velocity(in: view).x
-      
-      if (containerViewCenterXConstraint.constant >= containerShownXConstraintValue &&
-        containerViewCenterXConstraint.constant <= containerHiddenXConstraintValue) {
-          containerViewCenterXConstraint.constant = beganPanGestureContainerCenterX + sender.translation(in: view).x
-          
-          if containerViewCenterXConstraint.constant < containerShownXConstraintValue {
-            containerViewCenterXConstraint.constant = containerShownXConstraintValue
-          } else if containerViewCenterXConstraint.constant > containerHiddenXConstraintValue {
-            containerViewCenterXConstraint.constant = containerHiddenXConstraintValue
-          }
-          containerShouldMove = true
-      }
+      moveContainerView(withTranslation: sender.translation(in: view))
     case .ended:
       if containerShouldMove {
         if containerVelocity >= 0 {
@@ -114,6 +80,20 @@ class MainViewController: UIViewController {
       break
     case .failed:
       break
+    }
+  }
+  
+  fileprivate func moveContainerView(withTranslation translation: CGPoint) {
+    if containerViewCenterXConstraint.constant >= containerShownXConstraintValue &&
+      containerViewCenterXConstraint.constant <= containerHiddenXConstraintValue {
+      containerViewCenterXConstraint.constant = beganPanGestureContainerCenterX + translation.x
+      
+      if containerViewCenterXConstraint.constant < containerShownXConstraintValue {
+        containerViewCenterXConstraint.constant = containerShownXConstraintValue
+      } else if containerViewCenterXConstraint.constant > containerHiddenXConstraintValue {
+        containerViewCenterXConstraint.constant = containerHiddenXConstraintValue
+      }
+      containerShouldMove = true
     }
   }
   

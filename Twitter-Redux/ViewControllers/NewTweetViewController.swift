@@ -23,7 +23,7 @@ class NewTweetViewController: UIViewController {
   @IBOutlet fileprivate weak var userNameLabel: UILabel!
   @IBOutlet fileprivate weak var profileImageView: UIImageView!
   @IBOutlet fileprivate weak var tweetTextView: UITextView!
-  @IBOutlet fileprivate weak var tweetTextViewBottomToSuperHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var textViewBottomToSuperHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   weak var delegate: AnyObject?
@@ -86,7 +86,7 @@ class NewTweetViewController: UIViewController {
   func willShowKeyboard(_ notification: Notification) {
     if let userInfo = notification.userInfo {
       let kbSize = ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size)!
-      tweetTextViewBottomToSuperHeightConstraint.constant = kbSize.height
+      textViewBottomToSuperHeightConstraint.constant = kbSize.height
     }
   }
   
