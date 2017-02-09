@@ -17,7 +17,7 @@ class TwitterLoginViewController: UIViewController {
   
   // MARK: - Convenience
   fileprivate func attemptToLogin() {
-    TwitterUser.loginWithCompletion { (user: TwitterUser?, error: NSError?) -> Void in
+    TwitterUser.loginWithCompletion { (user: TwitterUser?, error: Error?) -> Void in
       if let error = error {
         print(error.localizedDescription)
         let alert = UIAlertController.init(title: nil, message: error.localizedDescription, preferredStyle: .alert)

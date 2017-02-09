@@ -50,7 +50,7 @@ class NewTweetViewController: UIViewController {
     automaticallyAdjustsScrollViewInsets = false
     edgesForExtendedLayout = UIRectEdge()
     
-    NotificationCenter.default.addObserver(self, selector: #selector(NewTweetViewController.willShowKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     
     profileImageView.layer.cornerRadius = 4.0
     profileImageView.clipsToBounds = true
@@ -98,7 +98,7 @@ class NewTweetViewController: UIViewController {
   func onTapTweetBarButton(_ sender: UIBarButtonItem) {
     tweetTextView.resignFirstResponder()
     if tweetTextView.text.characters.count > 0 {
-      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion: {(_, error: NSError?) -> Void in
+      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion: {(_, error: Error?) -> Void in
           if let error = error {
             print(error.localizedDescription)
           } else {

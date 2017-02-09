@@ -9,8 +9,8 @@
 import UIKit
 
   // MARK: - Credentials
-let twitterConsumerKey = "k1czNm79JKV5T5WLd8lPSSDBB"
-let twitterConsumerSecret = "kJzE1C4Giq4MTHNVshWRgJqLDL7Mx4ShHSjS7ZmxzyQWvIoGLw"
+let twitterConsumerKey = "pYUDbmqygahTYTTQ7i0bGNIZp"
+let twitterConsumerSecret = "KrzcXMh6IOArfNnyTPdiMizzuMrK3RFmdYfFtyjO8JzG3VoNsr"
 let twitterBaseURL = URL(string: "https://api.twitter.com")
 
 class TwitterClient: BDBOAuth1RequestOperationManager {
@@ -34,7 +34,8 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
       scope: nil,
       success: {
         (requestToken: BDBOAuth1Credential?) -> Void in
-        let authURL = URL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken!.token)")
+        
+        let authURL = URL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken!.token!)")
         UIApplication.shared.openURL(authURL!)
       }) {
         (error: Error?) -> Void in
@@ -61,9 +62,18 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     get("/1.1/account/verify_credentials.json",
       parameters: nil,
       success: { (operation: AFHTTPRequestOperation?, response: Any?) -> Void in
-        let userDetails = response as! NSDictionary
-        let currentUser = TwitterUser.init(dictionary: userDetails)
-        completion?(currentUser, nil)
+        
+        do {
+          
+          let JsonDict = try JSONSerialization.jsonObject(with: response as! Data, options: [])
+          if let userDetails = JsonDict as? NSDictionary
+          {
+            let currentUser = TwitterUser.init(dictionary: userDetails)
+            completion?(currentUser, nil)
+          }
+        } catch {
+          print(error)
+        }
         
       }) { (operation: AFHTTPRequestOperation?, error: Error?) -> Void in
         (completion?(nil, error))!
@@ -178,6 +188,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     
     if tweet.retweeted == false {
       let error = NSError.init(domain: "com.randy.Twitter", code: 0, userInfo: ["Error reason": "Tweet has not been retweeted."])
+
       completion(nil, error)
     } else {
       if tweet.originalTweet == nil {
@@ -192,7 +203,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
                     "include_my_retweet": true],
       success: { (operation: AFHTTPRequestOperation?, response: Any?) -> Void in
         let tweetResponse = response as? NSDictionary
-        let retweetIDString = (tweetResponse!["current_user_retweet"] as! [String:String])["id_str"]!
+        let retweetIDString = (tweetResponse!["current_user_retweet"] as! [String:AnyObject])["id_str"] as! String
         
         let parameters = ["id": retweetIDString]
         

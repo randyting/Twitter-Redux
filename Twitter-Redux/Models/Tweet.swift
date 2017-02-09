@@ -51,8 +51,8 @@ class Tweet: NSObject {
     idString = dictionary["id_str"] as? String
     retweetCount = dictionary["retweet_count"] as? Int
     text = dictionary["text"] as? String
-    userName = (dictionary["user"] as! [String:String])["name"]
-    userScreenname = (dictionary["user"] as! [String:String])["screen_name"]
+    userName = (dictionary["user"] as! [String:AnyObject])["name"] as? String
+    userScreenname = (dictionary["user"] as! [String:AnyObject])["screen_name"] as? String
     id = UInt64(idString)
     
     inReplyToScreenName = dictionary["in_reply_to_screen_name"] as? String
@@ -62,16 +62,12 @@ class Tweet: NSObject {
       originalTweet = Tweet(dictionary: retweetedStatus)
     }
     
-    var profileImageURLString = (dictionary["user"] as! [String:String])["profile_image_url_https"]
+    var profileImageURLString = (dictionary["user"] as! [String:AnyObject])["profile_image_url_https"] as? String
     let range = profileImageURLString!.range(of: "normal.jpg", options: .regularExpression)
     if let range = range {
       profileImageURLString = profileImageURLString!.replacingCharacters(in: range, with: "bigger.jpg")
     }
     profileImageURL = URL(string: profileImageURLString!)
-    
-//    if let mediaURLString = (dictionary["entities"]?["media"] as? NSArray)![0]["media_url_https"] as? String {
-//      mediaURL = NSURL(string: mediaURLString)
-//    }
     
     favorited = dictionary["favorited"] as? Bool
     retweeted = dictionary["retweeted"] as? Bool
