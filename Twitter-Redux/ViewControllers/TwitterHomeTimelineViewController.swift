@@ -112,7 +112,7 @@ class TwitterHomeTimelineViewController: UIViewController {
 extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tweetsTableView.dequeueReusableCell(withIdentifier: tweetsCellReuseIdentifier, for: indexPath) as! TweetTableViewCell
+    let cell = tweetsTableView.dequeueReusableCell(withIdentifier: tweetsCellReuseIdentifier, for: indexPath) as! TweetTableViewCell // swiftlint:disable:this force_cast
     
     cell.tweet = tweets?[indexPath.row]
     cell.delegate = self
@@ -132,7 +132,7 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
     tableView.deselectRow(at: indexPath, animated: true)
     let tweetDetailVC = TweetDetailViewController()
     tweetDetailVC.edgesForExtendedLayout = UIRectEdge()
-    tweetDetailVC.tweet = (tweetsTableView.cellForRow(at: indexPath) as! TweetTableViewCell).tweetToShow
+    tweetDetailVC.tweet = (tweetsTableView.cellForRow(at: indexPath) as! TweetTableViewCell).tweetToShow // swiftlint:disable:this force_cast
     navigationController?.pushViewController(tweetDetailVC, animated: true)
   }
   

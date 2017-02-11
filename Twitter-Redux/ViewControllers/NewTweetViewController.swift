@@ -95,7 +95,7 @@ class NewTweetViewController: UIViewController {
   // MARK: - Behavior
   func willShowKeyboard(_ notification: Notification) {
     if let userInfo = notification.userInfo {
-      let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
+      let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
       textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
     }
   }

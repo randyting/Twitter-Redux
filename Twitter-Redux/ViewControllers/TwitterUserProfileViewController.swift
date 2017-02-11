@@ -139,8 +139,7 @@ class TwitterUserProfileViewController: UIViewController {
 
 extension TwitterUserProfileViewController: UIGestureRecognizerDelegate {
   func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-    // Respond only if gesture is a vertical gesture
-    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocity(in: view)
+    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocity(in: view) // swiftlint:disable:this force_cast
     return fabs(velocity.y) > fabs(velocity.x)
   }
 }
