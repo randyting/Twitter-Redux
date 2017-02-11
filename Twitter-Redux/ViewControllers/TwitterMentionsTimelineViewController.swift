@@ -9,7 +9,7 @@
 import UIKit
 
 class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
-
+  
   init() {
     super.init(nibName: "TwitterHomeTimelineViewController", bundle: nil)
     //Do whatever you want here
@@ -40,23 +40,23 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
   }
   
   override func loadOlderTweets() {
-    let params = TwitterHomeTimelineParameters()
     
-    if let tweets = tweets {  // Unwrap tweets because bottom refresh control calls selector when view is loaded
-      params.maxId = String((tweets.last!.id! - 1))
-      params.count = 20
-      
-      currentUser.homeTimelineWithParams(params) { (tweets, error) -> Void in
-        if let error = error {
-          print(error.localizedDescription)
-        } else {
-          self.tweets? += tweets!
-          self.tweetsTableView.reloadData()
-          DispatchQueue.main.async(execute: { () -> Void in
-            self.tweetsTableView.finishInfiniteScroll()
-          })
-        }
+    guard let tweets = tweets else { return }
+    let params = TwitterHomeTimelineParameters(withCount: 20,
+                                               withSinceID: String(tweets.last!.id - 1),
+                                               withMaxID: nil)
+    
+    currentUser.homeTimelineWithParams(params) { (tweets, error) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        self.tweets? += tweets!
+        self.tweetsTableView.reloadData()
+        DispatchQueue.main.async(execute: { () -> Void in
+          self.tweetsTableView.finishInfiniteScroll()
+        })
       }
     }
+    
   }
 }

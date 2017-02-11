@@ -11,8 +11,8 @@ import UIKit
 class TwitterHomeTimelineParameters: NSObject {
   
   var count: Int?
-  var sinceId: String?
-  var maxId: String?
+  var sinceID: String?
+  var maxID: String?
   
   var dictionary: [String: AnyObject]? {
       var params: [String: AnyObject]? = [:]
@@ -33,12 +33,22 @@ class TwitterHomeTimelineParameters: NSObject {
     super.init()
   }
   
+  convenience init(withCount count: Int? = nil,
+                   withSinceID sinceID: String? = nil,
+                   withMaxID maxID: String? = nil) {
+    self.init()
+    
+    self.count = count
+    self.sinceID = sinceID
+    self.maxID = maxID
+  }
+  
   fileprivate func namesAndValues() -> [String:AnyObject?] {
     let dictionary: [String: AnyObject?] =
     [
       "count": self.count as AnyObject?,
-      "since_id": self.sinceId as AnyObject?,
-      "max_id": self.maxId as AnyObject?
+      "since_id": self.sinceID as AnyObject?,
+      "max_id": self.maxID as AnyObject?
     ]
     
     return dictionary
