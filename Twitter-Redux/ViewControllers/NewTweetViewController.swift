@@ -14,6 +14,7 @@ class NewTweetViewController: UIViewController {
     fileprivate static let profileImageViewCornerRadius: CGFloat = 4.0
     fileprivate static let navigationBarTitle = "New Tweet"
     fileprivate static let tweetButtonImageName = "twitter"
+    fileprivate static let dismissButtonImageName = "xmark"
   }
   
   // MARK: - Interface Builder
@@ -73,7 +74,7 @@ class NewTweetViewController: UIViewController {
     if let inReplyToUserScreenname = inReplyToUserScreenname {
       tweetTextView.text = "@" + inReplyToUserScreenname + " "
     }
-    characterCountBarButtonItem.title = String(NewTweetViewControllerConstants.maxTweetLength - (tweetTextView.text as NSString).length)
+    characterCountBarButtonItem.title = String(NewTweetViewControllerConstants.maxTweetLength - tweetTextView.text.characters.count)
   }
   
   fileprivate func setupNavigationBar() {
@@ -85,14 +86,17 @@ class NewTweetViewController: UIViewController {
     characterCountBarButtonItem = UIBarButtonItem()
     characterCountBarButtonItem.tintColor = UIColor.white
     navigationItem.rightBarButtonItems = [tweetBarButtonItem, characterCountBarButtonItem]
-    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "xmark"), style: .plain, target: self, action: #selector(NewTweetViewController.onTapCancelBarButton(_:)))    
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: NewTweetViewControllerConstants.dismissButtonImageName),
+                                                       style: .plain,
+                                                       target: self,
+                                                       action: #selector(NewTweetViewController.onTapCancelBarButton(_:)))
   }
   
   // MARK: - Behavior
   func willShowKeyboard(_ notification: Notification) {
     if let userInfo = notification.userInfo {
-      let kbSize = ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size)!
-      textViewBottomToSuperHeightConstraint.constant = kbSize.height
+      let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
+      textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
     }
   }
   
@@ -103,8 +107,10 @@ class NewTweetViewController: UIViewController {
   
   func onTapTweetBarButton(_ sender: UIBarButtonItem) {
     tweetTextView.resignFirstResponder()
-    if tweetTextView.text.characters.count > 0 {
-      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion: {(_, error: Error?) -> Void in
+    if !tweetTextView.text.characters.isEmpty {
+      TwitterUser.tweetText(tweetTextView.text,
+                            inReplyToStatusID: inReplyToStatusID,
+                            completion: {(_, error: Error?) -> Void in
           if let error = error {
             print(error.localizedDescription)
           } else {
@@ -128,18 +134,17 @@ class NewTweetViewController: UIViewController {
 extension NewTweetViewController: UITextViewDelegate {
   
   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    let currentString: NSString = tweetTextView.text as NSString
-    let newString: NSString =
-    currentString.replacingCharacters(in: range, with: text) as NSString
+    let currentString = tweetTextView.text as NSString
+    let newString: NSString = currentString.replacingCharacters(in: range, with: text) as NSString
     return newString.length <= NewTweetViewControllerConstants.maxTweetLength
   }
   
   func textViewDidChange(_ textView: UITextView) {
-    let text = textView.text as NSString
-    if text.length == 0 {
+    let text: String! = textView.text
+    if text.characters.isEmpty {
       characterCountBarButtonItem.title = ""
     } else {
-      characterCountBarButtonItem.title = String(NewTweetViewControllerConstants.maxTweetLength - text.length)
+      characterCountBarButtonItem.title = String(NewTweetViewControllerConstants.maxTweetLength - text.characters.count)
     }
   }
   
