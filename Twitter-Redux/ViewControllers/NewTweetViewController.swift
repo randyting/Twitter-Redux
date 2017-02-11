@@ -27,7 +27,7 @@ class NewTweetViewController: UIViewController {
   
   // MARK: - Properties
   
-  private weak var delegate: NewTweetViewControllerDelegate?
+  fileprivate weak var delegate: NewTweetViewControllerDelegate?
   
   fileprivate var currentUser: TwitterUser!
   fileprivate var inReplyToStatusID: String?
