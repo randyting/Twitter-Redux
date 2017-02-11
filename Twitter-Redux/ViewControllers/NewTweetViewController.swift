@@ -110,11 +110,12 @@ class NewTweetViewController: UIViewController {
     if !tweetTextView.text.characters.isEmpty {
       TwitterUser.tweetText(tweetTextView.text,
                             inReplyToStatusID: inReplyToStatusID,
-                            completion: {(_, error: Error?) -> Void in
+                            completion: {[weak self] (_, error: Error?) -> Void in
           if let error = error {
             print(error.localizedDescription)
           } else {
-            self.delegate?.newTweetViewController(self, didPostTweetText: self.tweetTextView.text)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.newTweetViewController(strongSelf, didPostTweetText: strongSelf.tweetTextView.text)
           }
       })
     }
