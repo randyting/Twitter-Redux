@@ -69,7 +69,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   
   // MARK: - Behavior
   func createNewTweet(_ sender: UIBarButtonItem) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
   func refreshTweets() {
@@ -141,7 +141,7 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
 // MARK: - TweetTableViewCell Delegate
 extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweetTableViewCell.tweetToShow, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweetTableViewCell.tweetToShow, forViewController: self)
   }
   
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {

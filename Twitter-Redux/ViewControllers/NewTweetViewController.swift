@@ -121,7 +121,7 @@ class NewTweetViewController: UIViewController {
   }
   
   // MARK: - Class Methods
-  class func presentNewTweetVCInReplyToTweet(_ tweet: Tweet?, forViewController viewController: NewTweetViewControllerDelegate!) {
+  class func presentNewTweetViewController(inReplyToTweet tweet: Tweet?, forViewController viewController: NewTweetViewControllerDelegate!) {
     let newTweetViewController = NewTweetViewController()
     newTweetViewController.inReplyToStatusID = tweet?.idString
     newTweetViewController.inReplyToUserScreenname = tweet?.userScreenname

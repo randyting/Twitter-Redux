@@ -120,7 +120,7 @@ class TweetDetailViewController: UIViewController {
   }
   
   @IBAction func onTapReplyButton(_ sender: AnyObject) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweet, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweet, forViewController: self)
   }
 
 }

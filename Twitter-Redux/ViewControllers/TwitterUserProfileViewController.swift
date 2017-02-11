@@ -127,7 +127,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   func createNewTweet(_ sender: UIBarButtonItem) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
   @IBAction func pageControlDidPage(_ sender: UIPageControl) {
