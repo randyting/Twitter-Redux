@@ -9,7 +9,7 @@ class NewTweetViewController: UIViewController {
   
   // MARK: - Constants
   
-  fileprivate struct NewTweetViewControllerConstants {
+  fileprivate enum NewTweetViewControllerConstants {
     fileprivate static let maxTweetLength = 140
     fileprivate static let profileImageViewCornerRadius: CGFloat = 4.0
     fileprivate static let navigationBarTitle = "New Tweet"
