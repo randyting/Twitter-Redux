@@ -10,11 +10,11 @@ class NewTweetViewController: UIViewController {
   // MARK: - Constants
   
   fileprivate enum NewTweetViewControllerConstants {
-    fileprivate static let maxTweetLength = 140
-    fileprivate static let profileImageViewCornerRadius: CGFloat = 4.0
-    fileprivate static let navigationBarTitle = "New Tweet"
-    fileprivate static let tweetButtonImageName = "twitter"
-    fileprivate static let dismissButtonImageName = "xmark"
+    static fileprivate let maxTweetLength = 140
+    static fileprivate let profileImageViewCornerRadius: CGFloat = 4.0
+    static fileprivate let navigationBarTitle = "New Tweet"
+    static fileprivate let tweetButtonImageName = "twitter"
+    static fileprivate let dismissButtonImageName = "xmark"
   }
   
   // MARK: - Interface Builder
