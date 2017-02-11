@@ -93,6 +93,7 @@ class NewTweetViewController: UIViewController {
   }
   
   // MARK: - Behavior
+  
   func willShowKeyboard(_ notification: Notification) {
     if let userInfo = notification.userInfo {
       let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
@@ -122,6 +123,7 @@ class NewTweetViewController: UIViewController {
   }
   
   // MARK: - Class Methods
+  
   class func presentNewTweetViewController(inReplyToTweet tweet: Tweet?, forViewController viewController: NewTweetViewControllerDelegate!) {
     let newTweetViewController = NewTweetViewController()
     newTweetViewController.inReplyToStatusID = tweet?.idString
@@ -131,6 +133,8 @@ class NewTweetViewController: UIViewController {
     (viewController as? UIViewController)?.present(newNavigationController, animated: true, completion: nil)
   }
 }
+
+// MARK: - UITextViewDelegate
 
 extension NewTweetViewController: UITextViewDelegate {
   
