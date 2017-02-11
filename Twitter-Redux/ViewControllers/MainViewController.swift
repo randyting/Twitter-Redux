@@ -47,12 +47,12 @@ class MainViewController: UIViewController {
   
   // MARK: - Behavior
   func onUserLogin(_ notification: Notification) {
-    selectViewController(MenuVCManager.sharedInstance.vcArray[0])
+    selectViewController(selectedViewController: MenuVCManager.sharedInstance.vcArray[0])
   }
   
   func onUserLogout(_ notification: Notification) {
     let loginVC = TwitterLoginViewController()
-    selectViewController(loginVC)
+    selectViewController(selectedViewController: loginVC)
   }
   
   func onContainerViewPanGesture(_ sender: UIPanGestureRecognizer) {
@@ -120,22 +120,35 @@ class MainViewController: UIViewController {
         self.view.layoutIfNeeded()
       }, completion: nil)
   }
+
+  private func showContainerViewWithCompletion(completion: @escaping (Bool) -> Void ) {
+    UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: 1.0,
+                               initialSpringVelocity: 1.0,
+                               options: UIViewAnimationOptions.curveEaseInOut,
+                               animations: { () -> Void in
+                                self.containerViewCenterXConstraint.constant = self.containerShownXConstraintValue
+                                self.view.layoutIfNeeded()
+      }, completion: completion)
+  }
   
-  func selectViewController(_ selectedViewController: UIViewController) {
-    
-    if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
-      currentViewController.willMove(toParentViewController: nil)
-      currentViewController.view.removeFromSuperview()
-      currentViewController.removeFromParentViewController()
+  func selectViewController(selectedViewController: UIViewController) {
+    showContainerViewWithCompletion { (_: Bool) in
+      if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
+        currentViewController.willMove(toParentViewController: nil)
+        currentViewController.view.removeFromSuperview()
+        currentViewController.removeFromParentViewController()
+      }
+      self.addChildViewController(selectedViewController)
+      selectedViewController.view.frame = self.containerView.bounds
+      selectedViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+      self.containerView.addSubview(selectedViewController.view)
+      selectedViewController.didMove(toParentViewController: self)
+      
+      MenuVCManager.sharedInstance.currentViewController = selectedViewController
     }
-    self.addChildViewController(selectedViewController)
-    selectedViewController.view.frame = containerView.bounds
-    selectedViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    containerView.addSubview(selectedViewController.view)
-    selectedViewController.didMove(toParentViewController: self)
-    
-    MenuVCManager.sharedInstance.currentViewController = selectedViewController
-    showContainerView()
+
   }
   
   // MARK: - Deinit
@@ -148,7 +161,7 @@ class MainViewController: UIViewController {
 // MARK: - MenuViewController Delegate
 extension MainViewController: MenuViewControllerDelegate {
   func menuViewController(_ menuViewController: MenuViewController, selectedViewController: UIViewController) {
-    selectViewController(selectedViewController)
+    selectViewController(selectedViewController: selectedViewController)
     showContainerView()
   }
 }
