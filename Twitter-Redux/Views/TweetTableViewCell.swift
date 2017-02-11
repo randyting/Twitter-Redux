@@ -53,7 +53,7 @@ class TweetTableViewCell: UITableViewCell {
   fileprivate func updateContent() {
     
     profileImageView.setImageWith(tweetToShow.profileImageURL as URL!)
-    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TweetTableViewCell.onTapProfileImage(_:))))
+    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfileImage(_:))))
     
     tweetTextLabel.text = tweetToShow.text
     userNameLabel.text = tweetToShow.userName

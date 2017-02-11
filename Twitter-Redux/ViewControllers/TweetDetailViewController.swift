@@ -41,7 +41,7 @@ class TweetDetailViewController: UIViewController {
   // MARK: - Setup
   fileprivate func updateContent() {
     profileImageView.setImageWith(tweet.profileImageURL as URL!)
-    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TweetDetailViewController.onTapProfileImage(_:))))
+    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfileImage(_:))))
     tweetTextLabel.text = tweet.text
     userNameLabel.text = tweet.userName
     userScreennameLabel.text = "@" + tweet.userScreenname
@@ -120,7 +120,7 @@ class TweetDetailViewController: UIViewController {
   }
   
   @IBAction func onTapReplyButton(_ sender: AnyObject) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweet, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweet, forViewController: self)
   }
 
 }

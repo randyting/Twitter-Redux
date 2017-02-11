@@ -47,7 +47,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(TwitterUserProfileViewController.createNewTweet(_:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(createNewTweet(_:)))
     if user == UserManager.sharedInstance.currentUser {
       self.title = "Me"
     } else {
@@ -86,7 +86,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   fileprivate func setupGestureRecognizer() {
-    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(TwitterUserProfileViewController.onPanGesture(_:)))
+    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onPanGesture(_:)))
     blurGestureRecognizer.delegate = self
     view.addGestureRecognizer(blurGestureRecognizer)
   }
@@ -127,7 +127,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   func createNewTweet(_ sender: UIBarButtonItem) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
   @IBAction func pageControlDidPage(_ sender: UIPageControl) {
@@ -139,8 +139,7 @@ class TwitterUserProfileViewController: UIViewController {
 
 extension TwitterUserProfileViewController: UIGestureRecognizerDelegate {
   func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-    // Respond only if gesture is a vertical gesture
-    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocity(in: view)
+    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocity(in: view) // swiftlint:disable:this force_cast
     return fabs(velocity.y) > fabs(velocity.x)
   }
 }

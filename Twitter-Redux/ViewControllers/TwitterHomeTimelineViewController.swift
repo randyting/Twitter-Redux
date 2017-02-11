@@ -54,7 +54,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   fileprivate func setupRefreshControl(_ refreshControl: UIRefreshControl) {
-    refreshControl.addTarget(self, action: #selector(TwitterHomeTimelineViewController.refreshTweets), for: .valueChanged)
+    refreshControl.addTarget(self, action: #selector(refreshTweets), for: .valueChanged)
     tweetsTableView.insertSubview(refreshControl, at: 0)
     
     tweetsTableView.infiniteScrollIndicatorStyle = .gray
@@ -64,12 +64,12 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(TwitterHomeTimelineViewController.createNewTweet(_:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(createNewTweet(_:)))
   }
   
   // MARK: - Behavior
   func createNewTweet(_ sender: UIBarButtonItem) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
   func refreshTweets() {
@@ -112,7 +112,7 @@ class TwitterHomeTimelineViewController: UIViewController {
 extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tweetsTableView.dequeueReusableCell(withIdentifier: tweetsCellReuseIdentifier, for: indexPath) as! TweetTableViewCell
+    let cell = tweetsTableView.dequeueReusableCell(withIdentifier: tweetsCellReuseIdentifier, for: indexPath) as! TweetTableViewCell // swiftlint:disable:this force_cast
     
     cell.tweet = tweets?[indexPath.row]
     cell.delegate = self
@@ -132,7 +132,7 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
     tableView.deselectRow(at: indexPath, animated: true)
     let tweetDetailVC = TweetDetailViewController()
     tweetDetailVC.edgesForExtendedLayout = UIRectEdge()
-    tweetDetailVC.tweet = (tweetsTableView.cellForRow(at: indexPath) as! TweetTableViewCell).tweetToShow
+    tweetDetailVC.tweet = (tweetsTableView.cellForRow(at: indexPath) as! TweetTableViewCell).tweetToShow // swiftlint:disable:this force_cast
     navigationController?.pushViewController(tweetDetailVC, animated: true)
   }
   
@@ -141,7 +141,7 @@ extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDat
 // MARK: - TweetTableViewCell Delegate
 extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweetTableViewCell.tweetToShow, forViewController: self)
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweetTableViewCell.tweetToShow, forViewController: self)
   }
   
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {

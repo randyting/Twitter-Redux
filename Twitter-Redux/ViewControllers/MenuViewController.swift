@@ -51,7 +51,7 @@ class MenuViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .plain, target: self, action: #selector(MenuViewController.logoutUser(_:)))
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .plain, target: self, action: #selector(logoutUser(_:)))
   }
   
   // MARK: - Behavior
