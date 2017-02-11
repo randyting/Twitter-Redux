@@ -63,6 +63,7 @@ class TweetDetailViewController: UIViewController {
   fileprivate func setupAppearance() {
     profileImageView.layer.cornerRadius = 4.0
     profileImageView.clipsToBounds = true
+    edgesForExtendedLayout = UIRectEdge()
   }
   
   // MARK: - Behavior
