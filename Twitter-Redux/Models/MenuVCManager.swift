@@ -33,7 +33,7 @@ class MenuVCManager: NSObject {
     didSet {
       if let currentViewController = currentViewController {
         if let topVC = (currentViewController as? UINavigationController)?.topViewController {
-          if topVC.isKindOfClass(TwitterUserProfileViewController){
+          if topVC.isKind(of: TwitterUserProfileViewController.self){
             (topVC as! TwitterUserProfileViewController).user = UserManager.sharedInstance.currentUser
           }
         }

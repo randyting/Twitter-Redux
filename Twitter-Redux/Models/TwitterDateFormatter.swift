@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TwitterDateFormatter: NSDateFormatter {
+class TwitterDateFormatter: DateFormatter {
 
   static let sharedInstance = TwitterDateFormatter()
   
