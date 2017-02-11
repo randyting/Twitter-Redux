@@ -101,7 +101,10 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   func loadOlderTweets() {
-    guard let tweets = tweets else { return }
+    guard let tweets = tweets else {
+      tweetsTableView.finishInfiniteScroll()
+      return
+    }
     
     let params = TwitterHomeTimelineParameters(withCount: HomeTimelineViewControllerConstants.numberOfAdditionalTweetsToLoad,
                                                withSinceID: String(tweets.last!.id - 1),
@@ -149,10 +152,7 @@ extension TwitterHomeTimelineViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let tweets = tweets else {
-      return 0
-    }
-    return tweets.count
+    return tweets?.count ?? 0
   }
   
 }
@@ -170,7 +170,7 @@ extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
     
     TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { [weak self] (user, error) -> Void in
       if let error = error {
-        print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
+        print(error.localizedDescription)
       } else {
         guard let strongSelf = self else { return }
         profileViewController.user = user
