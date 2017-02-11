@@ -302,6 +302,7 @@
 				6F38A3871BC747D600D226E9 /* Resources */,
 				F87CE4BBE3D3F4531A8B189C /* [CP] Embed Pods Frameworks */,
 				102C2F3973F7212E8DAB9CF1 /* [CP] Copy Pods Resources */,
+				25BAFC391E4BE21A0061D3DD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -384,6 +385,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Twitter-Redux/Pods-Twitter-Redux-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		25BAFC391E4BE21A0061D3DD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
 		8C9310B4AD12C7FF49AD8D1A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -17,11 +17,11 @@ class TwitterLoginViewController: UIViewController {
   
   // MARK: - Convenience
   fileprivate func attemptToLogin() {
-    TwitterUser.loginWithCompletion { (user: TwitterUser?, error: NSError?) -> () in
+    TwitterUser.loginWithCompletion { (user: TwitterUser?, error: Error?) -> Void in
       if let error = error {
         print(error.localizedDescription)
         let alert = UIAlertController.init(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-        let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction) -> Void in
+        let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: { (_) -> Void in
           self.attemptToLogin()
         })
         alert.addAction(tryAgainAction)

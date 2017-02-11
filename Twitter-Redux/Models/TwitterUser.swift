@@ -88,12 +88,12 @@ class TwitterUser: NSObject {
     NotificationCenter.default.post(name: Notification.Name(rawValue: userDidLogoutNotification), object: nil)
   }
   
-  func homeTimelineWithParams(_ params: TwitterHomeTimelineParameters?, completion: @escaping (_ tweets: [Tweet]?, _ error: NSError?) -> ()){
-    TwitterClient.sharedInstance.homeTimelineWithParams(params, completion: completion as! ([Tweet]?, Error?) -> ())
+  func homeTimelineWithParams(_ params: TwitterHomeTimelineParameters?, completion: @escaping (_ tweets: [Tweet]?, _ error: Error?) -> ()){
+    TwitterClient.sharedInstance.homeTimelineWithParams(params, completion: completion)
   }
   
-  func mentionsTimelineWithParams(_ params: TwitterHomeTimelineParameters?, completion: @escaping (_ tweets: [Tweet]?, _ error: NSError?) -> ()){
-    TwitterClient.sharedInstance.mentionsTimelineWithParams(params, completion: completion as! ([Tweet]?, Error?) -> ())
+  func mentionsTimelineWithParams(_ params: TwitterHomeTimelineParameters?, completion: @escaping (_ tweets: [Tweet]?, _ error: Error?) -> ()){
+    TwitterClient.sharedInstance.mentionsTimelineWithParams(params, completion: completion)
   }
   
   func profileImageURL() -> URL? {
@@ -101,32 +101,32 @@ class TwitterUser: NSObject {
   }
   
   // MARK: - Class Methods
-  class func loginWithCompletion(_ completion: @escaping (_ user: TwitterUser?, _ error: NSError?) -> ()) {
-    TwitterClient.sharedInstance.loginWithCompletion(completion as! (TwitterUser?, Error?) -> ())
+  class func loginWithCompletion(_ completion: @escaping (_ user: TwitterUser?, _ error: Error?) -> ()) {
+    TwitterClient.sharedInstance.loginWithCompletion (completion)
   }
   
-  class func tweetText(_ text: String?, inReplyToStatusID: String?, completion: @escaping (_ success: Bool?, _ error: NSError?) -> ()) {
-    TwitterClient.sharedInstance.tweetText(text, inReplyToStatusID: inReplyToStatusID, completion: completion as! (Bool?, Error?) -> ())
+  class func tweetText(_ text: String?, inReplyToStatusID: String?, completion: @escaping (_ success: Bool?, _ error: Error?) -> ()) {
+    TwitterClient.sharedInstance.tweetText(text, inReplyToStatusID: inReplyToStatusID, completion: completion)
   }
   
-  class func favorite(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: NSError?) ->()){
-    TwitterClient.sharedInstance.favorite(tweet, completion: completion as! (AnyObject?, Error?) -> () as! (Any??, Error?) -> ())
+  class func favorite(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.favorite(tweet, completion: completion as! (Any??, Error?) -> ())
   }
   
-  class func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: NSError?) ->()){
-    TwitterClient.sharedInstance.unfavorite(tweet, completion: completion as! (AnyObject?, Error?) -> () as! (Any??, Error?) -> ())
+  class func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.unfavorite(tweet, completion: completion as! (Any??, Error?) -> ())
   }
   
-  class func retweet(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: NSError?) ->()){
-    TwitterClient.sharedInstance.retweet(tweet, completion: completion as! (AnyObject?, Error?) -> () as! (Any??, Error?) -> ())
+  class func retweet(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.retweet(tweet, completion: completion as! (Any??, Error?) -> ())
   }
   
-  class func unretweet(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: NSError?) ->()){
-    TwitterClient.sharedInstance.unretweet(tweet, completion: completion as! (AnyObject?, Error?) -> () as! (Any??, Error?) -> ())
+  class func unretweet(_ tweet: Tweet, completion: @escaping (_ response: AnyObject?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.unretweet(tweet, completion: completion as! (Any??, Error?) -> ())
   }
   
-  class func userWithScreenName(_ screenName: String?, completion: @escaping (_ user: TwitterUser?, _ error: NSError?) -> ()) {
-    TwitterClient.sharedInstance.userWithScreenName(screenName, completion: completion as! (TwitterUser?, Error?) -> ())
+  class func userWithScreenName(_ screenName: String?, completion: @escaping (_ user: TwitterUser?, _ error: Error?) -> ()) {
+    TwitterClient.sharedInstance.userWithScreenName(screenName, completion: completion)
   }
   
   // MARK: - Class Variables

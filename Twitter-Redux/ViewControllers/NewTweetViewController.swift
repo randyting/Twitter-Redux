@@ -23,7 +23,7 @@ class NewTweetViewController: UIViewController {
   @IBOutlet fileprivate weak var userNameLabel: UILabel!
   @IBOutlet fileprivate weak var profileImageView: UIImageView!
   @IBOutlet fileprivate weak var tweetTextView: UITextView!
-  @IBOutlet fileprivate weak var tweetTextViewBottomToSuperHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var textViewBottomToSuperHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   weak var delegate: AnyObject?
@@ -45,12 +45,12 @@ class NewTweetViewController: UIViewController {
   }
   
   // MARK: - Initial Setup
-  fileprivate func setupAppearance(){
+  fileprivate func setupAppearance() {
     // Aligns text to top in text view
     automaticallyAdjustsScrollViewInsets = false
     edgesForExtendedLayout = UIRectEdge()
     
-    NotificationCenter.default.addObserver(self, selector: #selector(NewTweetViewController.willShowKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     
     profileImageView.layer.cornerRadius = 4.0
     profileImageView.clipsToBounds = true
@@ -62,7 +62,7 @@ class NewTweetViewController: UIViewController {
     textView.delegate = self
   }
   
-  fileprivate func setupInitialValues(){
+  fileprivate func setupInitialValues() {
     currentUser = TwitterUser.currentUser
     profileImageView.setImageWith(currentUser.profileImageURL() as URL!)
     userNameLabel.text = currentUser.name
@@ -86,7 +86,7 @@ class NewTweetViewController: UIViewController {
   func willShowKeyboard(_ notification: Notification) {
     if let userInfo = notification.userInfo {
       let kbSize = ((userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size)!
-      tweetTextViewBottomToSuperHeightConstraint.constant = kbSize.height
+      textViewBottomToSuperHeightConstraint.constant = kbSize.height
     }
   }
   
@@ -98,8 +98,7 @@ class NewTweetViewController: UIViewController {
   func onTapTweetBarButton(_ sender: UIBarButtonItem) {
     tweetTextView.resignFirstResponder()
     if tweetTextView.text.characters.count > 0 {
-      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion:
-        {(success: Bool?, error: NSError?) -> () in
+      TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID, completion: {(_, error: Error?) -> Void in
           if let error = error {
             print(error.localizedDescription)
           } else {

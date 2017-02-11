@@ -46,7 +46,7 @@ class TwitterUserProfileViewController: UIViewController {
     setupGestureRecognizer()
   }
   
-  fileprivate func setupNavigationBar(){
+  fileprivate func setupNavigationBar() {
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(TwitterUserProfileViewController.createNewTweet(_:)))
     if user == UserManager.sharedInstance.currentUser {
       self.title = "Me"
@@ -55,7 +55,7 @@ class TwitterUserProfileViewController: UIViewController {
     }
   }
   
-  fileprivate func setupAppearance(){
+  fileprivate func setupAppearance() {
     statusCountContainerView.layer.borderWidth = 0.5
     statusCountContainerView.layer.borderColor = UIColor.lightGray.cgColor
     friendsCountContainerView.layer.borderWidth = 0.5
@@ -67,7 +67,7 @@ class TwitterUserProfileViewController: UIViewController {
     profileImageView.clipsToBounds = true
   }
   
-  fileprivate func setupInitialValues(){
+  fileprivate func setupInitialValues() {
     leftBackgroundImageView.setImageWith(URL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
     rightBackgroundImageView.setImageWith(URL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
     profileImageView.setImageWith(URL(string: user.profileImageURLString))
@@ -79,7 +79,7 @@ class TwitterUserProfileViewController: UIViewController {
     followerCountLabel.text = String(user.followersCount)
   }
   
-  fileprivate func setupPaging(){
+  fileprivate func setupPaging() {
     profileScrollView.delegate = self
     profileScrollView.isPagingEnabled = true
     profileScrollView.showsHorizontalScrollIndicator = false
@@ -132,7 +132,7 @@ class TwitterUserProfileViewController: UIViewController {
   
   @IBAction func pageControlDidPage(_ sender: UIPageControl) {
     let xOffset = profileScrollView.bounds.width * CGFloat(pageControl.currentPage)
-    profileScrollView.setContentOffset(CGPoint(x: xOffset,y: 0) , animated: true)
+    profileScrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: true)
   }
   
 }

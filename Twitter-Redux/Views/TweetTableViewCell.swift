@@ -31,18 +31,18 @@ class TweetTableViewCell: UITableViewCell {
   @IBOutlet fileprivate weak var favoriteCountLabel: UILabel!
   
   @IBOutlet fileprivate weak var retweetOrReplyContainerView: UIView!
-  @IBOutlet fileprivate weak var retweetOrReplyContainerViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var retweetContainerViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet fileprivate weak var retweetOrReplyIcon: UIImageView!
   @IBOutlet fileprivate weak var retweetOrReplyLabel: UILabel!
   
-  @IBOutlet fileprivate weak var profileImageTopToContainerHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var profileTopToContainerHeightConstraint: NSLayoutConstraint!
   
   // MARK: - Properties
   var tweetToShow: Tweet!
   weak var delegate: AnyObject?
   
   var tweet: Tweet! {
-    didSet{
+    didSet {
       tweetToShow = tweet.originalTweet ?? tweet
       updateContent()
       setupAppearance()
@@ -74,8 +74,8 @@ class TweetTableViewCell: UITableViewCell {
     
     if tweet.isRetweet || tweet.isReply {
       retweetOrReplyContainerView.isHidden = false
-      retweetOrReplyContainerViewHeightConstraint.constant = 25
-      profileImageTopToContainerHeightConstraint.constant = 0
+      retweetContainerViewHeightConstraint.constant = 25
+      profileTopToContainerHeightConstraint.constant = 0
       if tweet.isRetweet {
         retweetOrReplyIcon.image = UIImage(named: "retweet")
         retweetOrReplyLabel.text = "\(tweet.userName!) Retweeted"
@@ -85,8 +85,8 @@ class TweetTableViewCell: UITableViewCell {
       }
     } else {
       retweetOrReplyContainerView.isHidden = true
-      retweetOrReplyContainerViewHeightConstraint.constant = 0
-      profileImageTopToContainerHeightConstraint.constant = 15
+      retweetContainerViewHeightConstraint.constant = 0
+      profileTopToContainerHeightConstraint.constant = 15
     }
     
   }
@@ -98,8 +98,8 @@ class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Behavior
   @IBAction func onTapRetweetButton(_ sender: AnyObject) {
-    if tweetToShow.retweeted == true{
-      TwitterUser.unretweet(tweetToShow) { (response, error) -> () in
+    if tweetToShow.retweeted == true {
+      TwitterUser.unretweet(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Unretweet Error: \(error.localizedDescription)")
         } else {
@@ -107,7 +107,7 @@ class TweetTableViewCell: UITableViewCell {
         }
       }
     } else {
-      TwitterUser.retweet(tweetToShow) { (response, error) -> () in
+      TwitterUser.retweet(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Retweet Error: \(error.localizedDescription)")
         } else {
@@ -118,8 +118,8 @@ class TweetTableViewCell: UITableViewCell {
   }
   
   @IBAction func onTapFavoriteButton(_ sender: UIButton) {
-    if tweetToShow.favorited == true{
-      TwitterUser.unfavorite(tweetToShow) { (response, error) -> () in
+    if tweetToShow.favorited == true {
+      TwitterUser.unfavorite(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Unfavorite Error: \(error.localizedDescription)")
         } else {
@@ -127,7 +127,7 @@ class TweetTableViewCell: UITableViewCell {
         }
       }
     } else {
-      TwitterUser.favorite(tweetToShow) { (response, error) -> () in
+      TwitterUser.favorite(tweetToShow) { (_, error) -> Void in
         if let error = error {
           print("Favorite Error: \(error.localizedDescription)")
         } else {
@@ -145,7 +145,7 @@ class TweetTableViewCell: UITableViewCell {
     delegate?.tweetTableViewCell!(self, didTapProfileImage: profileImageView)
   }
   
-  //  MARK: - Lifecycel
+  // MARK: - Lifecycel
   override func awakeFromNib() {
     super.awakeFromNib()
     
