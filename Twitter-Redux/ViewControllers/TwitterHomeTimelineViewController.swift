@@ -54,7 +54,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   fileprivate func setupRefreshControl(_ refreshControl: UIRefreshControl) {
-    refreshControl.addTarget(self, action: #selector(TwitterHomeTimelineViewController.refreshTweets), for: .valueChanged)
+    refreshControl.addTarget(self, action: #selector(refreshTweets), for: .valueChanged)
     tweetsTableView.insertSubview(refreshControl, at: 0)
     
     tweetsTableView.infiniteScrollIndicatorStyle = .gray
@@ -64,7 +64,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(TwitterHomeTimelineViewController.createNewTweet(_:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(createNewTweet(_:)))
   }
   
   // MARK: - Behavior

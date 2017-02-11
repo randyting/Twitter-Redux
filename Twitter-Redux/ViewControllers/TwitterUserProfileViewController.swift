@@ -47,7 +47,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(TwitterUserProfileViewController.createNewTweet(_:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(createNewTweet(_:)))
     if user == UserManager.sharedInstance.currentUser {
       self.title = "Me"
     } else {
@@ -86,7 +86,7 @@ class TwitterUserProfileViewController: UIViewController {
   }
   
   fileprivate func setupGestureRecognizer() {
-    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(TwitterUserProfileViewController.onPanGesture(_:)))
+    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onPanGesture(_:)))
     blurGestureRecognizer.delegate = self
     view.addGestureRecognizer(blurGestureRecognizer)
   }

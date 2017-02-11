@@ -29,13 +29,13 @@ class MainViewController: UIViewController {
     
     setupShadowBehindView(containerView)
     setupObservers()
-    containerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(MainViewController.onContainerViewPanGesture(_:))))
+    containerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onContainerViewPanGesture(_:))))
   }
   
   // MARK: - Setup
   fileprivate func setupObservers() {
-    NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onUserLogin(_:)), name: NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.onUserLogout(_:)), name: NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(onUserLogin(_:)), name: NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(onUserLogout(_:)), name: NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
   }
   
   fileprivate func setupShadowBehindView(_ view: UIView) {

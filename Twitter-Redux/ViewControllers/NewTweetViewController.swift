@@ -89,7 +89,7 @@ class NewTweetViewController: UIViewController {
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: NewTweetViewControllerConstants.dismissButtonImageName),
                                                        style: .plain,
                                                        target: self,
-                                                       action: #selector(NewTweetViewController.onTapCancelBarButton(_:)))
+                                                       action: #selector(onTapCancelBarButton(_:)))
   }
   
   // MARK: - Behavior
