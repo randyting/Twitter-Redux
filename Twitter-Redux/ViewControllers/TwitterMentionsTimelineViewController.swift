@@ -46,7 +46,7 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
                                                withSinceID: String(tweets.last!.id - 1),
                                                withMaxID: nil)
     
-    currentUser.homeTimelineWithParams(params) { (tweets, error) -> Void in
+    currentUser.mentionsTimelineWithParams(params) { (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
