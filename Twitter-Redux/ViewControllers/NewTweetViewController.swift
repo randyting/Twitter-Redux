@@ -68,7 +68,7 @@ class NewTweetViewController: UIViewController {
   
   fileprivate func setupInitialValues() {
     currentUser = TwitterUser.currentUser
-    profileImageView.setImageWith(currentUser.profileImageURL() as URL!)
+    profileImageView.setImageWith(currentUser.profileImageURL())
     userNameLabel.text = currentUser.name
     userScreennameLabel.text = "@" + currentUser.screenname
     if let inReplyToUserScreenname = inReplyToUserScreenname {
