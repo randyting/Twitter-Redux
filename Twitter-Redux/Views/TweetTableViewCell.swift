@@ -67,7 +67,7 @@ class TweetTableViewCell: UITableViewCell {
   fileprivate func setupProfileImageView() {
     profileImageView.layer.cornerRadius = TweetTableViewCellConstants.profileViewCornerRadius
     profileImageView.clipsToBounds = true
-    profileImageView.setImageWith(tweetToShow.profileImageURL as URL!)
+    profileImageView.setImageWith(tweetToShow.profileImageURL)
     profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfileImage(_:))))
   }
   
