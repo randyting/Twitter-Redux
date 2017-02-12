@@ -8,15 +8,15 @@
 
 import UIKit
 
-class TwitterDetailDateFormatter: NSDateFormatter {
+class TwitterDetailDateFormatter: DateFormatter {
 
   static let sharedInstance = TwitterDetailDateFormatter()
   
   required override init() {
     super.init()
     dateFormat = "M/d/yyyy, HH:mm a"
-    AMSymbol = "am"
-    PMSymbol = "pm"
+    amSymbol = "am"
+    pmSymbol = "pm"
   }
   
   required init?(coder aDecoder: NSCoder) {

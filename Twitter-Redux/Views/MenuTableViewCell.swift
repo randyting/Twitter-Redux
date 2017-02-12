@@ -12,7 +12,7 @@ class MenuTableViewCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    layoutMargins = UIEdgeInsetsZero
+    layoutMargins = UIEdgeInsets.zero
     preservesSuperviewLayoutMargins = false
   }
 }

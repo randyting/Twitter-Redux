@@ -11,18 +11,17 @@ import UIKit
 class MainViewController: UIViewController {
   
   // MARK: - Constants
-  private let containerShownXConstraintValue = CGFloat(0)
-  private let containerHiddenXConstraintValue = MenuViewController.Constants.menuWidth
+  fileprivate let containerShownXConstraintValue = CGFloat(0)
+  fileprivate let containerHiddenXConstraintValue = MenuViewController.Constants.menuWidth
   
   // MARK: - Xib Objects
   @IBOutlet weak var containerView: UIView!
-  @IBOutlet private weak var containerViewCenterXConstraint: NSLayoutConstraint!
-  
+  @IBOutlet fileprivate weak var containerViewCenterXConstraint: NSLayoutConstraint!
   
   // MARK: - Instance Variables
-  private var beganPanGestureContainerCenterX: CGFloat!
-  private var containerVelocity: CGFloat!
-  private var containerShouldMove = false
+  fileprivate var beganPanGestureContainerCenterX: CGFloat!
+  fileprivate var containerVelocity: CGFloat!
+  fileprivate var containerShouldMove = false
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -30,54 +29,43 @@ class MainViewController: UIViewController {
     
     setupShadowBehindView(containerView)
     setupObservers()
-    containerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "onContainerViewPanGesture:"))
+    containerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onContainerViewPanGesture(_:))))
   }
   
   // MARK: - Setup
-  private func setupObservers() {
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogin:", name: userDidLoginNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "onUserLogout:", name: userDidLogoutNotification, object: nil)
+  fileprivate func setupObservers() {
+    NotificationCenter.default.addObserver(self, selector: #selector(onUserLogin(_:)), name: NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(onUserLogout(_:)), name: NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
   }
   
-  private func setupShadowBehindView(view: UIView){
-    view.layer.masksToBounds = false;
-    view.layer.shadowOffset = CGSizeMake(-5, 0);
-    view.layer.shadowRadius = 5;
-    view.layer.shadowOpacity = 0.5;
+  fileprivate func setupShadowBehindView(_ view: UIView) {
+    view.layer.masksToBounds = false
+    view.layer.shadowOffset = CGSize(width: -5, height: 0)
+    view.layer.shadowRadius = 5
+    view.layer.shadowOpacity = 0.5
   }
   
   // MARK: - Behavior
-  func onUserLogin(notification: NSNotification) {
-    selectViewController(MenuVCManager.sharedInstance.vcArray[0])
+  func onUserLogin(_ notification: Notification) {
+    selectViewController(selectedViewController: MenuVCManager.sharedInstance.vcArray[0])
   }
   
-  func onUserLogout(notification: NSNotification) {
+  func onUserLogout(_ notification: Notification) {
     let loginVC = TwitterLoginViewController()
-    selectViewController(loginVC)
+    selectViewController(selectedViewController: loginVC)
   }
   
-  func onContainerViewPanGesture(sender: UIPanGestureRecognizer) {
+  func onContainerViewPanGesture(_ sender: UIPanGestureRecognizer) {
     
     let state = sender.state
     
     switch state {
-    case .Began:
+    case .began:
       beganPanGestureContainerCenterX = containerViewCenterXConstraint.constant
-    case .Changed:
-      containerVelocity = sender.velocityInView(view).x
-      
-      if (containerViewCenterXConstraint.constant >= containerShownXConstraintValue &&
-        containerViewCenterXConstraint.constant <= containerHiddenXConstraintValue){
-          containerViewCenterXConstraint.constant = beganPanGestureContainerCenterX + sender.translationInView(view).x
-          
-          if containerViewCenterXConstraint.constant < containerShownXConstraintValue {
-            containerViewCenterXConstraint.constant = containerShownXConstraintValue
-          } else if containerViewCenterXConstraint.constant > containerHiddenXConstraintValue {
-            containerViewCenterXConstraint.constant = containerHiddenXConstraintValue
-          }
-          containerShouldMove = true
-      }
-    case .Ended:
+    case .changed:
+      containerVelocity = sender.velocity(in: view).x
+      moveContainerView(withTranslation: sender.translation(in: view))
+    case .ended:
       if containerShouldMove {
         if containerVelocity >= 0 {
           hideContainerView()
@@ -86,67 +74,94 @@ class MainViewController: UIViewController {
         }
         containerShouldMove = false
       }
-    case .Cancelled:
+    case .cancelled:
       containerViewCenterXConstraint.constant = beganPanGestureContainerCenterX
-    case .Possible:
+    case .possible:
       break
-    case .Failed:
+    case .failed:
       break
     }
   }
   
-  private func hideContainerView(){
-    UIView.animateWithDuration(0.5,
+  fileprivate func moveContainerView(withTranslation translation: CGPoint) {
+    if containerViewCenterXConstraint.constant >= containerShownXConstraintValue &&
+      containerViewCenterXConstraint.constant <= containerHiddenXConstraintValue {
+      containerViewCenterXConstraint.constant = beganPanGestureContainerCenterX + translation.x
+      
+      if containerViewCenterXConstraint.constant < containerShownXConstraintValue {
+        containerViewCenterXConstraint.constant = containerShownXConstraintValue
+      } else if containerViewCenterXConstraint.constant > containerHiddenXConstraintValue {
+        containerViewCenterXConstraint.constant = containerHiddenXConstraintValue
+      }
+      containerShouldMove = true
+    }
+  }
+  
+  fileprivate func hideContainerView() {
+    UIView.animate(withDuration: 0.5,
       delay: 0,
       usingSpringWithDamping: 1.0,
       initialSpringVelocity: 1.0,
-      options: UIViewAnimationOptions.CurveEaseInOut,
+      options: UIViewAnimationOptions(),
       animations: { () -> Void in
         self.containerViewCenterXConstraint.constant = self.containerHiddenXConstraintValue
         self.view.layoutIfNeeded()
       }, completion: nil)
   }
   
-  private func showContainerView(){
-    UIView.animateWithDuration(0.5,
+  fileprivate func showContainerView() {
+    UIView.animate(withDuration: 0.5,
       delay: 0,
       usingSpringWithDamping: 1.0,
       initialSpringVelocity: 1.0,
-      options: UIViewAnimationOptions.CurveEaseInOut,
+      options: UIViewAnimationOptions(),
       animations: { () -> Void in
         self.containerViewCenterXConstraint.constant = self.containerShownXConstraintValue
         self.view.layoutIfNeeded()
       }, completion: nil)
   }
+
+  private func showContainerViewWithCompletion(completion: @escaping (Bool) -> Void ) {
+    UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: 1.0,
+                               initialSpringVelocity: 1.0,
+                               options: UIViewAnimationOptions.curveEaseInOut,
+                               animations: { () -> Void in
+                                self.containerViewCenterXConstraint.constant = self.containerShownXConstraintValue
+                                self.view.layoutIfNeeded()
+      }, completion: completion)
+  }
   
   func selectViewController(selectedViewController: UIViewController) {
-    
-    if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
-      currentViewController.willMoveToParentViewController(nil)
-      currentViewController.view.removeFromSuperview()
-      currentViewController.removeFromParentViewController()
+    showContainerViewWithCompletion { (_: Bool) in
+      if let currentViewController = MenuVCManager.sharedInstance.currentViewController {
+        currentViewController.willMove(toParentViewController: nil)
+        currentViewController.view.removeFromSuperview()
+        currentViewController.removeFromParentViewController()
+      }
+      self.addChildViewController(selectedViewController)
+      selectedViewController.view.frame = self.containerView.bounds
+      selectedViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+      self.containerView.addSubview(selectedViewController.view)
+      selectedViewController.didMove(toParentViewController: self)
+      
+      MenuVCManager.sharedInstance.currentViewController = selectedViewController
     }
-    self.addChildViewController(selectedViewController)
-    selectedViewController.view.frame = containerView.bounds
-    selectedViewController.view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-    containerView.addSubview(selectedViewController.view)
-    selectedViewController.didMoveToParentViewController(self)
-    
-    MenuVCManager.sharedInstance.currentViewController = selectedViewController
-    showContainerView()
+
   }
   
   // MARK: - Deinit
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
   }
   
 }
 
 // MARK: - MenuViewController Delegate
 extension MainViewController: MenuViewControllerDelegate {
-  func menuViewController(menuViewController: MenuViewController, selectedViewController: UIViewController) {
-    selectViewController(selectedViewController)
+  func menuViewController(_ menuViewController: MenuViewController, selectedViewController: UIViewController) {
+    selectViewController(selectedViewController: selectedViewController)
     showContainerView()
   }
 }

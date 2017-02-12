@@ -11,21 +11,21 @@ import UIKit
 class TweetDetailViewController: UIViewController {
 
   // MARK: - Constants
-  private let replyToTweetSegueIdentifier = "ReplyToTweetSegue"
+  fileprivate let replyToTweetSegueIdentifier = "ReplyToTweetSegue"
   
   // MARK: - Storyboard Objects
-  @IBOutlet private weak var tweetTextLabel: UILabel!
-  @IBOutlet private weak var userScreennameLabel: UILabel!
-  @IBOutlet private weak var profileImageView: UIImageView!
-  @IBOutlet private weak var userNameLabel: UILabel!
-  @IBOutlet private weak var createdTimeLabel: UILabel!
+  @IBOutlet fileprivate weak var tweetTextLabel: UILabel!
+  @IBOutlet fileprivate weak var userScreennameLabel: UILabel!
+  @IBOutlet fileprivate weak var profileImageView: UIImageView!
+  @IBOutlet fileprivate weak var userNameLabel: UILabel!
+  @IBOutlet fileprivate weak var createdTimeLabel: UILabel!
   
-  @IBOutlet private weak var retweetCountLabel: UILabel!
-  @IBOutlet private weak var favoriteCountLabel: UILabel!
+  @IBOutlet fileprivate weak var retweetCountLabel: UILabel!
+  @IBOutlet fileprivate weak var favoriteCountLabel: UILabel!
   
-  @IBOutlet private weak var favoriteButton: UIButton!
-  @IBOutlet private weak var replyButton: UIButton!
-  @IBOutlet private weak var retweetButton: UIButton!
+  @IBOutlet fileprivate weak var favoriteButton: UIButton!
+  @IBOutlet fileprivate weak var replyButton: UIButton!
+  @IBOutlet fileprivate weak var retweetButton: UIButton!
   
   // MARK: - Properties
   var tweet: Tweet!
@@ -39,37 +39,38 @@ class TweetDetailViewController: UIViewController {
   }
   
   // MARK: - Setup
-  private func updateContent() {
-    profileImageView.setImageWithURL(tweet.profileImageURL)
-    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTapProfileImage:"))
+  fileprivate func updateContent() {
+    profileImageView.setImageWith(tweet.profileImageURL as URL!)
+    profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfileImage(_:))))
     tweetTextLabel.text = tweet.text
     userNameLabel.text = tweet.userName
     userScreennameLabel.text = "@" + tweet.userScreenname
     favoriteCountLabel.text = String(tweet.favoriteCount)
     retweetCountLabel.text = String(tweet.retweetCount)
-    createdTimeLabel.text = TwitterDetailDateFormatter.sharedInstance.stringFromDate(TwitterDateFormatter.sharedInstance.dateFromString(tweet.createdAt)!)
+    createdTimeLabel.text = TwitterDetailDateFormatter.sharedInstance.string(from: TwitterDateFormatter.sharedInstance.date(from: tweet.createdAt)!)
     if tweet.favorited == true {
-      favoriteButton.setImage(UIImage(named: "favorite_on"), forState: UIControlState.Normal)
+      favoriteButton.setImage(UIImage(named: "favorite_on"), for: UIControlState())
     } else {
-      favoriteButton.setImage(UIImage(named: "favorite"), forState: UIControlState.Normal)
+      favoriteButton.setImage(UIImage(named: "favorite"), for: UIControlState())
     }
     if tweet.retweeted == true {
-      retweetButton.setImage(UIImage(named: "retweet_on"), forState: UIControlState.Normal)
+      retweetButton.setImage(UIImage(named: "retweet_on"), for: UIControlState())
     } else {
-      retweetButton.setImage(UIImage(named: "retweet"), forState: UIControlState.Normal)
+      retweetButton.setImage(UIImage(named: "retweet"), for: UIControlState())
     }
   }
   
-  private func setupAppearance() {
+  fileprivate func setupAppearance() {
     profileImageView.layer.cornerRadius = 4.0
     profileImageView.clipsToBounds = true
+    edgesForExtendedLayout = UIRectEdge()
   }
   
   // MARK: - Behavior
-  func onTapProfileImage(sender: UITapGestureRecognizer) {
+  func onTapProfileImage(_ sender: UITapGestureRecognizer) {
     let profileVC = TwitterUserProfileViewController()
     
-    TwitterUser.userWithScreenName(tweet.userScreenname) { (user, error) -> () in
+    TwitterUser.userWithScreenName(tweet.userScreenname) { (user, error) -> Void in
       if let error = error {
         print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
       } else {
@@ -79,9 +80,9 @@ class TweetDetailViewController: UIViewController {
     }
   }
   
-  @IBAction func onTapFavoriteButton(sender: AnyObject) {
-    if tweet.favorited == true{
-      TwitterUser.unfavorite(tweet) { (response, error) -> () in
+  @IBAction func onTapFavoriteButton(_ sender: AnyObject) {
+    if tweet.favorited == true {
+      TwitterUser.unfavorite(tweet) { (_, error) -> Void in
         if let error = error {
           print("Unfavorite Error: \(error.localizedDescription)")
         } else {
@@ -89,7 +90,7 @@ class TweetDetailViewController: UIViewController {
         }
       }
     } else {
-      TwitterUser.favorite(tweet) { (response, error) -> () in
+      TwitterUser.favorite(tweet) { (_, error) -> Void in
         if let error = error {
           print("Favorite Error: \(error.localizedDescription)")
         } else {
@@ -99,9 +100,9 @@ class TweetDetailViewController: UIViewController {
     }
   }
   
-  @IBAction func onTapRetweet(sender: AnyObject) {
-    if tweet.retweeted == true{
-      TwitterUser.unretweet(tweet) { (response, error) -> () in
+  @IBAction func onTapRetweet(_ sender: AnyObject) {
+    if tweet.retweeted == true {
+      TwitterUser.unretweet(tweet) { (_, error) -> Void in
         if let error = error {
           print("Unretweet Error: \(error.localizedDescription)")
         } else {
@@ -109,7 +110,7 @@ class TweetDetailViewController: UIViewController {
         }
       }
     } else {
-      TwitterUser.retweet(tweet) { (response, error) -> () in
+      TwitterUser.retweet(tweet) { (_, error) -> Void in
         if let error = error {
           print("Retweet Error: \(error.localizedDescription)")
         } else {
@@ -119,19 +120,19 @@ class TweetDetailViewController: UIViewController {
     }
   }
   
-  @IBAction func onTapReplyButton(sender: AnyObject) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweet, forViewController: self)
+  @IBAction func onTapReplyButton(_ sender: AnyObject) {
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweet, forViewController: self)
   }
 
 }
 
 // MARK: - NewTweetViewControllerDelegate
 extension TweetDetailViewController: NewTweetViewControllerDelegate {
-  func newTweetViewController(newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
-    dismissViewControllerAnimated(true, completion: nil)
+  func newTweetViewController(_ newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
+    dismiss(animated: true, completion: nil)
   }
   
-  func newTweetViewController(newTweetViewController: NewTweetViewController, didPostTweetText: String) {
-    dismissViewControllerAnimated(true, completion: nil)
+  func newTweetViewController(_ newTweetViewController: NewTweetViewController, didPostTweetText: String) {
+    dismiss(animated: true, completion: nil)
   }
 }

@@ -1,0 +1,16 @@
+disabled_rules:
+  - line_length
+  - trailing_whitespace
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+  - Twitter-Redux/Models/MenuVCManager.swift 
+  - Twitter-Redux/Models/TwitterUser.swift
+  - Twitter-Redux/Models/Tweet.swift
+  - Twitter-Redux/API/TwitterClient.swift
+custom_rules:
+  use_us_english:
+    included: ".*.swift"
+    name: "Use US English"
+    regex: "([c,C]olour|[f,F]avourite)"
+    message: "Use US English where possible. e.g. 'color' instead of 'colour'."

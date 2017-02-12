@@ -25,6 +25,7 @@ PODS:
     - AFNetworking/NSURLSession (~> 2.5.0)
   - DXTimestamper (0.1.0)
   - FXBlurView (1.6.4)
+  - SwiftLint (0.16.1)
   - UIScrollView-InfiniteScroll (0.7.3)
 
 DEPENDENCIES:
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - BDBOAuth1Manager
   - DXTimestamper
   - FXBlurView
+  - SwiftLint
   - UIScrollView-InfiniteScroll
 
 SPEC CHECKSUMS:
@@ -39,6 +41,9 @@ SPEC CHECKSUMS:
   BDBOAuth1Manager: 2e28773b58f880fb36b5cd3efcf0b1fefbc78a99
   DXTimestamper: 820bfa89bd230a108e421a66249ad55d08269a6a
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
+  SwiftLint: b8b683208cc09640898f16318a7a452274e91f61
   UIScrollView-InfiniteScroll: b6c7d6d155dca7f9c5dd43813ecffeb301b3d50c
 
-COCOAPODS: 0.38.2
+PODFILE CHECKSUM: 38014efd7e558a04a87d8b8d07c115407b80c602
+
+COCOAPODS: 1.2.0

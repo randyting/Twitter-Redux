@@ -9,7 +9,7 @@
 import UIKit
 
 class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
-
+  
   init() {
     super.init(nibName: "TwitterHomeTimelineViewController", bundle: nil)
     //Do whatever you want here
@@ -19,20 +19,20 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
     super.init(nibName: "TwitterHomeTimelineViewController", bundle: nil)
   }
   
-  override func setupInitialValues(){
+  override func setupInitialValues() {
     title = "Mentions"
     currentUser = UserManager.sharedInstance.currentUser
     refreshTweets()
   }
   
-  override func refreshTweets(){
-    currentUser.mentionsTimelineWithParams(nil) { (tweets, error) -> () in
+  override func refreshTweets() {
+    currentUser.mentionsTimelineWithParams(nil) { (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
         self.tweets = tweets
         self.tweetsTableView.reloadData()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
           self.refreshControl.endRefreshing()
         })
       }
@@ -40,23 +40,23 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
   }
   
   override func loadOlderTweets() {
-    let params = TwitterHomeTimelineParameters()
     
-    if let tweets = tweets {  // Unwrap tweets because bottom refresh control calls selector when view is loaded
-      params.maxId = String((tweets.last!.id! - 1))
-      params.count = 20
-      
-      currentUser.homeTimelineWithParams(params) { (tweets, error) -> () in
-        if let error = error {
-          print(error.localizedDescription)
-        } else {
-          self.tweets? += tweets!
-          self.tweetsTableView.reloadData()
-          dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.tweetsTableView.finishInfiniteScroll()
-          })
-        }
+    guard let tweets = tweets else { return }
+    let params = TwitterHomeTimelineParameters(withCount: 20,
+                                               withSinceID: nil,
+                                               withMaxID: String(tweets.last!.id - 1))
+    
+    currentUser.mentionsTimelineWithParams(params) { (tweets, error) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        self.tweets? += tweets!
+        self.tweetsTableView.reloadData()
+        DispatchQueue.main.async(execute: { () -> Void in
+          self.tweetsTableView.finishInfiniteScroll()
+        })
       }
     }
+    
   }
 }

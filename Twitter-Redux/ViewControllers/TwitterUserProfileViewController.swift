@@ -10,32 +10,32 @@ import UIKit
 
 class TwitterUserProfileViewController: UIViewController {
   
-  @IBOutlet private weak var profileScrollView: UIScrollView!
-  @IBOutlet private weak var contentView: UIView!
-  @IBOutlet private weak var leftBackgroundImageView: UIImageView!
-  @IBOutlet private weak var rightBackgroundImageView: UIImageView!
-  @IBOutlet private weak var profileImageView: UIImageView!
-  @IBOutlet private weak var userNameLabel: UILabel!
-  @IBOutlet private weak var userScreennameLabel: UILabel!
-  @IBOutlet private weak var userDescriptionLabel: UILabel!
-  @IBOutlet private weak var pageControl: UIPageControl!
-  @IBOutlet private weak var statusCountLabel: UILabel!
-  @IBOutlet private weak var friendsCountLabel: UILabel!
-  @IBOutlet private weak var followerCountLabel: UILabel!
-  @IBOutlet private weak var statusCountContainerView: UIView!
-  @IBOutlet private weak var friendsCountContainerView: UIView!
-  @IBOutlet private weak var followerCountContainerView: UIView!
+  @IBOutlet fileprivate weak var profileScrollView: UIScrollView!
+  @IBOutlet fileprivate weak var contentView: UIView!
+  @IBOutlet fileprivate weak var leftBackgroundImageView: UIImageView!
+  @IBOutlet fileprivate weak var rightBackgroundImageView: UIImageView!
+  @IBOutlet fileprivate weak var profileImageView: UIImageView!
+  @IBOutlet fileprivate weak var userNameLabel: UILabel!
+  @IBOutlet fileprivate weak var userScreennameLabel: UILabel!
+  @IBOutlet fileprivate weak var userDescriptionLabel: UILabel!
+  @IBOutlet fileprivate weak var pageControl: UIPageControl!
+  @IBOutlet fileprivate weak var statusCountLabel: UILabel!
+  @IBOutlet fileprivate weak var friendsCountLabel: UILabel!
+  @IBOutlet fileprivate weak var followerCountLabel: UILabel!
+  @IBOutlet fileprivate weak var statusCountContainerView: UIView!
+  @IBOutlet fileprivate weak var friendsCountContainerView: UIView!
+  @IBOutlet fileprivate weak var followerCountContainerView: UIView!
   
-  @IBOutlet private weak var profileScrollViewHeightConstraint: NSLayoutConstraint!
-  @IBOutlet private weak var contentViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var profileScrollViewHeightConstraint: NSLayoutConstraint!
+  @IBOutlet fileprivate weak var contentViewHeightConstraint: NSLayoutConstraint!
   
-  private var backgroundImage: UIImage?
-  private var beganPanGestureViewHeightY: CGFloat!
+  fileprivate var backgroundImage: UIImage?
+  fileprivate var beganPanGestureViewHeightY: CGFloat!
   var user: TwitterUser!
   
   override func viewDidLoad() {
     
-    edgesForExtendedLayout = .None
+    edgesForExtendedLayout = UIRectEdge()
     
     if user == UserManager.sharedInstance.currentUser {
       setupNavigationBar()
@@ -46,8 +46,8 @@ class TwitterUserProfileViewController: UIViewController {
     setupGestureRecognizer()
   }
   
-  private func setupNavigationBar(){
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .Plain, target: self, action: "createNewTweet:")
+  fileprivate func setupNavigationBar() {
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .plain, target: self, action: #selector(createNewTweet(_:)))
     if user == UserManager.sharedInstance.currentUser {
       self.title = "Me"
     } else {
@@ -55,22 +55,22 @@ class TwitterUserProfileViewController: UIViewController {
     }
   }
   
-  private func setupAppearance(){
+  fileprivate func setupAppearance() {
     statusCountContainerView.layer.borderWidth = 0.5
-    statusCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    statusCountContainerView.layer.borderColor = UIColor.lightGray.cgColor
     friendsCountContainerView.layer.borderWidth = 0.5
-    friendsCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    friendsCountContainerView.layer.borderColor = UIColor.lightGray.cgColor
     followerCountContainerView.layer.borderWidth = 0.5
-    followerCountContainerView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    followerCountContainerView.layer.borderColor = UIColor.lightGray.cgColor
     
     profileImageView.layer.cornerRadius = 4.0
     profileImageView.clipsToBounds = true
   }
   
-  private func setupInitialValues(){
-    leftBackgroundImageView.setImageWithURL(NSURL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
-    rightBackgroundImageView.setImageWithURL(NSURL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
-    profileImageView.setImageWithURL(NSURL(string: user.profileImageURLString))
+  fileprivate func setupInitialValues() {
+    leftBackgroundImageView.setImageWith(URL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
+    rightBackgroundImageView.setImageWith(URL(string: user.profileBannerImageURLString ?? user.profileBackgroundImageURLString))
+    profileImageView.setImageWith(URL(string: user.profileImageURLString))
     userNameLabel.text = user.name
     userScreennameLabel.text = "@ \(user.screenname)"
     userDescriptionLabel.text = user.userDescription
@@ -79,39 +79,39 @@ class TwitterUserProfileViewController: UIViewController {
     followerCountLabel.text = String(user.followersCount)
   }
   
-  private func setupPaging(){
+  fileprivate func setupPaging() {
     profileScrollView.delegate = self
-    profileScrollView.pagingEnabled = true
+    profileScrollView.isPagingEnabled = true
     profileScrollView.showsHorizontalScrollIndicator = false
   }
   
-  private func setupGestureRecognizer() {
-    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: "onPanGesture:")
+  fileprivate func setupGestureRecognizer() {
+    let blurGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onPanGesture(_:)))
     blurGestureRecognizer.delegate = self
     view.addGestureRecognizer(blurGestureRecognizer)
   }
   
-  func onPanGesture(sender: UIPanGestureRecognizer) {
+  func onPanGesture(_ sender: UIPanGestureRecognizer) {
     
     switch sender.state {
-    case .Began:
+    case .began:
       beganPanGestureViewHeightY = profileScrollViewHeightConstraint.constant
       backgroundImage = leftBackgroundImageView.image
-    case .Cancelled:
+    case .cancelled:
       break
-    case .Changed:
-      if sender.translationInView(view).y > 0 {
-        profileScrollViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
-        contentViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translationInView(view).y
-        leftBackgroundImageView.image = backgroundImage?.blurredImageWithRadius(abs(sender.translationInView(view).y), iterations: 2, tintColor: nil)
+    case .changed:
+      if sender.translation(in: view).y > 0 {
+        profileScrollViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translation(in: view).y
+        contentViewHeightConstraint.constant = beganPanGestureViewHeightY + sender.translation(in: view).y
+        leftBackgroundImageView.image = backgroundImage?.blurredImage(withRadius: abs(sender.translation(in: view).y), iterations: 2, tintColor: nil)
         rightBackgroundImageView.image = leftBackgroundImageView.image
       }
-    case .Ended:
-      UIView.animateWithDuration(0.5,
+    case .ended:
+      UIView.animate(withDuration: 0.5,
         delay: 0,
         usingSpringWithDamping: 1.0,
         initialSpringVelocity: 1.0,
-        options: UIViewAnimationOptions.CurveEaseInOut,
+        options: UIViewAnimationOptions(),
         animations: { () -> Void in
           self.profileScrollViewHeightConstraint.constant = self.beganPanGestureViewHeightY
           self.contentViewHeightConstraint.constant = self.beganPanGestureViewHeightY
@@ -119,44 +119,43 @@ class TwitterUserProfileViewController: UIViewController {
           self.rightBackgroundImageView.image = self.backgroundImage
           self.view.layoutIfNeeded()
         }, completion: nil)
-    case .Failed:
+    case .failed:
       break
-    case .Possible:
+    case .possible:
       break
     }
   }
   
-  func createNewTweet(sender: UIBarButtonItem) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+  func createNewTweet(_ sender: UIBarButtonItem) {
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
-  @IBAction func pageControlDidPage(sender: UIPageControl) {
+  @IBAction func pageControlDidPage(_ sender: UIPageControl) {
     let xOffset = profileScrollView.bounds.width * CGFloat(pageControl.currentPage)
-    profileScrollView.setContentOffset(CGPointMake(xOffset,0) , animated: true)
+    profileScrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: true)
   }
   
 }
 
 extension TwitterUserProfileViewController: UIGestureRecognizerDelegate {
-  func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-    // Respond only if gesture is a vertical gesture
-    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocityInView(view)
+  func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocity(in: view) // swiftlint:disable:this force_cast
     return fabs(velocity.y) > fabs(velocity.x)
   }
 }
 
 extension TwitterUserProfileViewController: UIScrollViewDelegate {
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     pageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
   }
 }
 
 extension TwitterUserProfileViewController: NewTweetViewControllerDelegate {
-  func newTweetViewController(newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
-    dismissViewControllerAnimated(true, completion: nil)
+  func newTweetViewController(_ newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
+    dismiss(animated: true, completion: nil)
   }
   
-  func newTweetViewController(newTweetViewController: NewTweetViewController, didPostTweetText: String) {
-    dismissViewControllerAnimated(true, completion: nil)
+  func newTweetViewController(_ newTweetViewController: NewTweetViewController, didPostTweetText: String) {
+    dismiss(animated: true, completion: nil)
   }
 }

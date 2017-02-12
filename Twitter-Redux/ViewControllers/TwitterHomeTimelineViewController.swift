@@ -1,159 +1,172 @@
-//
-//  TwitterHomeTimelineViewController.swift
-//  Twitter-Redux
-//
-//  Created by Randy Ting on 10/9/15.
-//  Copyright © 2015 Randy Ting. All rights reserved.
-//
-
 import UIKit
 
 class TwitterHomeTimelineViewController: UIViewController {
   
   // MARK: - Constants
-  private let tweetsCellReuseIdentifier = "tweetsCellReuseIdentifier"
+  
+  fileprivate enum HomeTimelineViewControllerConstants {
+    static fileprivate let tweetTableViewCellNibName = "TweetTableViewCell"
+    static fileprivate let tweetsCellReuseIdentifier = "com.randy.tweetsCellReuseIdentifier"
+    static fileprivate let tableViewEstimatedRowHeight: CGFloat = 300
+    static fileprivate let title = "Home"
+    static fileprivate let createNewTweetIconImageName = "compose"
+    static fileprivate let numberOfAdditionalTweetsToLoad = 20
+  }
   
   // MARK: - Properties
+  
   var currentUser: TwitterUser!
   var tweets: [Tweet]?
   let refreshControl = UIRefreshControl()
-//  let bottomRefreshControl = UIRefreshControl()
   
-  // MARK: - Storyboard
+  // MARK: - Interface Builder
+  
   @IBOutlet weak var tweetsTableView: UITableView!
   
   // MARK: - Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     setupTweetsTableView(tweetsTableView)
     setupRefreshControl(refreshControl)
-    setupInitialValues()
     setupNavigationBar()
+    setupInitialValues()
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     tweetsTableView.reloadData()
   }
   
-  
   // MARK: - Initial Setup
-  private func setupTweetsTableView(tableView: UITableView){
+  
+  fileprivate func setupTweetsTableView(_ tableView: UITableView) {
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.estimatedRowHeight = 300
+    tableView.estimatedRowHeight = HomeTimelineViewControllerConstants.tableViewEstimatedRowHeight
     tableView.rowHeight = UITableViewAutomaticDimension
-    let tweetTableViewCellNib = UINib(nibName: "TweetTableViewCell", bundle: nil)
-    tableView.registerNib(tweetTableViewCellNib, forCellReuseIdentifier: tweetsCellReuseIdentifier)
-    tableView.separatorInset = UIEdgeInsetsZero
+    let tweetTableViewCellNib = UINib(nibName: HomeTimelineViewControllerConstants.tweetTableViewCellNibName, bundle: nil)
+    tableView.register(tweetTableViewCellNib, forCellReuseIdentifier: HomeTimelineViewControllerConstants.tweetsCellReuseIdentifier)
+    tableView.separatorInset = UIEdgeInsets.zero
   }
   
-  func setupInitialValues(){
-    title = "Home"
+  func setupInitialValues() {
     currentUser = UserManager.sharedInstance.currentUser
     refreshTweets()
   }
   
-  private func setupRefreshControl(refreshControl: UIRefreshControl) {
-    refreshControl.addTarget(self, action: "refreshTweets", forControlEvents: .ValueChanged)
-    tweetsTableView.insertSubview(refreshControl, atIndex: 0)
-    
-    tweetsTableView.infiniteScrollIndicatorStyle = .Gray
-    tweetsTableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+  fileprivate func setupRefreshControl(_ refreshControl: UIRefreshControl) {
+    refreshControl.addTarget(self, action: #selector(refreshTweets), for: .valueChanged)
+    tweetsTableView.insertSubview(refreshControl, at: 0)
+    tweetsTableView.infiniteScrollIndicatorStyle = .gray
+    tweetsTableView.addInfiniteScroll { (_) -> Void in
       self.loadOlderTweets()
     }
   }
   
-  private func setupNavigationBar(){
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "compose"), style: .Plain, target: self, action: "createNewTweet:")
+  fileprivate func setupNavigationBar() {
+    title = HomeTimelineViewControllerConstants.title
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: HomeTimelineViewControllerConstants.createNewTweetIconImageName ),
+                                                        style: .plain,
+                                                        target: self,
+                                                        action: #selector(createNewTweet(_:)))
   }
   
   // MARK: - Behavior
-  func createNewTweet(sender: UIBarButtonItem) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(nil, forViewController: self)
+  
+  func createNewTweet(_ sender: UIBarButtonItem) {
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
-  func refreshTweets(){
-    currentUser.homeTimelineWithParams(nil) { (tweets, error) -> () in
+  func refreshTweets() {
+    currentUser.homeTimelineWithParams(nil) { [weak self] (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
-        self.tweets = tweets
-        self.tweetsTableView.reloadData()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-          self.refreshControl.endRefreshing()
+        guard let strongSelf = self else { return }
+        strongSelf.tweets = tweets
+        strongSelf.tweetsTableView.reloadData()
+        DispatchQueue.main.async(execute: { () -> Void in
+          strongSelf.refreshControl.endRefreshing()
         })
       }
     }
   }
   
   func loadOlderTweets() {
-    let params = TwitterHomeTimelineParameters()
+    guard let tweets = tweets else {
+      tweetsTableView.finishInfiniteScroll()
+      return
+    }
     
-    if let tweets = tweets {  // Unwrap tweets because bottom refresh control calls selector when view is loaded
-      params.maxId = String((tweets.last!.id! - 1))
-      params.count = 20
-      
-      currentUser.homeTimelineWithParams(params) { (tweets, error) -> () in
-        if let error = error {
-          print(error.localizedDescription)
-        } else {
-          self.tweets? += tweets!
-          self.tweetsTableView.reloadData()
-          dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.tweetsTableView.finishInfiniteScroll()
-          })
+    let params = TwitterHomeTimelineParameters(withCount: HomeTimelineViewControllerConstants.numberOfAdditionalTweetsToLoad,
+                                               withSinceID: nil,
+                                               withMaxID: String(tweets.last!.id - 1))
+    
+    currentUser.homeTimelineWithParams(params) { [weak self] (tweets, error) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        guard let strongSelf = self else { return }
+        strongSelf.tweets? += tweets!
+        strongSelf.tweetsTableView.reloadData()
+        DispatchQueue.main.async { () -> Void in
+          strongSelf.tweetsTableView.finishInfiniteScroll()
         }
       }
     }
   }
+  
 }
 
-// MARK: - UITableView Delegate and Datasource
-extension TwitterHomeTimelineViewController: UITableViewDelegate, UITableViewDataSource {
+// MARK: - UITableViewDelegate
+
+extension TwitterHomeTimelineViewController: UITableViewDelegate {
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tweetsTableView.dequeueReusableCellWithIdentifier(tweetsCellReuseIdentifier, forIndexPath: indexPath) as! TweetTableViewCell
-    
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    let tweetDetailViewController = TweetDetailViewController()
+    tweetDetailViewController.tweet = (tweetsTableView.cellForRow(at: indexPath) as! TweetTableViewCell).tweetToShow // swiftlint:disable:this force_cast
+    navigationController?.pushViewController(tweetDetailViewController, animated: true)
+  }
+  
+}
+
+// MARK: - UITableViewDataSource
+
+extension TwitterHomeTimelineViewController: UITableViewDataSource {
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tweetsTableView.dequeueReusableCell(withIdentifier: HomeTimelineViewControllerConstants.tweetsCellReuseIdentifier,
+                                                   for: indexPath) as! TweetTableViewCell // swiftlint:disable:this force_cast
     cell.tweet = tweets?[indexPath.row]
     cell.delegate = self
-    
     return cell
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if let tweets = tweets {
-      return tweets.count
-    } else {
-      return 0
-    }
-  }
-  
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    let tweetDetailVC = TweetDetailViewController()
-    tweetDetailVC.edgesForExtendedLayout = .None
-    tweetDetailVC.tweet = (tweetsTableView.cellForRowAtIndexPath(indexPath) as! TweetTableViewCell).tweetToShow
-    navigationController?.pushViewController(tweetDetailVC, animated: true)
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return tweets?.count ?? 0
   }
   
 }
 
 // MARK: - TweetTableViewCell Delegate
+
 extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
-  func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton) {
-    NewTweetViewController.presentNewTweetVCInReplyToTweet(tweetTableViewCell.tweetToShow, forViewController: self)
+  
+  func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton) {
+    NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweetTableViewCell.tweetToShow, forViewController: self)
   }
   
-  func tweetTableViewCell(tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {
-    let profileVC = TwitterUserProfileViewController()
-    
-    TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { (user, error) -> () in
+  func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {
+    TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { [weak self] (user, error) -> Void in
       if let error = error {
-        print("TwitterUser.userWithScreenName Error: \(error.localizedDescription)")
+        print(error.localizedDescription)
       } else {
-        profileVC.user = user
-        self.navigationController?.pushViewController(profileVC, animated: true)
+        guard let strongSelf = self else { return }
+        let profileViewController = TwitterUserProfileViewController()
+        profileViewController.user = user
+        strongSelf.navigationController?.pushViewController(profileViewController, animated: true)
       }
     }
   }
@@ -161,17 +174,16 @@ extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
 }
 
 // MARK: - NewTweetViewController Delegate
+
 extension TwitterHomeTimelineViewController: NewTweetViewControllerDelegate {
-  func newTweetViewController(newTweetViewController: NewTweetViewController, didPostTweetText: String) {
-    dismissViewControllerAnimated(true, completion: nil)
+  
+  func newTweetViewController(_ newTweetViewController: NewTweetViewController, didPostTweetText: String) {
+    dismiss(animated: true, completion: nil)
     refreshTweets()
   }
   
-  func newTweetViewController(newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
-    dismissViewControllerAnimated(true, completion: nil)
+  func newTweetViewController(_ newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool) {
+    dismiss(animated: true, completion: nil)
   }
   
 }
-
-
-

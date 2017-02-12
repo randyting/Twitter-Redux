@@ -1,5 +1,8 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager" "${PODS_ROOT}/Headers/Public/DXTimestamper" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/UIScrollView-InfiniteScroll"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager" -isystem "${PODS_ROOT}/Headers/Public/DXTimestamper" -isystem "${PODS_ROOT}/Headers/Public/FXBlurView" -isystem "${PODS_ROOT}/Headers/Public/UIScrollView-InfiniteScroll"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager" "${PODS_ROOT}/Headers/Public/DXTimestamper" "${PODS_ROOT}/Headers/Public/FXBlurView" "${PODS_ROOT}/Headers/Public/SwiftLint" "${PODS_ROOT}/Headers/Public/UIScrollView-InfiniteScroll"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/BDBOAuth1Manager" "$PODS_CONFIGURATION_BUILD_DIR/DXTimestamper" "$PODS_CONFIGURATION_BUILD_DIR/FXBlurView" "$PODS_CONFIGURATION_BUILD_DIR/UIScrollView-InfiniteScroll"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager" -isystem "${PODS_ROOT}/Headers/Public/DXTimestamper" -isystem "${PODS_ROOT}/Headers/Public/FXBlurView" -isystem "${PODS_ROOT}/Headers/Public/SwiftLint" -isystem "${PODS_ROOT}/Headers/Public/UIScrollView-InfiniteScroll"
 OTHER_LDFLAGS = $(inherited) -ObjC -l"AFNetworking" -l"BDBOAuth1Manager" -l"DXTimestamper" -l"FXBlurView" -l"UIScrollView-InfiniteScroll" -framework "Accelerate" -framework "CoreGraphics" -framework "MobileCoreServices" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods

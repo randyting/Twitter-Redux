@@ -16,26 +16,26 @@ class TwitterLoginViewController: UIViewController {
   }
   
   // MARK: - Convenience
-  private func attemptToLogin() {
-    TwitterUser.loginWithCompletion { (user: TwitterUser?, error: NSError?) -> () in
+  fileprivate func attemptToLogin() {
+    TwitterUser.loginWithCompletion { (user: TwitterUser?, error: Error?) -> Void in
       if let error = error {
         print(error.localizedDescription)
-        let alert = UIAlertController.init(title: nil, message: error.localizedDescription, preferredStyle: .Alert)
-        let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction) -> Void in
+        let alert = UIAlertController.init(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+        let tryAgainAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: { (_) -> Void in
           self.attemptToLogin()
         })
         alert.addAction(tryAgainAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
       } else {
         UserManager.sharedInstance.currentUser = user
         TwitterUser.currentUser = user
         UserManager.sharedInstance.loggedInUsers.append(user!)
-        NSNotificationCenter.defaultCenter().postNotificationName(userDidLoginNotification, object: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: userDidLoginNotification), object: self)
       }
     }
   }
 
-  @IBAction func onTapLoginButton(sender: UIButton) {
+  @IBAction func onTapLoginButton(_ sender: UIButton) {
     attemptToLogin()
   }
   

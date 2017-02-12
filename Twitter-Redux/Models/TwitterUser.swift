@@ -41,8 +41,8 @@ class TwitterUser: NSObject {
     statusesCount = dictionary["statuses_count"] as? Int
     
     let profileImageURLStringRaw = dictionary["profile_image_url_https"] as? String
-    let range = profileImageURLStringRaw!.rangeOfString("normal", options: .RegularExpressionSearch)
-    profileImageURLString = profileImageURLStringRaw!.stringByReplacingCharactersInRange(range!, withString: "bigger")
+    let range = profileImageURLStringRaw!.range(of: "normal", options: .regularExpression)
+    profileImageURLString = profileImageURLStringRaw!.replacingCharacters(in: range!, with: "bigger")
     
     profileBackgroundImageURLString = dictionary["profile_background_image_url_https"] as? String
 
@@ -55,29 +55,29 @@ class TwitterUser: NSObject {
   
   // MARK: - NSCoding
   required init(coder aDecoder: NSCoder) {
-    self.name = aDecoder.decodeObjectForKey("name") as! String
-    self.screenname = aDecoder.decodeObjectForKey("screenname") as! String
-    self.profileImageURLString = aDecoder.decodeObjectForKey("profileImageURLString") as! String
-    self.idString =  aDecoder.decodeObjectForKey("userIDString") as! String
-    self.userDescription = aDecoder.decodeObjectForKey("userDescription") as! String
-    self.followersCount = aDecoder.decodeObjectForKey("followersCount") as! Int
-    self.friendsCount = aDecoder.decodeObjectForKey("friendsCount") as! Int
-    self.statusesCount = aDecoder.decodeObjectForKey("statuses_count") as! Int
-    self.profileBackgroundImageURLString = aDecoder.decodeObjectForKey("profileBackgroundImageURLString") as! String
-    self.profileBannerImageURLString = aDecoder.decodeObjectForKey("profileBannerImageURLString") as? String
+    self.name = aDecoder.decodeObject(forKey: "name") as! String
+    self.screenname = aDecoder.decodeObject(forKey: "screenname") as! String
+    self.profileImageURLString = aDecoder.decodeObject(forKey: "profileImageURLString") as! String
+    self.idString =  aDecoder.decodeObject(forKey: "userIDString") as! String
+    self.userDescription = aDecoder.decodeObject(forKey: "userDescription") as! String
+    self.followersCount = aDecoder.decodeObject(forKey: "followersCount") as! Int
+    self.friendsCount = aDecoder.decodeObject(forKey: "friendsCount") as! Int
+    self.statusesCount = aDecoder.decodeObject(forKey: "statuses_count") as! Int
+    self.profileBackgroundImageURLString = aDecoder.decodeObject(forKey: "profileBackgroundImageURLString") as! String
+    self.profileBannerImageURLString = aDecoder.decodeObject(forKey: "profileBannerImageURLString") as? String
   }
   
-  func encodeWithCoder(aCoder: NSCoder) {
-    aCoder.encodeObject(name, forKey: "name")
-    aCoder.encodeObject(screenname, forKey: "screenname")
-    aCoder.encodeObject(profileImageURLString, forKey: "profileImageURLString")
-    aCoder.encodeObject(idString, forKey: "userIDString")
-    aCoder.encodeObject(userDescription, forKey: "userDescription")
-    aCoder.encodeObject(followersCount, forKey: "followersCount")
-    aCoder.encodeObject(friendsCount, forKey: "friendsCount")
-    aCoder.encodeObject(statusesCount, forKey: "statuses_count")
-    aCoder.encodeObject(profileBackgroundImageURLString, forKey: "profileBackgroundImageURLString")
-    aCoder.encodeObject(profileBannerImageURLString, forKey: "profileBannerImageURLString")
+  func encodeWithCoder(_ aCoder: NSCoder) {
+    aCoder.encode(name, forKey: "name")
+    aCoder.encode(screenname, forKey: "screenname")
+    aCoder.encode(profileImageURLString, forKey: "profileImageURLString")
+    aCoder.encode(idString, forKey: "userIDString")
+    aCoder.encode(userDescription, forKey: "userDescription")
+    aCoder.encode(followersCount, forKey: "followersCount")
+    aCoder.encode(friendsCount, forKey: "friendsCount")
+    aCoder.encode(statusesCount, forKey: "statuses_count")
+    aCoder.encode(profileBackgroundImageURLString, forKey: "profileBackgroundImageURLString")
+    aCoder.encode(profileBannerImageURLString, forKey: "profileBannerImageURLString")
   }
   
   // MARK: - Instance Methods
@@ -85,66 +85,77 @@ class TwitterUser: NSObject {
     UserManager.sharedInstance.currentUser = nil
     TwitterUser.currentUser = nil
     TwitterClient.sharedInstance.requestSerializer.removeAccessToken()
-    NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
+    NotificationCenter.default.post(name: Notification.Name(rawValue: userDidLogoutNotification), object: nil)
   }
   
-  func homeTimelineWithParams(params: TwitterHomeTimelineParameters?, completion: (tweets: [Tweet]?, error: NSError?) -> ()){
+  func homeTimelineWithParams(_ params: TwitterHomeTimelineParameters?, completion: @escaping (_ tweets: [Tweet]?, _ error: Error?) -> ()){
     TwitterClient.sharedInstance.homeTimelineWithParams(params, completion: completion)
   }
   
-  func mentionsTimelineWithParams(params: TwitterHomeTimelineParameters?, completion: (tweets: [Tweet]?, error: NSError?) -> ()){
+  func mentionsTimelineWithParams(_ params: TwitterHomeTimelineParameters?, completion: @escaping (_ tweets: [Tweet]?, _ error: Error?) -> ()){
     TwitterClient.sharedInstance.mentionsTimelineWithParams(params, completion: completion)
   }
   
-  func profileImageURL() -> NSURL? {
-    return NSURL(string: profileImageURLString)
+  func profileImageURL() -> URL? {
+    return URL(string: profileImageURLString)
   }
   
   // MARK: - Class Methods
-  class func loginWithCompletion(completion: (user: TwitterUser?, error: NSError?) -> ()) {
-    TwitterClient.sharedInstance.loginWithCompletion(completion)
+  class func loginWithCompletion(_ completion: @escaping (_ user: TwitterUser?, _ error: Error?) -> ()) {
+    TwitterClient.sharedInstance.loginWithCompletion (completion)
   }
   
-  class func tweetText(text: String?, inReplyToStatusID: String?, completion: (success: Bool?, error: NSError?) -> ()) {
+  class func tweetText(_ text: String?, inReplyToStatusID: String?, completion: @escaping (_ success: Bool?, _ error: Error?) -> ()) {
     TwitterClient.sharedInstance.tweetText(text, inReplyToStatusID: inReplyToStatusID, completion: completion)
   }
   
-  class func favorite(tweet: Tweet, completion: (response: AnyObject?, error: NSError?) ->()){
+  class func favorite(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     TwitterClient.sharedInstance.favorite(tweet, completion: completion)
   }
   
-  class func unfavorite(tweet: Tweet, completion: (response: AnyObject?, error: NSError?) ->()){
+  class func unfavorite(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     TwitterClient.sharedInstance.unfavorite(tweet, completion: completion)
   }
   
-  class func retweet(tweet: Tweet, completion: (response: AnyObject?, error: NSError?) ->()){
+  class func toggleFavoritedState(forTweet tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    tweet.favorited == true ? TwitterUser.unfavorite(tweet, completion: completion) : TwitterUser.favorite(tweet, completion: completion)
+  }
+  
+  
+  class func retweet(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
     TwitterClient.sharedInstance.retweet(tweet, completion: completion)
+
   }
   
-  class func unretweet(tweet: Tweet, completion: (response: AnyObject?, error: NSError?) ->()){
-    TwitterClient.sharedInstance.unretweet(tweet, completion: completion)
+  class func unretweet(_ tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    TwitterClient.sharedInstance.unretweet(tweet, completion: completion
+    )
   }
   
-  class func userWithScreenName(screenName: String?, completion: (user: TwitterUser?, error: NSError?) -> ()) {
+  class func toggleRetweetedState(forTweet tweet: Tweet, completion: @escaping (_ response: Any?, _ error: Error?) ->()){
+    tweet.retweeted == true ? TwitterUser.unretweet(tweet, completion: completion) : TwitterUser.retweet(tweet, completion: completion)
+  }
+  
+  class func userWithScreenName(_ screenName: String?, completion: @escaping (_ user: TwitterUser?, _ error: Error?) -> ()) {
     TwitterClient.sharedInstance.userWithScreenName(screenName, completion: completion)
   }
   
   // MARK: - Class Variables
   class var currentUser: TwitterUser?{
     get {
-    if let archivedUser = NSUserDefaults.standardUserDefaults().objectForKey(currentUserKey) {
-    return NSKeyedUnarchiver.unarchiveObjectWithData(archivedUser as! NSData) as? TwitterUser
+    if let archivedUser = UserDefaults.standard.object(forKey: currentUserKey) {
+    return NSKeyedUnarchiver.unarchiveObject(with: archivedUser as! Data) as? TwitterUser
     }
     return nil
     }
     set(user) {
       if let user = user {
-        let archivedUser = NSKeyedArchiver.archivedDataWithRootObject(user)
-        NSUserDefaults.standardUserDefaults().setObject(archivedUser, forKey: currentUserKey)
+        let archivedUser = NSKeyedArchiver.archivedData(withRootObject: user)
+        UserDefaults.standard.set(archivedUser, forKey: currentUserKey)
       } else {
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: currentUserKey)
+        UserDefaults.standard.set(nil, forKey: currentUserKey)
       }
-      NSUserDefaults.standardUserDefaults().synchronize()
+      UserDefaults.standard.synchronize()
     }
   }
   

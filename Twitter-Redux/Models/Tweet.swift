@@ -19,8 +19,8 @@ class Tweet: NSObject {
   let text: String!
   let userName: String!
   let userScreenname: String!
-  let profileImageURL: NSURL!
-  var mediaURL: NSURL?
+  let profileImageURL: URL!
+  var mediaURL: URL?
   var inReplyToScreenName: String?
   var favorited: Bool!
   var retweeted: Bool!
@@ -51,8 +51,8 @@ class Tweet: NSObject {
     idString = dictionary["id_str"] as? String
     retweetCount = dictionary["retweet_count"] as? Int
     text = dictionary["text"] as? String
-    userName = dictionary["user"]!["name"] as? String
-    userScreenname = dictionary["user"]!["screen_name"] as? String
+    userName = (dictionary["user"] as! [String:AnyObject])["name"] as? String
+    userScreenname = (dictionary["user"] as! [String:AnyObject])["screen_name"] as? String
     id = UInt64(idString)
     
     inReplyToScreenName = dictionary["in_reply_to_screen_name"] as? String
@@ -62,16 +62,12 @@ class Tweet: NSObject {
       originalTweet = Tweet(dictionary: retweetedStatus)
     }
     
-    var profileImageURLString = dictionary["user"]!["profile_image_url_https"] as? String
-    let range = profileImageURLString!.rangeOfString("normal.jpg", options: .RegularExpressionSearch)
+    var profileImageURLString = (dictionary["user"] as! [String:AnyObject])["profile_image_url_https"] as? String
+    let range = profileImageURLString!.range(of: "normal.jpg", options: .regularExpression)
     if let range = range {
-      profileImageURLString = profileImageURLString!.stringByReplacingCharactersInRange(range, withString: "bigger.jpg")
+      profileImageURLString = profileImageURLString!.replacingCharacters(in: range, with: "bigger.jpg")
     }
-    profileImageURL = NSURL(string: profileImageURLString!)
-    
-//    if let mediaURLString = (dictionary["entities"]?["media"] as? NSArray)![0]["media_url_https"] as? String {
-//      mediaURL = NSURL(string: mediaURLString)
-//    }
+    profileImageURL = URL(string: profileImageURLString!)
     
     favorited = dictionary["favorited"] as? Bool
     retweeted = dictionary["retweeted"] as? Bool
@@ -80,7 +76,7 @@ class Tweet: NSObject {
   }
   
   // MARK: - Class Methods
-  class func tweets(array array: [NSDictionary]) -> [Tweet] {
+  class func tweets(array: [NSDictionary]) -> [Tweet] {
     var tweets = [Tweet]()
     for tweet in array {
       tweets.append(Tweet.init(dictionary: tweet ))

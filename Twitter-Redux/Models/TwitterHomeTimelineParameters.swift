@@ -11,11 +11,10 @@ import UIKit
 class TwitterHomeTimelineParameters: NSObject {
   
   var count: Int?
-  var sinceId: String?
-  var maxId: String?
+  var sinceID: String?
+  var maxID: String?
   
-  var dictionary: [String:AnyObject]?{
-    get {
+  var dictionary: [String: AnyObject]? {
       var params: [String: AnyObject]? = [:]
       let parameterDictionary = namesAndValues()
       for (name, value) in parameterDictionary {
@@ -28,19 +27,28 @@ class TwitterHomeTimelineParameters: NSObject {
       } else {
         return params
       }
-    }
   }
   
   override init() {
     super.init()
   }
   
-  private func namesAndValues() -> [String:AnyObject?] {
+  convenience init(withCount count: Int? = nil,
+                   withSinceID sinceID: String? = nil,
+                   withMaxID maxID: String? = nil) {
+    self.init()
+    
+    self.count = count
+    self.sinceID = sinceID
+    self.maxID = maxID
+  }
+  
+  fileprivate func namesAndValues() -> [String:AnyObject?] {
     let dictionary: [String: AnyObject?] =
     [
-      "count"   : self.count,
-      "since_id": self.sinceId,
-      "max_id"  : self.maxId
+      "count": self.count as AnyObject?,
+      "since_id": self.sinceID as AnyObject?,
+      "max_id": self.maxID as AnyObject?
     ]
     
     return dictionary
