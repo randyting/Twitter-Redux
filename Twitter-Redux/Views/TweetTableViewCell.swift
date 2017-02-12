@@ -1,11 +1,3 @@
-//
-//  TweetTableViewCell.swift
-//  Twitter-Redux
-//
-//  Created by Randy Ting on 10/9/15.
-//  Copyright © 2015 Randy Ting. All rights reserved.
-//
-
 import UIKit
 
 protocol TweetTableViewCellDelegate: class {
@@ -75,7 +67,7 @@ class TweetTableViewCell: UITableViewCell {
   fileprivate func setupProfileImageView() {
     profileImageView.layer.cornerRadius = TweetTableViewCellConstants.profileViewCornerRadius
     profileImageView.clipsToBounds = true
-    profileImageView.setImageWith(tweetToShow.profileImageURL as URL!)
+    profileImageView.setImageWith(tweetToShow.profileImageURL)
     profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapProfileImage(_:))))
   }
   
@@ -112,13 +104,14 @@ class TweetTableViewCell: UITableViewCell {
   }
   
   fileprivate func updateRetweetOrReplyViews() {
-    if tweet.isRetweet || tweet.isReply {
-      setRetweetOrReplyViews(hidden: false)
-      retweetOrReplyIcon.image = tweet.isRetweet ? TweetTableViewCellConstants.retweetIconImage : TweetTableViewCellConstants.replyIconImage
-      retweetOrReplyLabel.text = tweet.isRetweet ? "\(tweet.userName!) Retweeted" : "in reply to @\(tweet.inReplyToScreenName!)"
-    } else {
+    guard tweet.isRetweet || tweet.isReply else {
       setRetweetOrReplyViews(hidden: true)
+      return
     }
+    
+    setRetweetOrReplyViews(hidden: false)
+    retweetOrReplyIcon.image = tweet.isRetweet ? TweetTableViewCellConstants.retweetIconImage : TweetTableViewCellConstants.replyIconImage
+    retweetOrReplyLabel.text = tweet.isRetweet ? "\(tweet.userName!) Retweeted" : "in reply to @\(tweet.inReplyToScreenName!)"
   }
   
   fileprivate func setRetweetOrReplyViews(hidden isHidden: Bool) {
@@ -130,45 +123,23 @@ class TweetTableViewCell: UITableViewCell {
   // MARK: - Behavior
   
   @IBAction func onTapRetweetButton(_ sender: AnyObject) {
-    if tweetToShow.retweeted == true {
-      TwitterUser.unretweet(tweetToShow) { [weak self] (_, error) -> Void in
-        if let error = error {
-          print("Unretweet Error: \(error.localizedDescription)")
-        } else {
-          guard let strongSelf = self else { return }
-          strongSelf.updateContent()
-        }
-      }
-    } else {
-      TwitterUser.retweet(tweetToShow) { [weak self] (_, error) -> Void in
-        if let error = error {
-          print("Retweet Error: \(error.localizedDescription)")
-        } else {
-          guard let strongSelf = self else { return }
-          strongSelf.updateContent()
-        }
+    TwitterUser.toggleRetweetedState(forTweet: tweetToShow) { [weak self] (_, error) in
+      if let error = error {
+        print("Toggle Retweeted Error: \(error.localizedDescription)")
+      } else {
+        guard let strongSelf = self else { return }
+        strongSelf.updateContent()
       }
     }
   }
   
   @IBAction func onTapFavoriteButton(_ sender: UIButton) {
-    if tweetToShow.favorited == true {
-      TwitterUser.unfavorite(tweetToShow) { [weak self] (_, error) -> Void in
-        if let error = error {
-          print("Unfavorite Error: \(error.localizedDescription)")
-        } else {
-          guard let strongSelf = self else { return }
-          strongSelf.updateContent()
-        }
-      }
-    } else {
-      TwitterUser.favorite(tweetToShow) { [weak self] (_, error) -> Void in
-        if let error = error {
-          print("Favorite Error: \(error.localizedDescription)")
-        } else {
-          guard let strongSelf = self else { return }
-          strongSelf.updateContent()
-        }
+    TwitterUser.toggleFavoritedState(forTweet: tweetToShow) { [weak self] (_, error) in
+      if let error = error {
+        print("Toggle Favorited Error: \(error.localizedDescription)")
+      } else {
+        guard let strongSelf = self else { return }
+        strongSelf.updateContent()
       }
     }
   }

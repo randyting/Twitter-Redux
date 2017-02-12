@@ -1,11 +1,3 @@
-//
-//  TwitterHomeTimelineViewController.swift
-//  Twitter-Redux
-//
-//  Created by Randy Ting on 10/9/15.
-//  Copyright © 2015 Randy Ting. All rights reserved.
-//
-
 import UIKit
 
 class TwitterHomeTimelineViewController: UIViewController {
@@ -32,6 +24,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   @IBOutlet weak var tweetsTableView: UITableView!
   
   // MARK: - Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -107,8 +100,8 @@ class TwitterHomeTimelineViewController: UIViewController {
     }
     
     let params = TwitterHomeTimelineParameters(withCount: HomeTimelineViewControllerConstants.numberOfAdditionalTweetsToLoad,
-                                               withSinceID: String(tweets.last!.id - 1),
-                                               withMaxID: nil)
+                                               withSinceID: nil,
+                                               withMaxID: String(tweets.last!.id - 1))
     
     currentUser.homeTimelineWithParams(params) { [weak self] (tweets, error) -> Void in
       if let error = error {
@@ -166,13 +159,12 @@ extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
   }
   
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {
-    let profileViewController = TwitterUserProfileViewController()
-    
     TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { [weak self] (user, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
         guard let strongSelf = self else { return }
+        let profileViewController = TwitterUserProfileViewController()
         profileViewController.user = user
         strongSelf.navigationController?.pushViewController(profileViewController, animated: true)
       }

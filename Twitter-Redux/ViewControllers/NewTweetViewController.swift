@@ -33,6 +33,9 @@ class NewTweetViewController: UIViewController {
   fileprivate var inReplyToStatusID: String?
   fileprivate var inReplyToUserScreenname: String?
   fileprivate var characterCountBarButtonItem: UIBarButtonItem!
+  fileprivate var remainigCharacterCountString: String {
+    return String(NewTweetViewControllerConstants.maxTweetLength - tweetTextView.text.characters.count)
+  }
   
   // MARK: - Lifecycle
   
@@ -54,7 +57,10 @@ class NewTweetViewController: UIViewController {
     automaticallyAdjustsScrollViewInsets = false
     edgesForExtendedLayout = UIRectEdge()
     
-    NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(willShowKeyboard(_:)),
+                                           name: NSNotification.Name.UIKeyboardWillShow,
+                                           object: nil)
     
     profileImageView.layer.cornerRadius = NewTweetViewControllerConstants.profileImageViewCornerRadius
     profileImageView.clipsToBounds = true
@@ -68,13 +74,13 @@ class NewTweetViewController: UIViewController {
   
   fileprivate func setupInitialValues() {
     currentUser = TwitterUser.currentUser
-    profileImageView.setImageWith(currentUser.profileImageURL() as URL!)
+    profileImageView.setImageWith(currentUser.profileImageURL())
     userNameLabel.text = currentUser.name
     userScreennameLabel.text = "@" + currentUser.screenname
     if let inReplyToUserScreenname = inReplyToUserScreenname {
       tweetTextView.text = "@" + inReplyToUserScreenname + " "
     }
-    characterCountBarButtonItem.title = String(NewTweetViewControllerConstants.maxTweetLength - tweetTextView.text.characters.count)
+    characterCountBarButtonItem.title = remainigCharacterCountString
   }
   
   fileprivate func setupNavigationBar() {
@@ -95,10 +101,10 @@ class NewTweetViewController: UIViewController {
   // MARK: - Behavior
   
   func willShowKeyboard(_ notification: Notification) {
-    if let userInfo = notification.userInfo {
-      let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
-      textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
-    }
+    guard let userInfo = notification.userInfo else { return }
+    
+    let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
+    textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
   }
   
   func onTapCancelBarButton(_ sender: UIBarButtonItem) {
@@ -107,24 +113,23 @@ class NewTweetViewController: UIViewController {
   }
   
   func onTapTweetBarButton(_ sender: UIBarButtonItem) {
+    guard !tweetTextView.text.characters.isEmpty else { return }
+    
     tweetTextView.resignFirstResponder()
-    if !tweetTextView.text.characters.isEmpty {
-      TwitterUser.tweetText(tweetTextView.text,
-                            inReplyToStatusID: inReplyToStatusID,
-                            completion: {[weak self] (_, error: Error?) -> Void in
-          if let error = error {
-            print(error.localizedDescription)
-          } else {
-            guard let strongSelf = self else { return }
-            strongSelf.delegate?.newTweetViewController(strongSelf, didPostTweetText: strongSelf.tweetTextView.text)
-          }
-      })
+    TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID) {[weak self] (_, error: Error?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        guard let strongSelf = self else { return }
+        strongSelf.delegate?.newTweetViewController(strongSelf, didPostTweetText: strongSelf.tweetTextView.text)
+      }
     }
   }
   
   // MARK: - Class Methods
   
-  class func presentNewTweetViewController(inReplyToTweet tweet: Tweet?, forViewController viewController: NewTweetViewControllerDelegate!) {
+  class func presentNewTweetViewController(inReplyToTweet tweet: Tweet?,
+                                           forViewController viewController: NewTweetViewControllerDelegate!) {
     let newTweetViewController = NewTweetViewController()
     newTweetViewController.inReplyToStatusID = tweet?.idString
     newTweetViewController.inReplyToUserScreenname = tweet?.userScreenname
@@ -132,25 +137,23 @@ class NewTweetViewController: UIViewController {
     let newNavigationController = UINavigationController(rootViewController: newTweetViewController)
     (viewController as? UIViewController)?.present(newNavigationController, animated: true, completion: nil)
   }
+  
 }
 
 // MARK: - UITextViewDelegate
 
 extension NewTweetViewController: UITextViewDelegate {
   
-  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+  func textView(_ textView: UITextView,
+                shouldChangeTextIn range: NSRange,
+                replacementText text: String) -> Bool {
     let currentString = tweetTextView.text as NSString
     let newString: NSString = currentString.replacingCharacters(in: range, with: text) as NSString
     return newString.length <= NewTweetViewControllerConstants.maxTweetLength
   }
   
   func textViewDidChange(_ textView: UITextView) {
-    let text: String! = textView.text
-    if text.characters.isEmpty {
-      characterCountBarButtonItem.title = ""
-    } else {
-      characterCountBarButtonItem.title = String(NewTweetViewControllerConstants.maxTweetLength - text.characters.count)
-    }
+    characterCountBarButtonItem.title = textView.text.characters.isEmpty ? "" : remainigCharacterCountString
   }
   
 }

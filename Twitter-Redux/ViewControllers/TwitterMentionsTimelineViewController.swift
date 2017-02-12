@@ -43,8 +43,8 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
     
     guard let tweets = tweets else { return }
     let params = TwitterHomeTimelineParameters(withCount: 20,
-                                               withSinceID: String(tweets.last!.id - 1),
-                                               withMaxID: nil)
+                                               withSinceID: nil,
+                                               withMaxID: String(tweets.last!.id - 1))
     
     currentUser.mentionsTimelineWithParams(params) { (tweets, error) -> Void in
       if let error = error {
