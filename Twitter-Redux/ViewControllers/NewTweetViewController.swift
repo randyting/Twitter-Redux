@@ -33,7 +33,7 @@ class NewTweetViewController: UIViewController {
   fileprivate var inReplyToStatusID: String?
   fileprivate var inReplyToUserScreenname: String?
   fileprivate var characterCountBarButtonItem: UIBarButtonItem!
-  fileprivate var remainigCharacterCountString: String {
+  fileprivate var remainingCharacterCountString: String {
     return String(NewTweetViewControllerConstants.maxTweetLength - tweetTextView.text.characters.count)
   }
   
@@ -80,7 +80,7 @@ class NewTweetViewController: UIViewController {
     if let inReplyToUserScreenname = inReplyToUserScreenname {
       tweetTextView.text = "@" + inReplyToUserScreenname + " "
     }
-    characterCountBarButtonItem.title = remainigCharacterCountString
+    characterCountBarButtonItem.title = remainingCharacterCountString
   }
   
   fileprivate func setupNavigationBar() {
@@ -153,7 +153,7 @@ extension NewTweetViewController: UITextViewDelegate {
   }
   
   func textViewDidChange(_ textView: UITextView) {
-    characterCountBarButtonItem.title = textView.text.characters.isEmpty ? "" : remainigCharacterCountString
+    characterCountBarButtonItem.title = textView.text.characters.isEmpty ? "" : remainingCharacterCountString
   }
   
 }
