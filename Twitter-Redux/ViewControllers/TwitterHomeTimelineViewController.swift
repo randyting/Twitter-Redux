@@ -37,8 +37,8 @@ class TwitterHomeTimelineViewController: UIViewController {
     
     setupTweetsTableView(tweetsTableView)
     setupRefreshControl(refreshControl)
-    setupInitialValues()
     setupNavigationBar()
+    setupInitialValues()
   }
   
   override func viewWillAppear(_ animated: Bool) {
