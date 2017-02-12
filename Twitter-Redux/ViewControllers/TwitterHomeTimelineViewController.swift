@@ -32,6 +32,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   @IBOutlet weak var tweetsTableView: UITableView!
   
   // MARK: - Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     

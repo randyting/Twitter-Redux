@@ -95,10 +95,10 @@ class NewTweetViewController: UIViewController {
   // MARK: - Behavior
   
   func willShowKeyboard(_ notification: Notification) {
-    if let userInfo = notification.userInfo {
-      let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
-      textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
-    }
+    guard let userInfo = notification.userInfo else { return }
+    
+    let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
+    textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
   }
   
   func onTapCancelBarButton(_ sender: UIBarButtonItem) {
@@ -107,18 +107,16 @@ class NewTweetViewController: UIViewController {
   }
   
   func onTapTweetBarButton(_ sender: UIBarButtonItem) {
+    guard !tweetTextView.text.characters.isEmpty else { return }
+    
     tweetTextView.resignFirstResponder()
-    if !tweetTextView.text.characters.isEmpty {
-      TwitterUser.tweetText(tweetTextView.text,
-                            inReplyToStatusID: inReplyToStatusID,
-                            completion: {[weak self] (_, error: Error?) -> Void in
-          if let error = error {
-            print(error.localizedDescription)
-          } else {
-            guard let strongSelf = self else { return }
-            strongSelf.delegate?.newTweetViewController(strongSelf, didPostTweetText: strongSelf.tweetTextView.text)
-          }
-      })
+    TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID) {[weak self] (_, error: Error?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        guard let strongSelf = self else { return }
+        strongSelf.delegate?.newTweetViewController(strongSelf, didPostTweetText: strongSelf.tweetTextView.text)
+      }
     }
   }
   
@@ -132,6 +130,7 @@ class NewTweetViewController: UIViewController {
     let newNavigationController = UINavigationController(rootViewController: newTweetViewController)
     (viewController as? UIViewController)?.present(newNavigationController, animated: true, completion: nil)
   }
+  
 }
 
 // MARK: - UITextViewDelegate
