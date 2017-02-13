@@ -50,9 +50,11 @@ class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Properties
   
+  /// This property represents the tweet that is displayed in the cell.  In the case that a retweet is assigned to the cell, tweetToShow will store the original tweet.
   var tweetToShow: Tweet!
+  /// This is the delegate for the TweetTableViewCell.  Implement the delegate methods to respond to interaction with the cell.
   weak var delegate: TweetTableViewCellDelegate?
-  
+  /// Set this property to the tweet model that should be displayed by the cell.  This can be an original tweet or retweet.
   var tweet: Tweet! {
     didSet {
       tweetToShow = tweet.originalTweet ?? tweet

@@ -15,12 +15,16 @@ class TwitterHomeTimelineViewController: UIViewController {
   
   // MARK: - Properties
   
+  /// This property is exposed internal only so that it can be used in a subclass.  Do not use it externally.
   var currentUser: TwitterUser!
+  /// This property is exposed internal only so that it can be used in a subclass.  Do not use it externally.
   var tweets: [Tweet]?
+  /// This property is exposed internal only so that it can be used in a subclass.  Do not use it externally.
   let refreshControl = UIRefreshControl()
   
   // MARK: - Interface Builder
   
+  /// This is exposed internal only so that it can be used in a subclass.  Do not use it externally.
   @IBOutlet weak var tweetsTableView: UITableView!
   
   // MARK: - Lifecycle
@@ -50,7 +54,10 @@ class TwitterHomeTimelineViewController: UIViewController {
     tableView.separatorInset = UIEdgeInsets.zero
   }
   
+  /// This method initializes all the data for the content to be displayed in this view controller.
+  /// It is exposed internal so that it can be overridden in a subclass. Do not call it externally.
   func setupInitialValues() {
+    title = HomeTimelineViewControllerConstants.title
     currentUser = UserManager.sharedInstance.currentUser
     refreshTweets()
   }
@@ -65,7 +72,6 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   fileprivate func setupNavigationBar() {
-    title = HomeTimelineViewControllerConstants.title
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: HomeTimelineViewControllerConstants.createNewTweetIconImageName ),
                                                         style: .plain,
                                                         target: self,
@@ -78,6 +84,8 @@ class TwitterHomeTimelineViewController: UIViewController {
     NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
+  /// This method is called to refresh all the tweets shown in this view controller.  It makes an Twitter API call to grab the latest timeline tweets.
+  /// It is exposed internal so that it can be overridden in a subclass. Do not call it externally.
   func refreshTweets() {
     currentUser.homeTimelineWithParams(nil) { [weak self] (tweets, error) -> Void in
       guard let error = error else {
@@ -93,6 +101,8 @@ class TwitterHomeTimelineViewController: UIViewController {
     }
   }
   
+  /// This method makes an Twitter API call to grab the next 20 older tweets on the timeline and appends them to the tableview model.
+  /// It is exposed internal so that it can be overridden in a subclass. Do not call it externally.
   func loadOlderTweets() {
     guard let tweets = tweets, let lastTweetID = tweets.last?.id else {
       tweetsTableView.finishInfiniteScroll()
