@@ -80,16 +80,16 @@ class TwitterHomeTimelineViewController: UIViewController {
   
   func refreshTweets() {
     currentUser.homeTimelineWithParams(nil) { [weak self] (tweets, error) -> Void in
-      if let error = error {
-        print(error.localizedDescription)
-      } else {
+      guard let error = error else {
         guard let strongSelf = self else { return }
         strongSelf.tweets = tweets
         strongSelf.tweetsTableView.reloadData()
         DispatchQueue.main.async(execute: { () -> Void in
           strongSelf.refreshControl.endRefreshing()
         })
+        return
       }
+      print(error.localizedDescription)
     }
   }
   
@@ -104,16 +104,16 @@ class TwitterHomeTimelineViewController: UIViewController {
                                                withMaxID: String(lastTweetID - 1))
     
     currentUser.homeTimelineWithParams(params) { [weak self] (tweets, error) -> Void in
-      if let error = error {
-        print(error.localizedDescription)
-      } else {
+      guard let error = error else {
         guard let strongSelf = self, let tweets = tweets else { return }
         strongSelf.tweets? += tweets
         strongSelf.tweetsTableView.reloadData()
         DispatchQueue.main.async { () -> Void in
           strongSelf.tweetsTableView.finishInfiniteScroll()
         }
+        return
       }
+      print(error.localizedDescription)
     }
   }
   
@@ -160,14 +160,14 @@ extension TwitterHomeTimelineViewController: TweetTableViewCellDelegate {
   
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView) {
     TwitterUser.userWithScreenName(tweetTableViewCell.tweetToShow.userScreenname) { [weak self] (user, error) -> Void in
-      if let error = error {
-        print(error.localizedDescription)
-      } else {
+      guard let error = error else {
         guard let strongSelf = self else { return }
         let profileViewController = TwitterUserProfileViewController()
         profileViewController.user = user
         strongSelf.navigationController?.pushViewController(profileViewController, animated: true)
+        return
       }
+      print(error.localizedDescription)
     }
   }
   

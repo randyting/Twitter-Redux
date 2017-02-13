@@ -117,12 +117,12 @@ class NewTweetViewController: UIViewController {
     
     tweetTextView.resignFirstResponder()
     TwitterUser.tweetText(tweetTextView.text, inReplyToStatusID: inReplyToStatusID) {[weak self] (_, error: Error?) -> Void in
-      if let error = error {
-        print(error.localizedDescription)
-      } else {
+      guard let error = error else {
         guard let strongSelf = self else { return }
         strongSelf.delegate?.newTweetViewController(strongSelf, didPostTweetText: strongSelf.tweetTextView.text)
+        return
       }
+      print(error.localizedDescription)
     }
   }
   

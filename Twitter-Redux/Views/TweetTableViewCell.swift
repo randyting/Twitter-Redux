@@ -126,23 +126,23 @@ class TweetTableViewCell: UITableViewCell {
   
   @IBAction func onTapRetweetButton(_ sender: AnyObject) {
     TwitterUser.toggleRetweetedState(forTweet: tweetToShow) { [weak self] (_, error) in
-      if let error = error {
-        print("Toggle Retweeted Error: \(error.localizedDescription)")
-      } else {
+      guard let error = error else {
         guard let strongSelf = self else { return }
         strongSelf.updateContent()
+        return
       }
+      print("Toggle Retweeted Error: \(error.localizedDescription)")
     }
   }
   
   @IBAction func onTapFavoriteButton(_ sender: UIButton) {
     TwitterUser.toggleFavoritedState(forTweet: tweetToShow) { [weak self] (_, error) in
-      if let error = error {
-        print("Toggle Favorited Error: \(error.localizedDescription)")
-      } else {
+      guard let error = error else {
         guard let strongSelf = self else { return }
         strongSelf.updateContent()
+        return
       }
+      print("Toggle Favorited Error: \(error.localizedDescription)")
     }
   }
   
