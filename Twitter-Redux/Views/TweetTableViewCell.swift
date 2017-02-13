@@ -124,7 +124,7 @@ class TweetTableViewCell: UITableViewCell {
   
   // MARK: - Behavior
   
-  @IBAction func onTapRetweetButton(_ sender: AnyObject) {
+  @IBAction fileprivate func onTapRetweetButton(_ sender: AnyObject) {
     TwitterUser.toggleRetweetedState(forTweet: tweetToShow) { [weak self] (_, error) in
       guard let error = error else {
         guard let strongSelf = self else { return }
@@ -135,7 +135,7 @@ class TweetTableViewCell: UITableViewCell {
     }
   }
   
-  @IBAction func onTapFavoriteButton(_ sender: UIButton) {
+  @IBAction fileprivate func onTapFavoriteButton(_ sender: UIButton) {
     TwitterUser.toggleFavoritedState(forTweet: tweetToShow) { [weak self] (_, error) in
       guard let error = error else {
         guard let strongSelf = self else { return }
@@ -146,11 +146,11 @@ class TweetTableViewCell: UITableViewCell {
     }
   }
   
-  @IBAction func onTapReplyButton(_ sender: UIButton) {
+  @IBAction fileprivate func onTapReplyButton(_ sender: UIButton) {
     delegate?.tweetTableViewCell(self, didTapReplyButton: sender)
   }
   
-  func onTapProfileImage(_ sender: UITapGestureRecognizer) {
+  @objc fileprivate func onTapProfileImage(_ sender: UITapGestureRecognizer) {
     delegate?.tweetTableViewCell(self, didTapProfileImage: profileImageView)
   }
   
