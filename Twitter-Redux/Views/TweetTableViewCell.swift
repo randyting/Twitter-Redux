@@ -1,8 +1,21 @@
 import UIKit
 
 protocol TweetTableViewCellDelegate: class {
+  
+  /// Called when the user taps the reply button on in the cell.
+  ///
+  /// - Parameters:
+  ///   - tweetTableViewCell: The cell that received the button tap.
+  ///   - didTapReplyButton: The button that was tapped.
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapReplyButton: UIButton)
+  
+  /// Called when the user taps on the profile image in the cell.
+  ///
+  /// - Parameters:
+  ///   - tweetTableViewCell: The cell that received the tap.
+  ///   - didTapProfileImage: The UIImageView that received the tap.
   func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, didTapProfileImage: UIImageView)
+  
 }
 
 class TweetTableViewCell: UITableViewCell {

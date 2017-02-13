@@ -1,8 +1,21 @@
 import UIKit
 
 protocol NewTweetViewControllerDelegate: class {
+  
+  /// This is called when a tweet has been posted successfully to Twitter servers.
+  ///
+  /// - Parameters:
+  ///   - newTweetViewController: The NewTweetViewController that made the tweet.
+  ///   - didPostTweetText: The tweet contents.
   func newTweetViewController(_ newTweetViewController: NewTweetViewController, didPostTweetText: String)
+  
+  /// This is called when the user taps the dismiss button.
+  ///
+  /// - Parameters:
+  ///   - newTweetViewController: The NewTweetViewController that was dismissed.
+  ///   - didCancelNewTweet: true if cancel was successful.
   func newTweetViewController(_ newTweetViewController: NewTweetViewController, didCancelNewTweet: Bool)
+  
 }
 
 class NewTweetViewController: UIViewController {
