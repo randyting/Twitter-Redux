@@ -111,7 +111,9 @@ class TweetTableViewCell: UITableViewCell {
     
     setRetweetOrReplyViews(hidden: false)
     retweetOrReplyIcon.image = tweet.isRetweet ? TweetTableViewCellConstants.retweetIconImage : TweetTableViewCellConstants.replyIconImage
-    retweetOrReplyLabel.text = tweet.isRetweet ? "\(tweet.userName!) Retweeted" : "in reply to @\(tweet.inReplyToScreenName!)"
+    if let username = tweet.userName, let inReplyToScreenName = tweet.inReplyToScreenName {
+      retweetOrReplyLabel.text = tweet.isRetweet ? "\(username) Retweeted" : "in reply to @\(inReplyToScreenName)"
+    }
   }
   
   fileprivate func setRetweetOrReplyViews(hidden isHidden: Bool) {

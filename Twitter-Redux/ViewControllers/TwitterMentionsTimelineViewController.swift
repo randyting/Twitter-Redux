@@ -41,17 +41,19 @@ class TwitterMentionsTimelineViewController: TwitterHomeTimelineViewController {
   
   override func loadOlderTweets() {
     
-    guard let tweets = tweets else { return }
+    guard let tweets = tweets, let lastTweetID = tweets.last?.id else { return }
     let params = TwitterHomeTimelineParameters(withCount: 20,
                                                withSinceID: nil,
-                                               withMaxID: String(tweets.last!.id - 1))
+                                               withMaxID: String(lastTweetID - 1))
     
     currentUser.mentionsTimelineWithParams(params) { (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
-        self.tweets? += tweets!
-        self.tweetsTableView.reloadData()
+        if let tweets = tweets {
+          self.tweets? += tweets
+          self.tweetsTableView.reloadData()
+        }
         DispatchQueue.main.async(execute: { () -> Void in
           self.tweetsTableView.finishInfiniteScroll()
         })

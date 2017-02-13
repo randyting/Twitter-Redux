@@ -67,8 +67,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = menuTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
     
-    cell.textLabel!.text = MenuVCManager.sharedInstance.vcTitleArray[indexPath.row]
-    cell.imageView!.image = MenuVCManager.sharedInstance.vcImageArray[indexPath.row]
+    cell.textLabel?.text = MenuVCManager.sharedInstance.vcTitleArray[indexPath.row]
+    cell.imageView?.image = MenuVCManager.sharedInstance.vcImageArray[indexPath.row]
     
     return cell
   }

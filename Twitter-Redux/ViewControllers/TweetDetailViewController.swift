@@ -9,7 +9,7 @@
 import UIKit
 
 class TweetDetailViewController: UIViewController {
-
+  
   // MARK: - Constants
   fileprivate let replyToTweetSegueIdentifier = "ReplyToTweetSegue"
   
@@ -47,7 +47,9 @@ class TweetDetailViewController: UIViewController {
     userScreennameLabel.text = "@" + tweet.userScreenname
     favoriteCountLabel.text = String(tweet.favoriteCount)
     retweetCountLabel.text = String(tweet.retweetCount)
-    createdTimeLabel.text = TwitterDetailDateFormatter.sharedInstance.string(from: TwitterDateFormatter.sharedInstance.date(from: tweet.createdAt)!)
+    if let date = TwitterDateFormatter.sharedInstance.date(from: tweet.createdAt) {
+      createdTimeLabel.text = TwitterDetailDateFormatter.sharedInstance.string(from: date)
+    }
     if tweet.favorited == true {
       favoriteButton.setImage(UIImage(named: "favorite_on"), for: UIControlState())
     } else {
@@ -123,7 +125,7 @@ class TweetDetailViewController: UIViewController {
   @IBAction func onTapReplyButton(_ sender: AnyObject) {
     NewTweetViewController.presentNewTweetViewController(inReplyToTweet: tweet, forViewController: self)
   }
-
+  
 }
 
 // MARK: - NewTweetViewControllerDelegate

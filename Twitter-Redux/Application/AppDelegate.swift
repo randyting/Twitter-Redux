@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var menuNavigationController: UINavigationController?
   var mainVC: MainViewController?
-  var loginVC: TwitterLoginViewController?
+  var loginVC: TwitterLoginViewController!
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
@@ -43,7 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       UserManager.sharedInstance.loggedInUsers.append(currentUser)
       mainVC?.selectViewController(selectedViewController: MenuVCManager.sharedInstance.vcArray[0])
     } else {
-      mainVC?.selectViewController(selectedViewController: loginVC!)
+      
+      mainVC?.selectViewController(selectedViewController: loginVC)
     }
     
     window?.rootViewController = mainVC

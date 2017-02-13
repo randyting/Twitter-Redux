@@ -19,7 +19,7 @@ class TwitterHomeTimelineParameters: NSObject {
       let parameterDictionary = namesAndValues()
       for (name, value) in parameterDictionary {
         if let value = value {
-          params![name] = value
+          params?[name] = value
         }
       }
       if params?.count == 0 {

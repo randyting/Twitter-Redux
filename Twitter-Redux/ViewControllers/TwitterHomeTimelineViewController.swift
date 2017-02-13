@@ -94,21 +94,21 @@ class TwitterHomeTimelineViewController: UIViewController {
   }
   
   func loadOlderTweets() {
-    guard let tweets = tweets else {
+    guard let tweets = tweets, let lastTweetID = tweets.last?.id else {
       tweetsTableView.finishInfiniteScroll()
       return
     }
     
     let params = TwitterHomeTimelineParameters(withCount: HomeTimelineViewControllerConstants.numberOfAdditionalTweetsToLoad,
                                                withSinceID: nil,
-                                               withMaxID: String(tweets.last!.id - 1))
+                                               withMaxID: String(lastTweetID - 1))
     
     currentUser.homeTimelineWithParams(params) { [weak self] (tweets, error) -> Void in
       if let error = error {
         print(error.localizedDescription)
       } else {
-        guard let strongSelf = self else { return }
-        strongSelf.tweets? += tweets!
+        guard let strongSelf = self, let tweets = tweets else { return }
+        strongSelf.tweets? += tweets
         strongSelf.tweetsTableView.reloadData()
         DispatchQueue.main.async { () -> Void in
           strongSelf.tweetsTableView.finishInfiniteScroll()
