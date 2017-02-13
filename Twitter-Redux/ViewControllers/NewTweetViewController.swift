@@ -100,19 +100,19 @@ class NewTweetViewController: UIViewController {
   
   // MARK: - Behavior
   
-  func willShowKeyboard(_ notification: Notification) {
+  @objc fileprivate func willShowKeyboard(_ notification: Notification) {
     guard let userInfo = notification.userInfo else { return }
     
     let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size // swiftlint:disable:this force_cast
     textViewBottomToSuperHeightConstraint.constant = keyboardSize.height
   }
   
-  func onTapCancelBarButton(_ sender: UIBarButtonItem) {
+  @objc fileprivate func onTapCancelBarButton(_ sender: UIBarButtonItem) {
     tweetTextView.resignFirstResponder()
     delegate?.newTweetViewController(self, didCancelNewTweet: true)
   }
   
-  func onTapTweetBarButton(_ sender: UIBarButtonItem) {
+  @objc fileprivate func onTapTweetBarButton(_ sender: UIBarButtonItem) {
     guard !tweetTextView.text.characters.isEmpty else { return }
     
     tweetTextView.resignFirstResponder()
@@ -127,6 +127,14 @@ class NewTweetViewController: UIViewController {
   }
   
   // MARK: - Class Methods
+  
+  /// Presents a NewTweetViewController modally so that the user can either compose a new tweet or reply to a tweet.
+  ///
+  /// - Parameters:
+  ///   - tweet: The tweet to reply to. Pass in nil if composing a new tweet.
+  ///   - viewController: The view controller presenting the NewTweetViewController.
+  ///
+  /// - Returns: Void
   
   class func presentNewTweetViewController(inReplyToTweet tweet: Tweet?,
                                            forViewController viewController: NewTweetViewControllerDelegate!) {

@@ -74,7 +74,7 @@ class TwitterHomeTimelineViewController: UIViewController {
   
   // MARK: - Behavior
   
-  func createNewTweet(_ sender: UIBarButtonItem) {
+  @objc fileprivate func createNewTweet(_ sender: UIBarButtonItem) {
     NewTweetViewController.presentNewTweetViewController(inReplyToTweet: nil, forViewController: self)
   }
   
